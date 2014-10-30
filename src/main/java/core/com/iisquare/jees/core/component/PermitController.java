@@ -12,17 +12,17 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.iisquare.jees.cms.domain.Log;
+import com.iisquare.jees.cms.domain.LogSetting;
+import com.iisquare.jees.cms.domain.Member;
+import com.iisquare.jees.cms.domain.Resource;
+import com.iisquare.jees.cms.service.LogService;
+import com.iisquare.jees.cms.service.MemberService;
+import com.iisquare.jees.cms.service.ResourceService;
+import com.iisquare.jees.cms.service.SettingService;
 import com.iisquare.jees.core.exception.PermitDediedException;
 import com.iisquare.jees.framework.util.DPUtil;
 import com.iisquare.jees.framework.util.ServletUtil;
-import com.iisquare.jees.oa.domain.Log;
-import com.iisquare.jees.oa.domain.LogSetting;
-import com.iisquare.jees.oa.domain.Member;
-import com.iisquare.jees.oa.domain.Resource;
-import com.iisquare.jees.oa.service.LogService;
-import com.iisquare.jees.oa.service.MemberService;
-import com.iisquare.jees.oa.service.ResourceService;
-import com.iisquare.jees.oa.service.SettingService;
 
 @Controller
 @Scope("prototype")
