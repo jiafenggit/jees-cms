@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-module
   type="WEB"
-  name="jees-oa"
+  name="jees-cms"
   id="myeclipse.1407125432281"
-  context-root="/jees-oa"
+  context-root="/jees-cms"
   j2ee-spec="6.0"
-  archive="jees-oa.war">
+  archive="jees-cms.war">
   <attributes>
     <attribute name="webrootdir" value="src/main/webapp" />
   </attributes>
