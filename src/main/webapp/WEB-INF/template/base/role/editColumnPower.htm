@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+[#include "../public/common.inc.htm"]
+[#include "../public/resource.inc.htm"]
+<table class="js-list-table"></table>
+<div id="toolbar">
+	<a href="javascript:void(0);" class="easyui-linkbutton js-control-save" data-options="iconCls:'icon-ok',plain:true">保存所选</a>
+	<a href="javascript:void(0);" onclick="Web_redirectPage(-1);" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true">返回列表</a>
+</div>
+<script type="text/javascript">
+function formatter(key, value, row, index) {
+	var html = '<input type="checkbox" name="' + key + '" value="1" data-id="' + row.id + '"'
+			+ (row.role_column_power && 1 == row.role_column_power[key] ? ' checked="checked"' : '') + ' />';
+	return html;
+}
+$(function () {
+	$('.js-list-table').treegrid({
+		url : '${_BASE_.url("manage", "column", "list")}?role_id=${id!0}',
+		idField : 'id',
+		treeField : 'name',
+		toolbar : '#toolbar',
+		rownumbers : true,
+		fitcolumns : true,
+		fit : true,
+		nowrap : true,
+		singleSelect : true,
+		checkOnSelect : false,
+		selectOnCheck : false,
+		columns:[[
+			{field:'id',checkbox:true},
+			{field:'show_id',title:'ID',formatter:function (value, row, index) {
+				return row.id;
+			}},
+			{field:'name',title:'栏目名称'},
+			{field:'sort',title:'排序'},
+			{field:'status_text',title:'状态'},
+			{field:'list_enable',title:'列表显示',align:'center',formatter:function (value, row, index) {
+				return formatter('list_enable', value, row, index);
+			}},
+			{field:'publish_self_enable',title:'栏目发布',align:'center',formatter:function (value, row, index) {
+				return formatter('publish_self_enable', value, row, index);
+			}},
+			{field:'publish_children_enable',title:'子栏目发布',align:'center',formatter:function (value, row, index) {
+				return formatter('publish_children_enable', value, row, index);
+			}},
+			{field:'manage_self_enable',title:'栏目管理',align:'center',formatter:function (value, row, index) {
+				return formatter('manage_self_enable', value, row, index);
+			}},
+			{field:'manage_children_enable',title:'子栏目管理',align:'center',formatter:function (value, row, index) {
+				return formatter('manage_children_enable', value, row, index);
+			}}
+		]],
+		onLoadSuccess : function (data) {
+			$('.js-list-button').linkbutton({
+				plain : true
+			});
+			$('.js-list-table').treegrid('autoSizeColumn');
+		}
+	});
+});
+</script>
+<div id="js-process-dialog" style="width:405px;height:250px" data-options="toolbar:'#js-process-toolbar',modal:true,resizable:true">
+	<table class="easyui-datagrid js-process-list" data-options="rownumbers:true,fitcolumns:true">
+	<thead>
+		<tr>
+			<th data-options="field:'id'">ID</th>
+			<th data-options="field:'message'">结果</th>
+		</tr>
+	</thead>
+	</table>
+</div>
+<div id="js-process-toolbar">
+	<div class="easyui-progressbar js-process-bar" data-options="value:0" style="width:380px"></div>
+</div>
+<script type="text/javascript">
+$(function () {
+	var $processDialog = $('#js-process-dialog');
+	var $processList = $('.js-process-list');
+	var $processBar = $('.js-process-bar');
+	
+	var bProcessing = false;
+	function process(index, rows) {
+		if(!bProcessing) return false;
+		var length = rows.length;
+		if(index >= length) return true;
+		var row = rows[index];
+		$.post('${_BASE_.url("saveColumnPower")}', {
+			role_id : '${id!0}',
+			column_id : row.id,
+			list_enable : $('input[name="list_enable"][data-id="' + row.id + '"]:checked').length > 0 ? 1 : 0,
+			publish_self_enable : $('input[name="publish_self_enable"][data-id="' + row.id + '"]:checked').length > 0 ? 1 : 0,
+			publish_children_enable : $('input[name="publish_children_enable"][data-id="' + row.id + '"]:checked').length > 0 ? 1 : 0,
+			manage_self_enable : $('input[name="manage_self_enable"][data-id="' + row.id + '"]:checked').length > 0 ? 1 : 0,
+			manage_children_enable : $('input[name="manage_children_enable"][data-id="' + row.id + '"]:checked').length > 0 ? 1 : 0
+		}, function (data) {
+			index++;
+			$processList.datagrid('appendRow', {
+				id : row.id,
+				message : data.message
+			});
+			$processList.datagrid('autoSizeColumn');
+			$processBar.progressbar('setValue', index / length * 100);
+			process(index, rows);
+		}, 'json');
+	}
+	
+	$('.js-control-save').bind('click', function () {
+		$processList.datagrid('loadData', []);
+		$processBar.progressbar('setValue', 0);
+		var rows = $('.js-list-table').treegrid('getChecked');
+		if(rows.length < 1) {
+			Web_alertInfo('请选择需要操作的记录');
+			return false;
+		}
+		$processDialog.dialog({
+			title : '处理进度',
+			iconCls : 'icon-tip',
+			onOpen : function () {
+				bProcessing = true;
+				process(0, rows);
+			},
+			onClose : function () {
+				bProcessing = false;
+				//$('.js-list-table').treegrid('reload');
+			}
+		});
+	});
+});
+</script>

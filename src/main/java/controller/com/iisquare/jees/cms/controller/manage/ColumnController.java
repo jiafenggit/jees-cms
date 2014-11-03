@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 
 import com.iisquare.jees.cms.domain.Column;
 import com.iisquare.jees.cms.service.ColumnService;
+import com.iisquare.jees.cms.service.RoleService;
 import com.iisquare.jees.core.component.PermitController;
 import com.iisquare.jees.framework.util.DPUtil;
 import com.iisquare.jees.framework.util.ServiceUtil;
@@ -25,13 +26,18 @@ public class ColumnController extends PermitController {
 	
 	@Autowired
 	public ColumnService columnService;
-	
+	@Autowired
+	public RoleService roleService;
+
 	public String layoutAction() throws Exception {
 		return displayTemplate();
 	}
 	
 	public String listAction () throws Exception {
+		/* role_id不为空时，填充栏目权限设置记录 */
+		Integer roleId = ValidateUtil.filterInteger(get("role_id"), true, 0, null, null);
 		List<Map<String, Object>> list = columnService.getList("*", "sort desc", 1, 0);
+		if(!DPUtil.empty(roleId)) list = columnService.fillRoleColumnRel(roleId, list);
 		list = ServiceUtil.formatRelation(list, 0);
 		assign("total", list.size());
 		assign("rows", DPUtil.collectionToArray(list));

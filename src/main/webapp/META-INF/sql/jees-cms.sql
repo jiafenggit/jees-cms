@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50525
 File Encoding         : 65001
 
-Date: 2014-11-03 15:17:18
+Date: 2014-11-03 17:58:44
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -59,33 +59,12 @@ CREATE TABLE `cms_column` (
   `update_id` int(11) NOT NULL DEFAULT '0',
   `update_time` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of cms_column
 -- ----------------------------
-INSERT INTO `cms_column` VALUES ('1', '内部通知', '0', null, null, '0', '1', '1', '1414486602560', '1', '1414486602560');
-INSERT INTO `cms_column` VALUES ('2', '紧急通知', '1', null, null, '0', '1', '1', '1414486632933', '1', '1414486632933');
-INSERT INTO `cms_column` VALUES ('3', '日常文件', '1', null, null, '0', '1', '1', '1414486646337', '1', '1414486646337');
-
--- ----------------------------
--- Table structure for `cms_column_role_rel`
--- ----------------------------
-DROP TABLE IF EXISTS `cms_column_role_rel`;
-CREATE TABLE `cms_column_role_rel` (
-  `column_id` int(11) NOT NULL,
-  `role_id` int(11) NOT NULL,
-  `list_enable` tinyint(4) NOT NULL DEFAULT '0',
-  `publish_self_enable` tinyint(4) NOT NULL DEFAULT '0',
-  `publish_children_enbale` tinyint(4) NOT NULL DEFAULT '0',
-  `manage_self_enable` tinyint(4) NOT NULL DEFAULT '0',
-  `manage_children_enable` tinyint(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`column_id`,`role_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of cms_column_role_rel
--- ----------------------------
+INSERT INTO `cms_column` VALUES ('1', '图文栏目', '0', '图文;栏目', '图文栏目', '0', '1', '1', '1415000500739', '1', '1415000523421');
 
 -- ----------------------------
 -- Table structure for `cms_duty`
@@ -160,7 +139,7 @@ CREATE TABLE `cms_log` (
   `operate_ip` varchar(64) NOT NULL DEFAULT '',
   `operate_time` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of cms_log
@@ -176,6 +155,7 @@ INSERT INTO `cms_log` VALUES ('8', '用户登陆', 'service', 'base', 'member', 
 INSERT INTO `cms_log` VALUES ('9', '用户登陆', 'service', 'base', 'member', 'guest', null, null, null, null, null, null, null, null, '2', '127.0.0.1', '1414549503629');
 INSERT INTO `cms_log` VALUES ('10', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1414550599929');
 INSERT INTO `cms_log` VALUES ('11', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1414641115538');
+INSERT INTO `cms_log` VALUES ('12', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1415000437396');
 
 -- ----------------------------
 -- Table structure for `cms_log_setting`
@@ -225,7 +205,7 @@ CREATE TABLE `cms_member` (
 -- ----------------------------
 -- Records of cms_member
 -- ----------------------------
-INSERT INTO `cms_member` VALUES ('1', 'admin', '管理员', '0f4e8ac95b5c1fc48dc98004c7525bc7', '888888', '0', '1', '1414641163542', '127.0.0.1', '1', '127.0.0.1', '1411090286300', '1', '1414476075652');
+INSERT INTO `cms_member` VALUES ('1', 'admin', '管理员', '0f4e8ac95b5c1fc48dc98004c7525bc7', '888888', '0', '1', '1415000665676', '127.0.0.1', '1', '127.0.0.1', '1411090286300', '1', '1414476075652');
 INSERT INTO `cms_member` VALUES ('2', 'guest', '访客', '793a507822c9ec991c3418dfb7950f07', '338043', '0', '1', '1414550595011', '127.0.0.1', '1', '127.0.0.1', '1414546536140', '1', '1414546536140');
 
 -- ----------------------------
@@ -570,6 +550,27 @@ INSERT INTO `cms_role` VALUES ('2', '超级管理员', '1', '0', '1', '', '1', '
 INSERT INTO `cms_role` VALUES ('3', '普通管理员', '1', '0', '1', '', '1', '1414475827975', '1', '1414475827975');
 INSERT INTO `cms_role` VALUES ('4', '普通用户组', '0', '0', '1', '', '1', '1414475854203', '1', '1414475854203');
 INSERT INTO `cms_role` VALUES ('5', '游客', '4', '0', '1', '', '1', '1414475889347', '1', '1414475889347');
+
+-- ----------------------------
+-- Table structure for `cms_role_column_rel`
+-- ----------------------------
+DROP TABLE IF EXISTS `cms_role_column_rel`;
+CREATE TABLE `cms_role_column_rel` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_id` int(11) NOT NULL DEFAULT '0',
+  `column_id` int(11) NOT NULL DEFAULT '0',
+  `list_enable` tinyint(4) NOT NULL DEFAULT '0',
+  `publish_self_enable` tinyint(4) NOT NULL DEFAULT '0',
+  `publish_children_enable` tinyint(4) NOT NULL DEFAULT '0',
+  `manage_self_enable` tinyint(4) NOT NULL DEFAULT '0',
+  `manage_children_enable` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of cms_role_column_rel
+-- ----------------------------
+INSERT INTO `cms_role_column_rel` VALUES ('1', '2', '1', '1', '0', '1', '0', '0');
 
 -- ----------------------------
 -- Table structure for `cms_role_menu_rel`

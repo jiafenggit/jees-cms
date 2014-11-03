@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.iisquare.jees.cms.dao.MemberDao;
 import com.iisquare.jees.cms.dao.ArticleDao;
 import com.iisquare.jees.cms.dao.ColumnDao;
+import com.iisquare.jees.cms.dao.RoleColumnRelDao;
 import com.iisquare.jees.cms.domain.Column;
 import com.iisquare.jees.framework.model.ServiceBase;
 import com.iisquare.jees.framework.util.DPUtil;
@@ -25,6 +26,8 @@ public class ColumnService extends ServiceBase {
 	public ColumnDao columnDao;
 	@Autowired
 	public ArticleDao articleDao;
+	@Autowired
+	public RoleColumnRelDao roleColumnRelDao;
 	
 	public Map<String, String> getStatusMap() {
 		Map<String, String> map = new LinkedHashMap<String, String>();
@@ -34,6 +37,17 @@ public class ColumnService extends ServiceBase {
 	}
 	
 	public ColumnService() {}
+	
+	public List<Map<String, Object>> fillRoleColumnRel(Object roleId, List<Map<String, Object>> columnList) {
+		List<Map<String, Object>> relList = roleColumnRelDao.getList("*",
+				new String[]{"role_id"}, new Object[]{roleId}, null, null, 0, 0);
+		Map<Object, List<Map<String, Object>>> indexMap = ServiceUtil.indexesMapList(relList, "column_id");
+		String primaryKey = columnDao.getPrimaryKey();
+		for (Map<String, Object> map : columnList) {
+			map.put("role_column_power", DPUtil.getByIndex(indexMap.get(map.get(primaryKey)), 0));
+		}
+		return columnList;
+	}
 	
 	public List<Map<String, Object>> getList(String columns, String orderBy, int page, int pageSize) {
 		String append = null;

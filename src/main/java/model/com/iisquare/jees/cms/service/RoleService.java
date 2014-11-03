@@ -8,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.iisquare.jees.cms.dao.MemberDao;
+import com.iisquare.jees.cms.dao.RoleColumnRelDao;
 import com.iisquare.jees.cms.dao.RoleDao;
 import com.iisquare.jees.cms.dao.RoleMenuRelDao;
 import com.iisquare.jees.cms.dao.RoleResourceRelDao;
 import com.iisquare.jees.cms.domain.Role;
+import com.iisquare.jees.cms.domain.RoleColumnRel;
 import com.iisquare.jees.cms.domain.RoleMenuRel;
 import com.iisquare.jees.cms.domain.RoleResourceRel;
 import com.iisquare.jees.framework.model.ServiceBase;
@@ -29,6 +31,8 @@ public class RoleService extends ServiceBase {
 	public RoleResourceRelDao roleResourceRelDao;
 	@Autowired
 	public RoleMenuRelDao roleMenuRelDao;
+	@Autowired
+	public RoleColumnRelDao roleColumnRelDao;
 	@Autowired
 	public MemberDao memberDao;
 	
@@ -116,5 +120,17 @@ public class RoleService extends ServiceBase {
 			}
 		}
 		return true;
+	}
+	
+	public int saveColumnPower(RoleColumnRel persist) {
+		if(DPUtil.empty(persist.getRoleId()) || DPUtil.empty(persist.getColumnId())) return 0;
+		RoleColumnRel info = roleColumnRelDao.getByFields(new String[]{"role_id", "column_id"},
+				new Object[]{persist.getRoleId(), persist.getColumnId()}, null, null);
+		if(null == info) {
+			return roleColumnRelDao.insert(persist);
+		} else {
+			persist.setId(info.getId());
+			return roleColumnRelDao.update(persist);
+		}
 	}
 }
