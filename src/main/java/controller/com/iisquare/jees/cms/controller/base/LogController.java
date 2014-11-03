@@ -1,4 +1,4 @@
-package com.iisquare.jees.cms.controller.index;
+package com.iisquare.jees.cms.controller.base;
 
 import java.util.Collection;
 import java.util.Map;

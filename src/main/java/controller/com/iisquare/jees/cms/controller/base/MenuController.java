@@ -1,4 +1,4 @@
-package com.iisquare.jees.cms.controller.index;
+package com.iisquare.jees.cms.controller.base;
 
 import java.util.List;
 import java.util.Map;
@@ -7,40 +7,61 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import com.iisquare.jees.cms.domain.NoticeType;
-import com.iisquare.jees.cms.service.NoticeTypeService;
+import com.iisquare.jees.cms.domain.Menu;
+import com.iisquare.jees.cms.service.MenuService;
 import com.iisquare.jees.core.component.PermitController;
+import com.iisquare.jees.core.util.UrlUtil;
+import com.iisquare.jees.core.util.ViewUtil;
 import com.iisquare.jees.framework.util.DPUtil;
 import com.iisquare.jees.framework.util.ServiceUtil;
 import com.iisquare.jees.framework.util.ValidateUtil;
 
 /**
- * 通知公告类型管理
+ * 菜单管理
  * @author Ouyang <iisquare@163.com>
  *
  */
 @Controller
 @Scope("prototype")
-public class NoticeTypeController extends PermitController {
+public class MenuController extends PermitController {
 	
 	@Autowired
-	public NoticeTypeService noticeTypeService;
+	public MenuService menuService;
 	
 	public String layoutAction() throws Exception {
 		return displayTemplate();
 	}
 	
 	public String listAction () throws Exception {
-		List<Map<String, Object>> list = noticeTypeService.getList("*", "sort desc", 1, 0);
+		boolean bCollapse = !DPUtil.empty(get("collapse")); // 折叠菜单
+		List<Map<String, Object>> list = menuService.getList("*", "sort desc", 1, 0);
+		for (Map<String, Object> map : list) {
+			map.put("iconCls", map.get("icon"));
+		}
 		list = ServiceUtil.formatRelation(list, 0);
+		if(bCollapse) ViewUtil.collapseAll(list);
 		assign("total", list.size());
 		assign("rows", DPUtil.collectionToArray(list));
 		return displayJSON();
 	}
 	
+	/**
+	 * 当前登录用户菜单
+	 */
+	public String listSelfAction () throws Exception {
+		List<Map<String, Object>> list = menuService.getListByMemberId(currentMember.getId());
+		for (Map<String, Object> map : list) {
+			map.put("text", map.get("name"));
+			map.put("iconCls", map.get("icon"));
+			map.put("fullUrl", UrlUtil.concat(_WEB_URL_, DPUtil.parseString(map.get("url"))));
+		}
+		list = ServiceUtil.formatRelation(list, null);
+		return displayJSON(DPUtil.collectionToArray(list));
+	}
+	
 	public String showAction() throws Exception {
 		Integer id = ValidateUtil.filterInteger(get("id"), true, 0, null, null);
-		Map<String, Object> info = noticeTypeService.getById(id, true);
+		Map<String, Object> info = menuService.getById(id, true);
 		if(null == info) {
 			return displayInfo("信息不存在，请刷新后再试", null);
 		}
@@ -50,32 +71,42 @@ public class NoticeTypeController extends PermitController {
 	
 	public String editAction() throws Exception {
 		Integer id = ValidateUtil.filterInteger(get("id"), true, 0, null, null);
-		NoticeType info;
+		Menu info;
 		if(DPUtil.empty(id)) {
-			info = new NoticeType();
+			info = new Menu();
 			info.setParentId(ValidateUtil.filterInteger(get("parentId"), true, 0, null, null));
 		} else {
-			info = noticeTypeService.getById(id);
+			info = menuService.getById(id);
 			if(DPUtil.empty(info)) return displayInfo("信息不存在，请刷新后再试", null);
 		}
 		assign("info", info);
-		assign("statusMap", noticeTypeService.getStatusMap());
+		assign("statusMap", menuService.getStatusMap());
+		assign("goalMap", menuService.getGoalMap());
 		return displayTemplate();
 	}
 	
 	public String saveAction() throws Exception {
 		Integer id = ValidateUtil.filterInteger(get("id"), true, 0, null, null);
-		NoticeType persist;
+		Menu persist;
 		if(DPUtil.empty(id)) {
-			persist = new NoticeType();
+			persist = new Menu();
 		} else {
-			persist = noticeTypeService.getById(id);
+			persist = menuService.getById(id);
 			if(DPUtil.empty(persist)) return displayMessage(3001, "信息不存在，请刷新后再试");
 		}
 		persist.setParentId(ValidateUtil.filterInteger(get("parentId"), true, 0, null, null));
 		String name = ValidateUtil.filterSimpleString(get("name"), true, 1, 64, null);
 		if(DPUtil.empty(name)) return displayMessage(3002, "名称参数错误");
 		persist.setName(name);
+		String icon = ValidateUtil.filterSimpleString(get("icon"), true, 0, 64, null);
+		if(null == icon) return displayMessage(3002, "图标参数错误");
+		persist.setIcon(icon);
+		String goal = ValidateUtil.filterItem(get("goal"), false,
+				DPUtil.collectionToStringArray(menuService.getGoalMap().keySet()), null);
+		if(null == goal) return displayMessage(3002, "打开方式参数错误");
+		persist.setGoal(goal);
+		String url = DPUtil.trim(get("url"));
+		persist.setUrl(url);
 		persist.setSort(ValidateUtil.filterInteger(get("sort"), true, null, null, null));
 		String status = get("status");
 		if(ValidateUtil.isNull(status, true)) return displayMessage(3003, "请选择记录状态");
@@ -87,9 +118,9 @@ public class NoticeTypeController extends PermitController {
 		if(DPUtil.empty(persist.getId())) {
 			persist.setCreateId(currentMember.getId());
 			persist.setCreateTime(time);
-			result = noticeTypeService.insert(persist);
+			result = menuService.insert(persist);
 		} else {
-			result = noticeTypeService.update(persist);
+			result = menuService.update(persist);
 		}
 		if(result > 0) {
 			return displayMessage(0, url("layout"));
@@ -100,9 +131,8 @@ public class NoticeTypeController extends PermitController {
 	
 	public String deleteAction() throws Exception {
 		Object[] idArray = DPUtil.explode(get("ids"), ",", " ", true);
-		int result = noticeTypeService.delete(idArray);
-		if(-1 == result) return displayInfo("该节点拥有下级节点，不允许删除", null);
-		if(-2 == result) return displayInfo("该节点拥有从属通知公告，不允许删除", null);
+		int result = menuService.delete(idArray);
+		if(-1 == result) return displayInfo("该信息拥有下级节点，不允许删除", null);
 		if(result > 0) {
 			return displayInfo("操作成功", url("layout"));
 		} else {

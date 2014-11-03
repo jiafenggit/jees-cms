@@ -1,4 +1,4 @@
-package com.iisquare.jees.cms.controller.index;
+package com.iisquare.jees.cms.controller.base;
 
 import java.util.List;
 import java.util.Map;
@@ -7,30 +7,51 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import com.iisquare.jees.cms.domain.Organize;
-import com.iisquare.jees.cms.service.OrganizeService;
+import com.iisquare.jees.cms.domain.Role;
+import com.iisquare.jees.cms.service.RoleService;
 import com.iisquare.jees.core.component.PermitController;
 import com.iisquare.jees.framework.util.DPUtil;
 import com.iisquare.jees.framework.util.ServiceUtil;
 import com.iisquare.jees.framework.util.ValidateUtil;
 
 /**
- * 组织结构管理
+ * 角色管理
  * @author Ouyang <iisquare@163.com>
  *
  */
 @Controller
 @Scope("prototype")
-public class OrganizeController extends PermitController {
+public class RoleController extends PermitController {
+	
 	@Autowired
-	public OrganizeService organizeService;
+	public RoleService roleService;
+	
+	public String editPowerAction() throws Exception {
+		Integer id = ValidateUtil.filterInteger(get("id"), true, 0, null, null);
+		Role info = roleService.getById(id);
+		if(DPUtil.empty(info)) return displayInfo("信息不存在，请刷新后再试", null);
+		assign("info", info);
+		assign("resourceIds", DPUtil.implode(",", DPUtil.collectionToArray(
+				ServiceUtil.getFieldValues(roleService.getResourceRelList(id), "resource_id"))));
+		assign("menuIds", DPUtil.implode(",", DPUtil.collectionToArray(
+				ServiceUtil.getFieldValues(roleService.getMenuRelList(id), "menu_id"))));
+		return displayTemplate();
+	}
+	
+	public String savePowerAction() throws Exception {
+		if(roleService.updatePower(get("id"), gets("resourceIds"), gets("menuIds"))) {
+			return displayMessage(0, url("layout"));
+		} else {
+			return displayMessage(1, "操作失败");
+		}
+	}
 	
 	public String layoutAction() throws Exception {
 		return displayTemplate();
 	}
 	
 	public String listAction() throws Exception {
-		List<Map<String, Object>> list = organizeService.getList("*", "sort desc", 1, 0);
+		List<Map<String, Object>> list = roleService.getList("*", "sort desc", 1, 0);
 		list = ServiceUtil.formatRelation(list, 0);
 		assign("total", list.size());
 		assign("rows", DPUtil.collectionToArray(list));
@@ -39,7 +60,7 @@ public class OrganizeController extends PermitController {
 	
 	public String showAction() throws Exception {
 		Integer id = ValidateUtil.filterInteger(get("id"), true, 0, null, null);
-		Map<String, Object> info = organizeService.getById(id, true);
+		Map<String, Object> info = roleService.getById(id, true);
 		if(null == info) {
 			return displayInfo("信息不存在，请刷新后再试", null);
 		}
@@ -49,26 +70,26 @@ public class OrganizeController extends PermitController {
 	
 	public String editAction() throws Exception {
 		Integer id = ValidateUtil.filterInteger(get("id"), true, 0, null, null);
-		Organize info;
+		Role info;
 		if(DPUtil.empty(id)) {
-			info = new Organize();
+			info = new Role();
 			info.setParentId(ValidateUtil.filterInteger(get("parentId"), true, 0, null, null));
 		} else {
-			info = organizeService.getById(id);
+			info = roleService.getById(id);
 			if(DPUtil.empty(info)) return displayInfo("信息不存在，请刷新后再试", null);
 		}
 		assign("info", info);
-		assign("statusMap", organizeService.getStatusMap());
+		assign("statusMap", roleService.getStatusMap());
 		return displayTemplate();
 	}
 	
 	public String saveAction() throws Exception {
 		Integer id = ValidateUtil.filterInteger(get("id"), true, 0, null, null);
-		Organize persist;
+		Role persist;
 		if(DPUtil.empty(id)) {
-			persist = new Organize();
+			persist = new Role();
 		} else {
-			persist = organizeService.getById(id);
+			persist = roleService.getById(id);
 			if(DPUtil.empty(persist)) return displayMessage(3001, "信息不存在，请刷新后再试");
 		}
 		persist.setParentId(ValidateUtil.filterInteger(get("parentId"), true, 0, null, null));
@@ -87,9 +108,9 @@ public class OrganizeController extends PermitController {
 		if(DPUtil.empty(persist.getId())) {
 			persist.setCreateId(currentMember.getId());
 			persist.setCreateTime(time);
-			result = organizeService.insert(persist);
+			result = roleService.insert(persist);
 		} else {
-			result = organizeService.update(persist);
+			result = roleService.update(persist);
 		}
 		if(result > 0) {
 			return displayMessage(0, url("layout"));
@@ -100,7 +121,7 @@ public class OrganizeController extends PermitController {
 	
 	public String deleteAction() throws Exception {
 		Object[] idArray = DPUtil.explode(get("ids"), ",", " ", true);
-		int result = organizeService.delete(idArray);
+		int result = roleService.delete(idArray);
 		if(-1 == result) return displayInfo("该节点拥有下级节点，不允许删除", null);
 		if(-2 == result) return displayInfo("该节点拥有从属用户，不允许删除", null);
 		if(result > 0) {

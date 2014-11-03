@@ -86,7 +86,7 @@ public abstract class PermitController extends CoreController {
 	 * 判断是否拥有对应Module、Controller、Action的权限
 	 */
 	public boolean hasPermit (String module, String controller, String action) {
-		//if(isCheckPermit) return true; // 调试模式，拥有所有权限
+		if(isCheckPermit) return true; // 调试模式，拥有所有权限
 		Resource resource = resourceService.getByRouter(0, module, controller, action); // 获取当前资源对象
 		resource = resourceService.getReferRoot(resource); // 处理引用关系
 		if(null == resource) return false; // 资源不存在
@@ -122,7 +122,7 @@ public abstract class PermitController extends CoreController {
 		if(1 == logSetting.getReferer()) log.setReferer(request.getHeader("referer"));
 		if(1 == logSetting.getRequestUrl()) log.setRequestUrl(request.getRequestURL().toString());
 		if(1 == logSetting.getRequestParam()) {
-			if("index".equals(_MODULE_) && "member".equals(_CONTROLLER_) && "logon".equals(_ACTION_)) {
+			if("base".equals(_MODULE_) && "member".equals(_CONTROLLER_) && "logon".equals(_ACTION_)) {
 				log.setRequestParam("******");
 			} else {
 				log.setRequestParam(JSONObject.fromObject(request.getParameterMap()).toString());
