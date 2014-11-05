@@ -33,12 +33,19 @@ public class ColumnController extends PermitController {
 		return displayTemplate();
 	}
 	
-	public String listAction () throws Exception { // 权限列表待完善
-		/* role_id不为空时，填充栏目权限设置记录 */
-		Integer roleId = ValidateUtil.filterInteger(get("role_id"), true, 0, null, null);
-		List<Map<String, Object>> list = columnService.getList("*", "sort desc", 1, 0);
-		if(!DPUtil.empty(roleId)) list = columnService.fillRoleColumnRel(roleId, list);
-		list = ServiceUtil.formatRelation(list, 0);
+	public String listAction () throws Exception {
+		Integer roleId = ValidateUtil.filterInteger(get("role_id"), false, 1, null, null); // 未指定时返回null
+		List<Map<String, Object>> list;
+		if(hasPermit("base", "role", "editColumnPower") == false) { // 拥有全部管理权限
+			list = columnService.getList(null, "*", "sort desc", 1, 0);
+			list = columnService.fillRoleColumnRel(roleId, list);
+			list = ServiceUtil.formatRelation(list, 0);
+		} else { // 按分配权限生成记录
+			list = columnService.getList(
+					roleService.getIdListByMemberId(currentMember.getId(), null), "*", "sort desc", 1, 0);
+			list = columnService.fillRoleColumnRel(null, list);
+			list = ServiceUtil.formatRelation(list, null);
+		}
 		assign("total", list.size());
 		assign("rows", DPUtil.collectionToArray(list));
 		return displayJSON();

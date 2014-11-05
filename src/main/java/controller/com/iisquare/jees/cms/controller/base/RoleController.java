@@ -3,13 +3,11 @@ package com.iisquare.jees.cms.controller.base;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.iisquare.jees.cms.domain.Role;
 import com.iisquare.jees.cms.domain.RoleColumnRel;
-import com.iisquare.jees.cms.service.RoleService;
 import com.iisquare.jees.core.component.PermitController;
 import com.iisquare.jees.framework.util.DPUtil;
 import com.iisquare.jees.framework.util.ServiceUtil;
@@ -23,9 +21,6 @@ import com.iisquare.jees.framework.util.ValidateUtil;
 @Controller
 @Scope("prototype")
 public class RoleController extends PermitController {
-	
-	@Autowired
-	public RoleService roleService;
 	
 	public String editColumnPowerAction() throws Exception {
 		Integer id = ValidateUtil.filterInteger(get("id"), true, 0, null, null);
