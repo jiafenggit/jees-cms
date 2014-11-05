@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 
 import com.iisquare.jees.cms.domain.Column;
 import com.iisquare.jees.cms.service.ColumnService;
-import com.iisquare.jees.cms.service.RoleService;
 import com.iisquare.jees.core.component.PermitController;
 import com.iisquare.jees.framework.util.DPUtil;
 import com.iisquare.jees.framework.util.ServiceUtil;
@@ -26,8 +25,6 @@ public class ColumnController extends PermitController {
 	
 	@Autowired
 	public ColumnService columnService;
-	@Autowired
-	public RoleService roleService;
 
 	public String layoutAction() throws Exception {
 		return displayTemplate();
