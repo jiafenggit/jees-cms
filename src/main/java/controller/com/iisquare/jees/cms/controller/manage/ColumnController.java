@@ -36,7 +36,7 @@ public class ColumnController extends PermitController {
 	public String listAction () throws Exception {
 		Integer roleId = ValidateUtil.filterInteger(get("role_id"), false, 1, null, null); // 未指定时返回null
 		List<Map<String, Object>> list;
-		if(hasPermit("base", "role", "editColumnPower") == false) { // 拥有全部管理权限
+		if(hasPermit("base", "role", "editColumnPower")) { // 拥有全部管理权限
 			list = columnService.getList(null, "*", "sort desc", 1, 0);
 			list = columnService.fillRoleColumnRel(roleId, list);
 			list = ServiceUtil.formatRelation(list, 0);
