@@ -33,7 +33,7 @@ public class ColumnController extends PermitController {
 		return displayTemplate();
 	}
 	
-	public String listAction () throws Exception {
+	public String listAction () throws Exception { // 权限列表待完善
 		/* role_id不为空时，填充栏目权限设置记录 */
 		Integer roleId = ValidateUtil.filterInteger(get("role_id"), true, 0, null, null);
 		List<Map<String, Object>> list = columnService.getList("*", "sort desc", 1, 0);

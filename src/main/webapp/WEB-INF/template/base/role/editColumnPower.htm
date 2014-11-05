@@ -36,17 +36,8 @@ $(function () {
 			{field:'list_enable',title:'列表显示',align:'center',formatter:function (value, row, index) {
 				return formatter('list_enable', value, row, index);
 			}},
-			{field:'publish_self_enable',title:'栏目发布',align:'center',formatter:function (value, row, index) {
-				return formatter('publish_self_enable', value, row, index);
-			}},
-			{field:'publish_children_enable',title:'子栏目发布',align:'center',formatter:function (value, row, index) {
-				return formatter('publish_children_enable', value, row, index);
-			}},
-			{field:'manage_self_enable',title:'栏目管理',align:'center',formatter:function (value, row, index) {
-				return formatter('manage_self_enable', value, row, index);
-			}},
-			{field:'manage_children_enable',title:'子栏目管理',align:'center',formatter:function (value, row, index) {
-				return formatter('manage_children_enable', value, row, index);
+			{field:'publish_enable',title:'文章发布',align:'center',formatter:function (value, row, index) {
+				return formatter('publish_enable', value, row, index);
 			}}
 		]],
 		onLoadSuccess : function (data) {
@@ -87,10 +78,7 @@ $(function () {
 			role_id : '${id!0}',
 			column_id : row.id,
 			list_enable : $('input[name="list_enable"][data-id="' + row.id + '"]:checked').length > 0 ? 1 : 0,
-			publish_self_enable : $('input[name="publish_self_enable"][data-id="' + row.id + '"]:checked').length > 0 ? 1 : 0,
-			publish_children_enable : $('input[name="publish_children_enable"][data-id="' + row.id + '"]:checked').length > 0 ? 1 : 0,
-			manage_self_enable : $('input[name="manage_self_enable"][data-id="' + row.id + '"]:checked').length > 0 ? 1 : 0,
-			manage_children_enable : $('input[name="manage_children_enable"][data-id="' + row.id + '"]:checked').length > 0 ? 1 : 0
+			publish_enable : $('input[name="publish_enable"][data-id="' + row.id + '"]:checked').length > 0 ? 1 : 0
 		}, function (data) {
 			index++;
 			$processList.datagrid('appendRow', {

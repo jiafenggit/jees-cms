@@ -10,10 +10,7 @@ public class RoleColumnRel {
 	private Integer roleId; // 角色主键
 	private Integer columnId; // 文章栏目主键
 	private Integer listEnable; // 管理列表中可见
-	private Integer publishSelfEnable; // 允许在当前节点中发布文章
-	private Integer publishChildrenEnable; // 允许在子节点中发布文章
-	private Integer manageSelfEnable; // 允许管理当前节点
-	private Integer manageChildrenEnable; // 允许管理子节点
+	private Integer publishEnable; // 允许发布文章
 
 	public Integer getId() {
 		return id;
@@ -47,36 +44,12 @@ public class RoleColumnRel {
 		this.listEnable = listEnable;
 	}
 
-	public Integer getPublishSelfEnable() {
-		return publishSelfEnable;
+	public Integer getPublishEnable() {
+		return publishEnable;
 	}
 
-	public void setPublishSelfEnable(Integer publishSelfEnable) {
-		this.publishSelfEnable = publishSelfEnable;
-	}
-
-	public Integer getPublishChildrenEnable() {
-		return publishChildrenEnable;
-	}
-
-	public void setPublishChildrenEnable(Integer publishChildrenEnable) {
-		this.publishChildrenEnable = publishChildrenEnable;
-	}
-
-	public Integer getManageSelfEnable() {
-		return manageSelfEnable;
-	}
-
-	public void setManageSelfEnable(Integer manageSelfEnable) {
-		this.manageSelfEnable = manageSelfEnable;
-	}
-
-	public Integer getManageChildrenEnable() {
-		return manageChildrenEnable;
-	}
-
-	public void setManageChildrenEnable(Integer manageChildrenEnable) {
-		this.manageChildrenEnable = manageChildrenEnable;
+	public void setPublishEnable(Integer publishEnable) {
+		this.publishEnable = publishEnable;
 	}
 
 	public RoleColumnRel() {}

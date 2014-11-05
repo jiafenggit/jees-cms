@@ -38,10 +38,7 @@ public class RoleController extends PermitController {
 		persist.setRoleId(ValidateUtil.filterInteger(get("role_id"), true, 0, null, null));
 		persist.setColumnId(ValidateUtil.filterInteger(get("column_id"), true, 0, null, null));
 		persist.setListEnable(ValidateUtil.filterInteger(get("list_enable"), true, 0, 1, null));
-		persist.setPublishSelfEnable(ValidateUtil.filterInteger(get("publish_self_enable"), true, 0, 1, null));
-		persist.setPublishChildrenEnable(ValidateUtil.filterInteger(get("publish_children_enable"), true, 0, 1, null));
-		persist.setManageSelfEnable(ValidateUtil.filterInteger(get("manage_self_enable"), true, 0, 1, null));
-		persist.setManageChildrenEnable(ValidateUtil.filterInteger(get("manage_children_enable"), true, 0, 1, null));
+		persist.setPublishEnable(ValidateUtil.filterInteger(get("publish_enable"), true, 0, 1, null));
 		int result = roleService.saveColumnPower(persist);
 		if(result > 0) {
 			return displayMessage(0, "操作成功");
