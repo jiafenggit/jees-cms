@@ -19,6 +19,13 @@
 		var dateObj = new Date(dateVal);
 		return dateObj.format(Web_dateTimeFormat);
 	}
+	
+	function Web_fullUrl(url) {
+		var regexUrl = /^[a-zA-Z]+:\/\/.+/;
+		url = $.trim(url);
+		if(Web_empty(url) || null != url.match(regexUrl)) return url;
+		return Web_projectUrl + ('/' == url.substring(0, 1) ? '' : '/') + url;
+	}
 </script>
 <script type="text/javascript" src="${_THEME_URL_}/script/code.js"></script>
 <script type="text/javascript" src="${_THEME_URL_}/script/main.js"></script>

@@ -13,6 +13,7 @@ public class Article {
 	private String url; // 链接地址
 	private String keywords; // 页面关键词
 	private String description; // 页面描述
+	private String pictureUrl; // 预览图片
 	private String content; // 内容
 	private Long sort; // 排序（从高到低）
 	private Integer status; // 状态
@@ -75,6 +76,14 @@ public class Article {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getPictureUrl() {
+		return pictureUrl;
+	}
+
+	public void setPictureUrl(String pictureUrl) {
+		this.pictureUrl = pictureUrl;
 	}
 
 	public String getContent() {
