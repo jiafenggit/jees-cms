@@ -5,7 +5,6 @@
 <div id="toolbar">
 	[#if _BASE_.hasPermit("edit")]<a href="${_BASE_.url("edit")}" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">添加</a>[/#if]
 	[#if _BASE_.hasPermit("delete")]<a href="javascript:void(0);" class="easyui-linkbutton js-control-delete" data-options="iconCls:'icon-remove',plain:true">批量删除</a>[/#if]
-	[#if _BASE_.hasPermit("noteType", "layout")]<a href="${_BASE_.url("noteType", "layout")}" class="easyui-linkbutton" data-options="iconCls:'icon-type',plain:true">类型管理</a>[/#if]
 	<a href="javascript:void(0);" class="easyui-linkbutton js-control-search" data-options="iconCls:'icon-search',plain:true">搜索</a>
 </div>
 <script type="text/javascript">
@@ -27,12 +26,14 @@ $(function () {
 			{field:'show_id',title:'ID',formatter:function (value, row, index) {
 				return row.id;
 			}},
-			{field:'type_id',title:'分类',formatter:function (value, row, index) {
-				return row.type_id_rel ? row.type_id_rel.name : row.type_id;
-			}},
+			{field:'name',title:'名称'},
 			{field:'sort',title:'排序'},
-			{field:'nickname',title:'称呼'},
-			{field:'ip',title:'IP'},
+			{field:'module',title:'模块'},
+			{field:'controller',title:'控制器'},
+			{field:'action',title:'方法'},
+			{field:'group',title:'分组'},
+			{field:'key',title:'标签'},
+			{field:'effect_text',title:'效果'},
 			{field:'status_text',title:'状态'},
 			{field:'create_id',title:'创建者',formatter:function (value, row, index) {
 				if(!row.create_id_rel) return '';
@@ -83,28 +84,40 @@ $(function () {
 });
 </script>
 <div class="hidden">
-<div id="js-search-dialog" style="width:255px;height:225px" data-options="buttons:'#js-search-button',modal:true,resizable:true">
+<div id="js-search-dialog" style="width:462px;height:200px" data-options="buttons:'#js-search-button',modal:true,resizable:true">
 <form id="searchForm" method="post" action="">
 <table align="center" class="table-horizontal tr-height25">
 	<tr>
-		<th>分类</th>
-		<td><input name="typeId" class="js-select-type width150" value="" /></td>
+		<th>名称</th>
+		<td><input class="easyui-textbox width150" type="text" name="name" value="" /></td>
+		<th>模块</th>
+		<td><input class="easyui-textbox width150" type="text" name="module" value="" /></td>
 	</tr>
 	<tr>
-		<th>昵称</th>
-		<td><input class="easyui-textbox width150" type="text" name="nickname" value="" /></td>
+		<th>控制器</th>
+		<td><input class="easyui-textbox width150" type="text" name="controller" value="" /></td>
+		<th>方法</th>
+		<td><input class="easyui-textbox width150" type="text" name="action" value="" /></td>
 	</tr>
 	<tr>
-		<th>联系方式</th>
-		<td><input class="easyui-textbox width150" type="text" name="contact" value="" /></td>
+		<th>分组</th>
+		<td><input class="easyui-textbox width150" type="text" name="group" value="" /></td>
+		<th>标签</th>
+		<td><input class="easyui-textbox width150" type="text" name="key" value="" /></td>
 	</tr>
 	<tr>
-		<th>IP地址</th>
-		<td><input class="easyui-textbox width150" type="text" name="ip" value="" /></td>
-	</tr>
-	<tr>
-		<th>账号</th>
-		<td><input class="easyui-textbox width150" type="text" name="serial" value="" /></td>
+		<th>展示效果</th>
+		<td>
+			<select class="easyui-combobox" name="effect" data-options="editable:false">
+				[@getMapOption map=effectMap default="" tips="全部" /]
+			</select>
+		</td>
+		<th>状态</th>
+		<td>
+			<select class="easyui-combobox" name="status" data-options="editable:false">
+				[@getMapOption map=statusMap default="" tips="全部" /]
+			</select>
+		</td>
 	</tr>
 </table>
 </form>
@@ -116,13 +129,6 @@ $(function () {
 </div>
 <script type="text/javascript">
 $(function () {
-	$('input[name="typeId"]').combotree({
-		checkbox : true,
-		url : '${_BASE_.url("noteType", "list")}',
-		loadFilter : function (data, parent) {
-			return Web_formatComboTree(data.rows, [], '全部', 'name');
-		}
-	});
 	var $searchDialog = $('#js-search-dialog');
 	$('.js-control-search').bind('click', function () {
 		$searchDialog.dialog({

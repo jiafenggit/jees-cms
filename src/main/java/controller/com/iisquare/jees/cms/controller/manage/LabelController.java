@@ -26,6 +26,8 @@ public class LabelController extends PermitController {
 	public LabelService labelService;
 	
 	public String layoutAction() throws Exception {
+		assign("statusMap", labelService.getStatusMap());
+		assign("effectMap", labelService.getEffectMap());
 		return displayTemplate();
 	}
 	
@@ -64,6 +66,7 @@ public class LabelController extends PermitController {
 		}
 		assign("info", info);
 		assign("statusMap", labelService.getStatusMap());
+		assign("effectMap", labelService.getEffectMap());
 		return displayTemplate();
 	}
 	
@@ -76,7 +79,28 @@ public class LabelController extends PermitController {
 			persist = labelService.getById(id);
 			if(DPUtil.empty(persist)) return displayMessage(3001, "信息不存在，请刷新后再试");
 		}
-		
+		String name = ValidateUtil.filterSimpleString(get("name"), true, 1, 64, null);
+		if(DPUtil.empty(name)) return displayMessage(3002, "名称参数错误");
+		persist.setName(name);
+		String module = ValidateUtil.filterSimpleString(get("module"), true, 0, 64, null);
+		if(null == module) return displayMessage(3002, "模块参数错误");
+		persist.setModule(module);
+		String controller = ValidateUtil.filterSimpleString(get("controller"), true, 0, 64, null);
+		if(null == controller) return displayMessage(3002, "控制器参数错误");
+		persist.setController(controller);
+		String action = ValidateUtil.filterSimpleString(get("action"), true, 0, 64, null);
+		if(null == action) return displayMessage(3002, "方法参数错误");
+		persist.setAction(action);
+		String group = ValidateUtil.filterSimpleString(get("group"), true, 0, 64, null);
+		if(null == group) return displayMessage(3002, "标签组参数错误");
+		persist.setGroup(group);
+		String key = ValidateUtil.filterSimpleString(get("key"), true, 1, 64, null);
+		if(null == key) return displayMessage(3002, "标签名称参数错误");
+		persist.setKey(key);
+		if(!DPUtil.empty(labelService.getContentMap(_MODULE_, _CONTROLLER_, _ACTION_, null, key, false))) {
+			return displayMessage(3006, "对应标签已存在");
+		}
+		persist.setRemark(get("remark"));
 		persist.setSort(ValidateUtil.filterInteger(get("sort"), true, null, null, null));
 		String status = get("status");
 		if(ValidateUtil.isNull(status, true)) return displayMessage(3003, "请选择记录状态");

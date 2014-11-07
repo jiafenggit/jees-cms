@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50525
 File Encoding         : 65001
 
-Date: 2014-11-07 17:18:06
+Date: 2014-11-07 17:38:03
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -131,7 +131,7 @@ CREATE TABLE `cms_label` (
   `module` varchar(64) NOT NULL DEFAULT '',
   `controller` varchar(64) NOT NULL DEFAULT '',
   `action` varchar(64) NOT NULL DEFAULT '',
-  `type` varchar(64) NOT NULL DEFAULT '',
+  `group` varchar(64) NOT NULL DEFAULT '',
   `key` varchar(64) NOT NULL DEFAULT '',
   `effect` varchar(32) NOT NULL DEFAULT '',
   `content` text,

@@ -64,10 +64,10 @@ public class LabelService extends ServiceBase {
 			sb.append(" and action = :action");
 			paramMap.put("action", action);
 		}
-		Object type = map.get("type");
-		if(!DPUtil.empty(type)) {
-			sb.append(" and type = :type");
-			paramMap.put("type", type);
+		Object group = map.get("group");
+		if(!DPUtil.empty(group)) {
+			sb.append(" and group = :group");
+			paramMap.put("group", group);
 		}
 		Object key = map.get("key");
 		if(!DPUtil.empty(key)) {
@@ -94,6 +94,50 @@ public class LabelService extends ServiceBase {
 		if(!DPUtil.empty(orderBy)) append = DPUtil.stringConcat(" order by ", orderBy);
 		List<Label> list = labelDao.getList(where, operators, append, page, pageSize);
 		return list;
+	}
+	
+	/**
+	 * 获取页面标签记录
+	 * @param module 模块名称
+	 * @param controller 控制器名称
+	 * @param action 方法名称
+	 * @param group 标签组，仅用于筛选
+	 * @param key 标签名称，在同一页面中唯一
+	 * @param bConvert 转换标签内容，生成数据
+	 * @return
+	 */
+	public Map<String, Object> getContentMap(String module, String controller, String action, String group, String key, boolean bConvert) {
+		StringBuilder sb = new StringBuilder("select * from ")
+			.append(labelDao.tableName()).append(" where 1 = 1");
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		if(!DPUtil.empty(module)) {
+			sb.append(" and module = :module");
+			paramMap.put("module", module);
+		}
+		if(!DPUtil.empty(controller)) {
+			sb.append(" and controller = :controller");
+			paramMap.put("controller", controller);
+		}
+		if(!DPUtil.empty(action)) {
+			sb.append(" and action = :action");
+			paramMap.put("action", action);
+		}
+		if(!DPUtil.empty(group)) {
+			sb.append(" and group = :group");
+			paramMap.put("group", group);
+		}
+		if(!DPUtil.empty(key)) {
+			sb.append(" and key = :key");
+			paramMap.put("key", key);
+		}
+		List<Map<String, Object>> rows = labelDao.npJdbcTemplate().queryForList(sb.toString(), paramMap);
+		Map<String, Object> contentMap = new HashMap<String, Object>(DPUtil.parseInt(rows.size() / 0.75f));
+		for (Map<String, Object> map : rows) {
+			String labelKey = DPUtil.parseString(map.get("key"));
+			Object labelContent = bConvert ? map.get("content") : map.get("content"); // 转换功能待处理
+			contentMap.put(labelKey, labelContent);
+		}
+		return contentMap;
 	}
 	
 	public Label getById(Object id) {

@@ -11,8 +11,8 @@ public class Label {
 	private String module; // 模块名称
 	private String controller; // 控制器名称
 	private String action; // 方法名称
-	private String type; // 分类标示
-	private String key; // 标签名称
+	private String group; // 标签组，仅用于筛选，通过逻辑判断，可仅获取特定组中的标签记录
+	private String key; // 标签名称，在同一页面中不可重复
 	private String effect; // 展示效果
 	private String content; // 变量值
 	private String remark; // 备注
@@ -63,12 +63,12 @@ public class Label {
 		this.action = action;
 	}
 
-	public String getType() {
-		return type;
+	public String getGroup() {
+		return group;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setGroup(String group) {
+		this.group = group;
 	}
 
 	public String getKey() {
