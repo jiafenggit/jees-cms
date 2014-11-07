@@ -7,31 +7,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import com.iisquare.jees.cms.domain.PartnerType;
-import com.iisquare.jees.cms.service.PartnerTypeService;
+import com.iisquare.jees.cms.domain.NoteType;
+import com.iisquare.jees.cms.service.NoteTypeService;
 import com.iisquare.jees.core.component.PermitController;
 import com.iisquare.jees.framework.util.DPUtil;
 import com.iisquare.jees.framework.util.ServiceUtil;
 import com.iisquare.jees.framework.util.ValidateUtil;
 
 /**
- * 友情链接类型管理
+ * 留言类型管理
  * @author Ouyang <iisquare@163.com>
  *
  */
 @Controller
 @Scope("prototype")
-public class PartnerTypeController extends PermitController {
+public class NoteTypeController extends PermitController {
 	
 	@Autowired
-	public PartnerTypeService partnerTypeService;
+	public NoteTypeService noteTypeService;
 	
 	public String layoutAction() throws Exception {
 		return displayTemplate();
 	}
 	
 	public String listAction () throws Exception {
-		List<Map<String, Object>> list = partnerTypeService.getList("*", "sort desc", 1, 0);
+		List<Map<String, Object>> list = noteTypeService.getList("*", "sort desc", 1, 0);
 		list = ServiceUtil.formatRelation(list, 0);
 		assign("total", list.size());
 		assign("rows", DPUtil.collectionToArray(list));
@@ -40,7 +40,7 @@ public class PartnerTypeController extends PermitController {
 	
 	public String showAction() throws Exception {
 		Integer id = ValidateUtil.filterInteger(get("id"), true, 0, null, null);
-		Map<String, Object> info = partnerTypeService.getById(id, true);
+		Map<String, Object> info = noteTypeService.getById(id, true);
 		if(null == info) {
 			return displayInfo("信息不存在，请刷新后再试", null);
 		}
@@ -50,26 +50,26 @@ public class PartnerTypeController extends PermitController {
 	
 	public String editAction() throws Exception {
 		Integer id = ValidateUtil.filterInteger(get("id"), true, 0, null, null);
-		PartnerType info;
+		NoteType info;
 		if(DPUtil.empty(id)) {
-			info = new PartnerType();
+			info = new NoteType();
 			info.setParentId(ValidateUtil.filterInteger(get("parentId"), true, 0, null, null));
 		} else {
-			info = partnerTypeService.getById(id);
+			info = noteTypeService.getById(id);
 			if(DPUtil.empty(info)) return displayInfo("信息不存在，请刷新后再试", null);
 		}
 		assign("info", info);
-		assign("statusMap", partnerTypeService.getStatusMap());
+		assign("statusMap", noteTypeService.getStatusMap());
 		return displayTemplate();
 	}
 	
 	public String saveAction() throws Exception {
 		Integer id = ValidateUtil.filterInteger(get("id"), true, 0, null, null);
-		PartnerType persist;
+		NoteType persist;
 		if(DPUtil.empty(id)) {
-			persist = new PartnerType();
+			persist = new NoteType();
 		} else {
-			persist = partnerTypeService.getById(id);
+			persist = noteTypeService.getById(id);
 			if(DPUtil.empty(persist)) return displayMessage(3001, "信息不存在，请刷新后再试");
 		}
 		persist.setParentId(ValidateUtil.filterInteger(get("parentId"), true, 0, null, null));
@@ -87,9 +87,9 @@ public class PartnerTypeController extends PermitController {
 		if(DPUtil.empty(persist.getId())) {
 			persist.setCreateId(currentMember.getId());
 			persist.setCreateTime(time);
-			result = partnerTypeService.insert(persist);
+			result = noteTypeService.insert(persist);
 		} else {
-			result = partnerTypeService.update(persist);
+			result = noteTypeService.update(persist);
 		}
 		if(result > 0) {
 			return displayMessage(0, url("layout"));
@@ -100,7 +100,7 @@ public class PartnerTypeController extends PermitController {
 	
 	public String deleteAction() throws Exception {
 		Object[] idArray = DPUtil.explode(get("ids"), ",", " ", true);
-		int result = partnerTypeService.delete(idArray);
+		int result = noteTypeService.delete(idArray);
 		if(-1 == result) return displayInfo("该节点拥有下级节点，不允许删除", null);
 		if(-2 == result) return displayInfo("该节点拥有从属通知公告，不允许删除", null);
 		if(result > 0) {

@@ -15,7 +15,7 @@ import com.iisquare.jees.framework.util.ServiceUtil;
 import com.iisquare.jees.framework.util.ValidateUtil;
 
 /**
- * 通知公告类型管理
+ * 栏目管理
  * @author Ouyang <iisquare@163.com>
  *
  */
