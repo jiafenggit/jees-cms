@@ -89,9 +89,9 @@ public class PartnerController extends PermitController {
 		String name = ValidateUtil.filterSimpleString(get("name"), true, 1, 64, null);
 		if(DPUtil.empty(name)) return displayMessage(3002, "名称参数错误");
 		persist.setName(name);
-		String typeId = get("typeId");
-		if(ValidateUtil.isNull(typeId, true)) return displayMessage(3003, "请选择所属类型");
-		persist.setTypeId(ValidateUtil.filterInteger(typeId, true, 1, null, 0));
+		int typeId = ValidateUtil.filterInteger(get("typeId"), true, 0, null, 0);
+		if(DPUtil.empty(typeId)) return displayMessage(3003, "请选择所属类型");
+		persist.setTypeId(typeId);
 		String goal = ValidateUtil.filterItem(get("goal"), false,
 				DPUtil.collectionToStringArray(partnerService.getGoalMap().keySet()), null);
 		if(null == goal) return displayMessage(3002, "打开方式参数错误");

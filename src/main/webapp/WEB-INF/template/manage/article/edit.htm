@@ -98,7 +98,9 @@ $(function () {
 	$('input[name="columnId"]').combotree({
 		url : '${_BASE_.url("column", "list")}',
 		loadFilter : function (data, parent) {
-			return Web_formatComboTree(data.rows, [], '请选择所属栏目', 'name');
+			return Web_formatComboTree(data.rows, [], '请选择所属栏目', 'name', null, null, function (value, row, index) {
+				return value + ((row.role_column_power && 1 != row.role_column_power.publish_enable) ? ' - 无权限' : '');
+			});
 		}
 	});
 	var editor = KindEditor.create('textarea[name="content"]');

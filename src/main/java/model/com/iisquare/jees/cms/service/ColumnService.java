@@ -121,6 +121,24 @@ public class ColumnService extends ServiceBase {
 		return list;
 	}
 	
+	/**
+	 * 根据角色主键值获取对应的栏目主键值数组
+	 * @param roleIdArray 角色主键值
+	 * @param withListEnable 获取具备列表显示权限的栏目
+	 * @param withPublishEnable 获取具备发布文章权限的栏目
+	 * @return
+	 */
+	public List<Object> getIdArrayByRoleId(Object[] roleIdArray, boolean withListEnable, boolean withPublishEnable) {
+		String roleIdStr = SqlUtil.buildSafeWhere(",", roleIdArray);
+		if(DPUtil.empty(roleIdStr)) return new ArrayList<Object>(0);
+		StringBuilder sb = new StringBuilder("select column_id from ").append(roleColumnRelDao.tableName())
+				.append(" where role_id in (").append(roleIdStr).append(")");
+		if(withListEnable) sb.append(" and list_enable = 1");
+		if(withPublishEnable) sb.append(" and publish_enable = 1");
+		List<Map<String, Object>> list = roleColumnRelDao.queryForList(sb.toString());
+		return ServiceUtil.getFieldValues(list, "column_id");
+	}
+	
 	public Column getById(Object id) {
 		return columnDao.getById(id);
 	}

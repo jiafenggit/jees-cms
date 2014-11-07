@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 
 import com.iisquare.jees.cms.domain.Article;
 import com.iisquare.jees.cms.service.ArticleService;
+import com.iisquare.jees.cms.service.ColumnService;
 import com.iisquare.jees.core.component.PermitController;
 import com.iisquare.jees.core.util.UrlUtil;
 import com.iisquare.jees.framework.util.DPUtil;
@@ -24,6 +25,8 @@ import com.iisquare.jees.framework.util.ValidateUtil;
 public class ArticleController extends PermitController {
 	@Autowired
 	public ArticleService articleService;
+	@Autowired
+	public ColumnService columnService;
 	
 	public String layoutAction() throws Exception {
 		assign("statusMap", articleService.getStatusMap(false));
@@ -87,9 +90,12 @@ public class ArticleController extends PermitController {
 			persist = articleService.getById(id);
 			if(DPUtil.empty(persist)) return displayMessage(3001, "信息不存在，请刷新后再试");
 		}
-		String columnId = get("columnId");
-		if(ValidateUtil.isNull(columnId, true)) return displayMessage(3003, "请选择所属栏目");
-		persist.setColumnId(ValidateUtil.filterInteger(columnId, true, 1, null, 0));
+		int columnId = ValidateUtil.filterInteger(get("columnId"), true, 0, null, 0);
+		if(DPUtil.empty(columnId)) return displayMessage(3003, "请选择所属栏目");
+		List<Object> columnIdArray = columnService.getIdArrayByRoleId(
+				roleService.getIdListByMemberId(currentMember.getId(), null), false, true);
+		if(!columnIdArray.contains(columnId)) return displayMessage(403, "权限不足，无该栏目发布权限");
+		persist.setColumnId(columnId);
 		String title = ValidateUtil.filterSimpleString(get("title"), true, 1, 64, null);
 		if(DPUtil.empty(title)) return displayMessage(3002, "标题参数错误");
 		persist.setTitle(title);
