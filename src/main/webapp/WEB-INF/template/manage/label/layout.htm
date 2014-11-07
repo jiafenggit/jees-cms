@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+[#include "../../base/public/common.inc.htm"]
+[#include "../../base/public/resource.inc.htm"]
+<table class="js-list-table"></table>
+<div id="toolbar">
+	[#if _BASE_.hasPermit("edit")]<a href="${_BASE_.url("edit")}" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">添加</a>[/#if]
+	[#if _BASE_.hasPermit("delete")]<a href="javascript:void(0);" class="easyui-linkbutton js-control-delete" data-options="iconCls:'icon-remove',plain:true">批量删除</a>[/#if]
+	[#if _BASE_.hasPermit("noteType", "layout")]<a href="${_BASE_.url("noteType", "layout")}" class="easyui-linkbutton" data-options="iconCls:'icon-type',plain:true">类型管理</a>[/#if]
+	<a href="javascript:void(0);" class="easyui-linkbutton js-control-search" data-options="iconCls:'icon-search',plain:true">搜索</a>
+</div>
+<script type="text/javascript">
+$(function () {
+	$('.js-list-table').datagrid({
+		url : '${_BASE_.url("list")}',
+		pagination : true,
+		idField : 'id',
+		toolbar : '#toolbar',
+		rownumbers : true,
+		fitcolumns : true,
+		fit : true,
+		nowrap : true,
+		singleSelect : true,
+		checkOnSelect : false,
+		selectOnCheck : false,
+		columns:[[
+			{field:'id',checkbox:true},
+			{field:'show_id',title:'ID',formatter:function (value, row, index) {
+				return row.id;
+			}},
+			{field:'type_id',title:'分类',formatter:function (value, row, index) {
+				return row.type_id_rel ? row.type_id_rel.name : row.type_id;
+			}},
+			{field:'sort',title:'排序'},
+			{field:'nickname',title:'称呼'},
+			{field:'ip',title:'IP'},
+			{field:'status_text',title:'状态'},
+			{field:'create_id',title:'创建者',formatter:function (value, row, index) {
+				if(!row.create_id_rel) return '';
+				return '[' + row.create_id_rel.serial + ']' + row.create_id_rel.name;
+			}},
+			{field:'create_time',title:'创建时间',formatter:function (value, row, index) {
+				return Web_formatDateTime(value);
+			}},
+			{field:'update_id',title:'修改者',formatter:function (value, row, index) {
+				if(!row.update_id_rel) return '';
+				return '[' + row.update_id_rel.serial + ']' + row.update_id_rel.name;
+			}},
+			{field:'update_time',title:'修改时间',formatter:function (value, row, index) {
+				return Web_formatDateTime(value);
+			}},
+			{field:'operate',title:'操作',formatter:function (value, row, index) {
+				return '[#if _BASE_.hasPermit("show")]<a href="${_BASE_.url("show")}?id='
+					+ row.id + '" class="js-list-button" data-options="iconCls:\'icon-detail\'">查看</a>[/#if]'
+					+ '[#if _BASE_.hasPermit("edit")]<a href="${_BASE_.url("edit")}?id='
+					+ row.id + '" class="js-list-button" data-options="iconCls:\'icon-edit\'">修改</a>[/#if]'
+					+ '[#if _BASE_.hasPermit("delete")]<a href="${_BASE_.url("delete")}?ids='
+					+ row.id + '" class="js-list-button" data-options="iconCls:\'icon-remove\'">删除</a>[/#if]';
+			}}
+		]],
+		onLoadSuccess : function (data) {
+			$('.js-list-button').linkbutton({plain : true});
+			$(this).datagrid('autoSizeColumn', 'operate');
+		}
+	});
+	
+	$('.js-control-delete').bind('click', function () {
+		var rows = $('.js-list-table').datagrid('getChecked');
+		var ids = '', size = rows.length;
+		if(size < 1) {
+			Web_alertInfo('请选择要删除的记录！');
+			return ;
+		}
+		for(var i = 0; i < size; i++) {
+			var row = rows[i];
+			ids += row.id;
+			if(i + 1 < size) {
+				ids += ',';
+			}
+		}
+		var url = '${_BASE_.url("delete")}?ids=' + ids;
+		Web_redirectPage(url);
+	});
+});
+</script>
+<div class="hidden">
+<div id="js-search-dialog" style="width:255px;height:225px" data-options="buttons:'#js-search-button',modal:true,resizable:true">
+<form id="searchForm" method="post" action="">
+<table align="center" class="table-horizontal tr-height25">
+	<tr>
+		<th>分类</th>
+		<td><input name="typeId" class="js-select-type width150" value="" /></td>
+	</tr>
+	<tr>
+		<th>昵称</th>
+		<td><input class="easyui-textbox width150" type="text" name="nickname" value="" /></td>
+	</tr>
+	<tr>
+		<th>联系方式</th>
+		<td><input class="easyui-textbox width150" type="text" name="contact" value="" /></td>
+	</tr>
+	<tr>
+		<th>IP地址</th>
+		<td><input class="easyui-textbox width150" type="text" name="ip" value="" /></td>
+	</tr>
+	<tr>
+		<th>账号</th>
+		<td><input class="easyui-textbox width150" type="text" name="serial" value="" /></td>
+	</tr>
+</table>
+</form>
+</div>
+<div id="js-search-button">
+	<a href="javascript:void(0);" class="easyui-linkbutton js-control-ok" data-options="iconCls:'icon-search'">搜索</a>
+	<a href="javascript:void(0);" class="easyui-linkbutton js-control-cancel" data-options="iconCls:'icon-cancel'">取消</a>
+</div>
+</div>
+<script type="text/javascript">
+$(function () {
+	$('input[name="typeId"]').combotree({
+		checkbox : true,
+		url : '${_BASE_.url("noteType", "list")}',
+		loadFilter : function (data, parent) {
+			return Web_formatComboTree(data.rows, [], '全部', 'name');
+		}
+	});
+	var $searchDialog = $('#js-search-dialog');
+	$('.js-control-search').bind('click', function () {
+		$searchDialog.dialog({
+			title : '筛选条件',
+			iconCls : 'icon-search'
+		});
+	});
+	$('#js-search-button').find('.js-control-ok').unbind('click.action').bind('click.action' ,function () {
+		$('.js-list-table').datagrid('load', $('#searchForm').form('getData'));
+		$searchDialog.dialog('close');
+	});
+	$('#js-search-button').find('.js-control-cancel').unbind('click.action').bind('click.action' ,function () {
+		$searchDialog.dialog('close');
+	});
+});
+</script>

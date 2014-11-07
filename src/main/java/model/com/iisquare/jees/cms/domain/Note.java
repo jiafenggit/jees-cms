@@ -12,7 +12,7 @@ public class Note {
 	private String contact; // 联系方式
 	private String ip; // 创建者IP
 	private String content; // 内容
-	private Long sort; // 排序（从高到低）
+	private Integer sort; // 排序（从高到低）
 	private Integer status; // 状态
 	private Integer createId; // 添加者
 	private Long createTime; // 添加时间
@@ -67,11 +67,11 @@ public class Note {
 		this.content = content;
 	}
 
-	public Long getSort() {
+	public Integer getSort() {
 		return sort;
 	}
 
-	public void setSort(Long sort) {
+	public void setSort(Integer sort) {
 		this.sort = sort;
 	}
 

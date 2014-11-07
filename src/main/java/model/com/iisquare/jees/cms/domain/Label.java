@@ -1,26 +1,28 @@
 package com.iisquare.jees.cms.domain;
 
 /**
- * 友情链接实体类
+ * 页面标签管理
  * @author Ouyang <iisquare@163.com>
  *
  */
-public class Partner {
+public class Label {
 	private Integer id; // 主键
 	private String name; // 名称
-	private Integer typeId; // 分类主键
-	private String goal; // 打开方式
-	private String url; // 链接地址
-	private String description; // 介绍
-	private String logo; // 网站图标
+	private String module; // 模块名称
+	private String controller; // 控制器名称
+	private String action; // 方法名称
+	private String type; // 分类标示
+	private String key; // 标签名称
+	private String effect; // 展示效果
+	private String content; // 变量值
 	private String remark; // 备注
 	private Integer sort; // 排序（从高到低）
 	private Integer status; // 状态
-	private Integer createId; // 添加者
+	private Integer createId; // 创建者
 	private Long createTime; // 添加时间
 	private Integer updateId; // 修改者
 	private Long updateTime; // 修改时间
-
+	
 	public Integer getId() {
 		return id;
 	}
@@ -37,44 +39,60 @@ public class Partner {
 		this.name = name;
 	}
 
-	public Integer getTypeId() {
-		return typeId;
+	public String getModule() {
+		return module;
 	}
 
-	public void setTypeId(Integer typeId) {
-		this.typeId = typeId;
+	public void setModule(String module) {
+		this.module = module;
 	}
 
-	public String getGoal() {
-		return goal;
+	public String getController() {
+		return controller;
 	}
 
-	public void setGoal(String goal) {
-		this.goal = goal;
+	public void setController(String controller) {
+		this.controller = controller;
 	}
 
-	public String getUrl() {
-		return url;
+	public String getAction() {
+		return action;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
+	public void setAction(String action) {
+		this.action = action;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getType() {
+		return type;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setType(String type) {
+		this.type = type;
 	}
 
-	public String getLogo() {
-		return logo;
+	public String getKey() {
+		return key;
 	}
 
-	public void setLogo(String logo) {
-		this.logo = logo;
+	public void setKey(String key) {
+		this.key = key;
+	}
+
+	public String getEffect() {
+		return effect;
+	}
+
+	public void setEffect(String effect) {
+		this.effect = effect;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 	public String getRemark() {
@@ -133,7 +151,7 @@ public class Partner {
 		this.updateTime = updateTime;
 	}
 
-	public Partner() {}
+	public Label() {}
 
 	@Override
 	public int hashCode() {
@@ -151,7 +169,7 @@ public class Partner {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Partner other = (Partner) obj;
+		Label other = (Label) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

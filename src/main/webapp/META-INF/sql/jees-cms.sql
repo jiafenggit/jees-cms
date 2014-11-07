@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50525
 File Encoding         : 65001
 
-Date: 2014-11-07 15:19:48
+Date: 2014-11-07 17:18:06
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -120,6 +120,34 @@ CREATE TABLE `cms_icon` (
 -- Records of cms_icon
 -- ----------------------------
 INSERT INTO `cms_icon` VALUES ('1', '系统图标', '0', 'api/jQuery/themes/icons/ok.png', '0', '1', '1', '1414550792111', '1', '1414551076574');
+
+-- ----------------------------
+-- Table structure for `cms_label`
+-- ----------------------------
+DROP TABLE IF EXISTS `cms_label`;
+CREATE TABLE `cms_label` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) NOT NULL DEFAULT '',
+  `module` varchar(64) NOT NULL DEFAULT '',
+  `controller` varchar(64) NOT NULL DEFAULT '',
+  `action` varchar(64) NOT NULL DEFAULT '',
+  `type` varchar(64) NOT NULL DEFAULT '',
+  `key` varchar(64) NOT NULL DEFAULT '',
+  `effect` varchar(32) NOT NULL DEFAULT '',
+  `content` text,
+  `remark` text,
+  `sort` int(11) NOT NULL DEFAULT '0',
+  `status` tinyint(4) NOT NULL DEFAULT '0',
+  `create_id` int(11) NOT NULL DEFAULT '0',
+  `create_time` bigint(20) NOT NULL DEFAULT '0',
+  `update_id` int(11) NOT NULL DEFAULT '0',
+  `update_time` bigint(20) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of cms_label
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `cms_log`
@@ -333,7 +361,7 @@ CREATE TABLE `cms_note` (
   `contact` varchar(255) NOT NULL DEFAULT '',
   `ip` varchar(64) NOT NULL DEFAULT '',
   `content` text,
-  `sort` bigint(20) NOT NULL DEFAULT '0',
+  `sort` int(11) NOT NULL DEFAULT '0',
   `status` tinyint(4) NOT NULL DEFAULT '0',
   `create_id` int(11) NOT NULL DEFAULT '0',
   `create_time` bigint(20) NOT NULL DEFAULT '0',
@@ -459,7 +487,7 @@ CREATE TABLE `cms_partner` (
   `description` tinytext,
   `logo` tinytext,
   `remark` text,
-  `sort` bigint(20) NOT NULL DEFAULT '0',
+  `sort` int(11) NOT NULL DEFAULT '0',
   `status` tinyint(4) NOT NULL DEFAULT '0',
   `create_id` int(11) NOT NULL DEFAULT '0',
   `create_time` bigint(20) NOT NULL DEFAULT '0',

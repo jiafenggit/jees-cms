@@ -90,7 +90,7 @@ public class NoteController extends PermitController {
 		String content = get("content");
 		if(content.length() < 20) return displayMessage(3002, "您输入的内容太少了，请详细描述");
 		persist.setContent(content);
-		persist.setSort(ValidateUtil.filterLong(get("sort"), true, null, null, null));
+		persist.setSort(ValidateUtil.filterInteger(get("sort"), true, null, null, null));
 		String status = get("status");
 		if(ValidateUtil.isNull(status, true)) return displayMessage(3003, "请选择记录状态");
 		persist.setStatus(ValidateUtil.filterInteger(status, true, null, null, null));
