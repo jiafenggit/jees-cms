@@ -76,6 +76,7 @@ public class UploadController extends PermitController {
 		long maxSize = 1000000; // 允许上传大小
 		HashMap<String, String> extMap = new HashMap<String, String>(); // 允许上传的文件扩展名
 		extMap.put("image", "gif,jpg,jpeg,png,bmp");
+		extMap.put("logo", "gif,jpg,jpeg,png,bmp");
 		extMap.put("flash", "swf,flv");
 		extMap.put("media", "swf,flv,mp3,wav,wma,wmv,mid,avi,mpg,asf,rm,rmvb");
 		extMap.put("file", "doc,docx,xls,xlsx,ppt,htm,html,txt,zip,rar,gz,bz2");

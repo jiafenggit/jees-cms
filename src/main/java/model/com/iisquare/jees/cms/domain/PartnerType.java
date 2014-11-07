@@ -1,27 +1,21 @@
 package com.iisquare.jees.cms.domain;
 
 /**
- * 文章实体类
- * @author Ouyang <iisquare@163.com>
+ * 友情链接类型实体类
+ * @author Ouyang<iisquare@163.com>
  *
  */
-public class Article {
+public class PartnerType {
 	private Integer id; // 主键
-	private String title; // 标题
-	private Integer columnId; // 栏目主键
-	private String goal; // 打开方式
-	private String url; // 链接地址
-	private String keywords; // 页面关键词
-	private String description; // 页面描述
-	private String logo; // 预览图片
-	private String content; // 内容
-	private Long sort; // 排序（从高到低）
+	private String name; // 名称
+	private Integer parentId; // 父级
+	private Integer sort; // 排序（从高到低）
 	private Integer status; // 状态
 	private Integer createId; // 添加者
 	private Long createTime; // 添加时间
 	private Integer updateId; // 修改者
 	private Long updateTime; // 修改时间
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -30,75 +24,27 @@ public class Article {
 		this.id = id;
 	}
 
-	public String getTitle() {
-		return title;
+	public String getName() {
+		return name;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public Integer getColumnId() {
-		return columnId;
+	public Integer getParentId() {
+		return parentId;
 	}
 
-	public void setColumnId(Integer columnId) {
-		this.columnId = columnId;
+	public void setParentId(Integer parentId) {
+		this.parentId = parentId;
 	}
 
-	public String getGoal() {
-		return goal;
-	}
-
-	public void setGoal(String goal) {
-		this.goal = goal;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
-	public String getKeywords() {
-		return keywords;
-	}
-
-	public void setKeywords(String keywords) {
-		this.keywords = keywords;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getLogo() {
-		return logo;
-	}
-
-	public void setLogo(String logo) {
-		this.logo = logo;
-	}
-
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
-	}
-
-	public Long getSort() {
+	public Integer getSort() {
 		return sort;
 	}
 
-	public void setSort(Long sort) {
+	public void setSort(Integer sort) {
 		this.sort = sort;
 	}
 
@@ -142,7 +88,7 @@ public class Article {
 		this.updateTime = updateTime;
 	}
 
-	public Article() {}
+	public PartnerType() {}
 
 	@Override
 	public int hashCode() {
@@ -160,7 +106,7 @@ public class Article {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Article other = (Article) obj;
+		PartnerType other = (PartnerType) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -168,5 +114,5 @@ public class Article {
 			return false;
 		return true;
 	}
-	
+
 }

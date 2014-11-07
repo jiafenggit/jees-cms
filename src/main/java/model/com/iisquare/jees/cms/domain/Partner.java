@@ -1,27 +1,26 @@
 package com.iisquare.jees.cms.domain;
 
 /**
- * 文章实体类
+ * 友情链接实体类
  * @author Ouyang <iisquare@163.com>
  *
  */
-public class Article {
+public class Partner {
 	private Integer id; // 主键
-	private String title; // 标题
-	private Integer columnId; // 栏目主键
+	private String name; // 名称
+	private Integer typeId; // 分类主键
 	private String goal; // 打开方式
 	private String url; // 链接地址
-	private String keywords; // 页面关键词
-	private String description; // 页面描述
-	private String logo; // 预览图片
-	private String content; // 内容
+	private String description; // 介绍
+	private String logo; // 网站图标
+	private String remark; // 备注
 	private Long sort; // 排序（从高到低）
 	private Integer status; // 状态
 	private Integer createId; // 添加者
 	private Long createTime; // 添加时间
 	private Integer updateId; // 修改者
 	private Long updateTime; // 修改时间
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -30,20 +29,20 @@ public class Article {
 		this.id = id;
 	}
 
-	public String getTitle() {
-		return title;
+	public String getName() {
+		return name;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public Integer getColumnId() {
-		return columnId;
+	public Integer getTypeId() {
+		return typeId;
 	}
 
-	public void setColumnId(Integer columnId) {
-		this.columnId = columnId;
+	public void setTypeId(Integer typeId) {
+		this.typeId = typeId;
 	}
 
 	public String getGoal() {
@@ -62,14 +61,6 @@ public class Article {
 		this.url = url;
 	}
 
-	public String getKeywords() {
-		return keywords;
-	}
-
-	public void setKeywords(String keywords) {
-		this.keywords = keywords;
-	}
-
 	public String getDescription() {
 		return description;
 	}
@@ -86,12 +77,12 @@ public class Article {
 		this.logo = logo;
 	}
 
-	public String getContent() {
-		return content;
+	public String getRemark() {
+		return remark;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 
 	public Long getSort() {
@@ -142,7 +133,7 @@ public class Article {
 		this.updateTime = updateTime;
 	}
 
-	public Article() {}
+	public Partner() {}
 
 	@Override
 	public int hashCode() {
@@ -160,7 +151,7 @@ public class Article {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Article other = (Article) obj;
+		Partner other = (Partner) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

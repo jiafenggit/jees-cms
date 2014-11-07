@@ -6,12 +6,12 @@
 <input type="hidden" name="id" value="${info.id!0}" />
 <table cellspacing="1" cellpadding="0" class="table-line td-left td-break-word">
 	<tr>
-		<th>栏目</th>
-		<td><input name="columnId" class="js-select-type width300" value="${info.columnId!0}" /></td>
+		<th class="width130">名称</th>
+		<td><input class="easyui-textbox width250" type="text" name="name" data-options="required:true" value="${(info.name)!""}" /></td>
 	</tr>
 	<tr>
-		<th class="width130">标题</th>
-		<td><input class="easyui-textbox width300" type="text" name="title" data-options="required:true" value="${(info.title)!""}" /></td>
+		<th>类型</th>
+		<td><input name="typeId" class="js-select-type width250" value="${info.typeId!0}" /></td>
 	</tr>
 	<tr>
 		<th>打开方式</th>
@@ -26,11 +26,7 @@
 		<td><textarea name="url" class="easyui-textbox width300" data-options="multiline:true,height:80">${info.url!""}</textarea></td>
 	</tr>
 	<tr>
-		<th>关键词</th>
-		<td><input class="easyui-textbox width300" type="text" name="keywords" value="${(info.keywords)!""}" /></td>
-	</tr>
-	<tr>
-		<th>页面描述</th>
+		<th>描述</th>
 		<td><textarea name="description" class="easyui-textbox width300" data-options="multiline:true,height:80">${info.description!""}</textarea></td>
 	</tr>
 	<tr>
@@ -48,8 +44,8 @@
 	<tr>
 		<th>缩略图</th>
 		<td>
-			<div class="width213 border-solid-gray"><a href="${fullUrl}" target="_blank" title="点击查看大图"><img src="${fullUrl}" class="img js-image-show" width="213px" height="160px" /></a></div>
-			<div class="align-center width213 padding2"><a href="javascript:void(0);" class="easyui-linkbutton js-swf-upload-button" data-options="iconCls:'icon-upload',plain:'true'"><span id="js-swf-upload"></span></a></div>
+			<a href="${fullUrl}" target="_blank" title="点击查看大图"><img src="${fullUrl}" class="img js-image-show" width="88px" height="31px" /></a>
+			<a href="javascript:void(0);" class="easyui-linkbutton js-swf-upload-button" data-options="iconCls:'icon-upload',plain:'true'"><span id="js-swf-upload"></span></a>
 		</td>
 	</tr>
 	<tr>
@@ -57,8 +53,8 @@
 		<td><textarea name="logo" class="easyui-textbox js-image-url width300" data-options="multiline:true,height:80">${info.logo!""}</textarea></td>
 	</tr>
 	<tr>
-		<th>内容</th>
-		<td><textarea name="content" class="w668h280">${(info.content)!""}</textarea></td>
+		<th>备注</th>
+		<td><textarea name="remark" class="w668h280">${(info.remark)!""}</textarea></td>
 	</tr>
 	<tr>
 		<th>操作</th>
@@ -73,7 +69,7 @@
 [#include "../../base/upload/swfUpload.htm"]
 <script type="text/javascript">
 $(function () {
-	swfUploadSettings.post_params['dir'] = 'image';
+	swfUploadSettings.post_params['dir'] = 'logo';
 	swfUploadSettings.upload_success_handler = function (file, serverData) {
 		isSWFUploading = false;
 		try {
@@ -95,13 +91,13 @@ $(function () {
 		$('.js-image-show').parent().attr('href', url);
 	});
 
-	$('input[name="columnId"]').combotree({
-		url : '${_BASE_.url("column", "list")}',
+	$('input[name="typeId"]').combotree({
+		url : '${_BASE_.url("partnerType", "list")}',
 		loadFilter : function (data, parent) {
-			return Web_formatComboTree(data.rows, [], '请选择所属栏目', 'name');
+			return Web_formatComboTree(data.rows, [], '请选择所属类型', 'name');
 		}
 	});
-	var editor = KindEditor.create('textarea[name="content"]');
+	var editor = KindEditor.create('textarea[name="remark"]');
 	var $submitForm = $('#submitForm');
 	$submitForm.form({
 		success : function (data) {
@@ -114,7 +110,7 @@ $(function () {
 		}
 	});
 	$('#buttonOk').bind('click', function () {
-		$('textarea[name="content"]').html(editor.html());
+		$('textarea[name="remark"]').html(editor.html());
 		if($submitForm.form('validate')) $submitForm.form('submit');
 	});
 	$('#buttonCancel').bind('click', function () {

@@ -7,27 +7,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import com.iisquare.jees.cms.domain.Article;
-import com.iisquare.jees.cms.service.ArticleService;
+import com.iisquare.jees.cms.domain.Partner;
+import com.iisquare.jees.cms.service.PartnerService;
 import com.iisquare.jees.core.component.PermitController;
 import com.iisquare.jees.core.util.UrlUtil;
 import com.iisquare.jees.framework.util.DPUtil;
 import com.iisquare.jees.framework.util.ValidateUtil;
 
 /**
- * 文章管理
+ * 通知公告管理
  * @author Ouyang <iisquare@163.com>
  *
  */
 @Controller
 @Scope("prototype")
-public class ArticleController extends PermitController {
+public class PartnerController extends PermitController {
 	@Autowired
-	public ArticleService articleService;
+	public PartnerService partnerService;
 	
 	public String layoutAction() throws Exception {
-		assign("statusMap", articleService.getStatusMap(false));
-		assign("goalMap", articleService.getGoalMap());
+		assign("statusMap", partnerService.getStatusMap(false));
+		assign("goalMap", partnerService.getGoalMap());
 		return displayTemplate();
 	}
 	
@@ -35,7 +35,7 @@ public class ArticleController extends PermitController {
 	public String listAction () throws Exception {
 		int page = ValidateUtil.filterInteger(get("page"), true, 0, null, null);
 		int pageSize = ValidateUtil.filterInteger(get("rows"), true, 0, 500, null);
-		Map<Object, Object> map = articleService.search(parameterMap, "sort desc", page, pageSize);
+		Map<Object, Object> map = partnerService.search(parameterMap, "sort desc", page, pageSize);
 		List<Map<String, Object>> rows = (List<Map<String, Object>>) map.get("rows");
 		for (Map<String, Object> row : rows) {
 			row.put("fullUrl", UrlUtil.concat(_WEB_URL_, DPUtil.parseString(row.get("url"))));
@@ -47,12 +47,12 @@ public class ArticleController extends PermitController {
 	
 	public String showAction() throws Exception {
 		Integer id = ValidateUtil.filterInteger(get("id"), true, 0, null, null);
-		Map<String, Object> info = articleService.getById(id, true);
+		Map<String, Object> info = partnerService.getById(id, true);
 		if(null == info) {
 			return displayInfo("信息不存在，请刷新后再试", null);
 		}
 		String fullUrl = UrlUtil.concat(_WEB_URL_, DPUtil.parseString(info.get("logo")));
-		if(DPUtil.empty(fullUrl)) fullUrl = UrlUtil.concat(_WEB_URL_, articleService.defaultLogo);
+		if(DPUtil.empty(fullUrl)) fullUrl = UrlUtil.concat(_WEB_URL_, partnerService.defaultLogo);
 		assign("info", info);
 		assign("fullUrl", fullUrl);
 		return displayTemplate();
@@ -60,19 +60,18 @@ public class ArticleController extends PermitController {
 	
 	public String editAction() throws Exception {
 		Integer id = ValidateUtil.filterInteger(get("id"), true, 0, null, null);
-		Article info;
+		Partner info;
 		if(DPUtil.empty(id)) {
-			info = new Article();
-			info.setSort(System.currentTimeMillis());
+			info = new Partner();
 		} else {
-			info = articleService.getById(id);
+			info = partnerService.getById(id);
 			if(DPUtil.empty(info)) return displayInfo("信息不存在，请刷新后再试", null);
 		}
 		String fullUrl = UrlUtil.concat(_WEB_URL_, DPUtil.parseString(info.getLogo()));
-		if(DPUtil.empty(fullUrl)) fullUrl = UrlUtil.concat(_WEB_URL_, articleService.defaultLogo);
+		if(DPUtil.empty(fullUrl)) fullUrl = UrlUtil.concat(_WEB_URL_, partnerService.defaultLogo);
 		assign("info", info);
-		assign("statusMap", articleService.getStatusMap(false));
-		assign("goalMap", articleService.getGoalMap());
+		assign("statusMap", partnerService.getStatusMap(false));
+		assign("goalMap", partnerService.getGoalMap());
 		assign("fullUrl", fullUrl);
 		assign("sessionId", request.getSession().getId());
 		return displayTemplate();
@@ -80,29 +79,28 @@ public class ArticleController extends PermitController {
 	
 	public String saveAction() throws Exception {
 		Integer id = ValidateUtil.filterInteger(get("id"), true, 0, null, null);
-		Article persist;
+		Partner persist;
 		if(DPUtil.empty(id)) {
-			persist = new Article();
+			persist = new Partner();
 		} else {
-			persist = articleService.getById(id);
+			persist = partnerService.getById(id);
 			if(DPUtil.empty(persist)) return displayMessage(3001, "信息不存在，请刷新后再试");
 		}
-		String columnId = get("columnId");
-		if(ValidateUtil.isNull(columnId, true)) return displayMessage(3003, "请选择所属栏目");
-		persist.setColumnId(ValidateUtil.filterInteger(columnId, true, 1, null, 0));
-		String title = ValidateUtil.filterSimpleString(get("title"), true, 1, 64, null);
-		if(DPUtil.empty(title)) return displayMessage(3002, "标题参数错误");
-		persist.setTitle(title);
+		String name = ValidateUtil.filterSimpleString(get("name"), true, 1, 64, null);
+		if(DPUtil.empty(name)) return displayMessage(3002, "名称参数错误");
+		persist.setName(name);
+		String typeId = get("typeId");
+		if(ValidateUtil.isNull(typeId, true)) return displayMessage(3003, "请选择所属类型");
+		persist.setTypeId(ValidateUtil.filterInteger(typeId, true, 1, null, 0));
 		String goal = ValidateUtil.filterItem(get("goal"), false,
-				DPUtil.collectionToStringArray(articleService.getGoalMap().keySet()), null);
+				DPUtil.collectionToStringArray(partnerService.getGoalMap().keySet()), null);
 		if(null == goal) return displayMessage(3002, "打开方式参数错误");
 		persist.setGoal(goal);
 		persist.setUrl(DPUtil.trim(get("url")));
-		persist.setKeywords(DPUtil.trim(get("keywords")));
 		persist.setDescription(DPUtil.trim(get("description")));
 		persist.setLogo(DPUtil.trim(get("logo")));
-		String content = get("content");
-		persist.setContent(content);
+		String remark = get("remark");
+		persist.setRemark(remark);
 		persist.setSort(ValidateUtil.filterLong(get("sort"), true, null, null, null));
 		String status = get("status");
 		if(ValidateUtil.isNull(status, true)) return displayMessage(3003, "请选择记录状态");
@@ -114,9 +112,9 @@ public class ArticleController extends PermitController {
 		if(DPUtil.empty(persist.getId())) {
 			persist.setCreateId(currentMember.getId());
 			persist.setCreateTime(time);
-			result = articleService.insert(persist);
+			result = partnerService.insert(persist);
 		} else {
-			result = articleService.update(persist);
+			result = partnerService.update(persist);
 		}
 		if(result > 0) {
 			return displayMessage(0, url("layout"));
@@ -127,7 +125,7 @@ public class ArticleController extends PermitController {
 	
 	public String deleteAction() throws Exception {
 		Object[] idArray = DPUtil.explode(get("ids"), ",", " ", true);
-		int result = articleService.delete(idArray);
+		int result = partnerService.delete(idArray);
 		if(result > 0) {
 			return displayInfo("操作成功", url("layout"));
 		} else {
