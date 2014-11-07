@@ -48,7 +48,7 @@
 	<tr>
 		<th>缩略图</th>
 		<td>
-			<div class="width213 border-solid-gray"><img src="${fullUrl}" class="img js-image-show" width="213px" height="160px" /></div>
+			<div class="width213 border-solid-gray"><a href="${fullUrl}" target="_blank" title="点击查看大图"><img src="${fullUrl}" class="img js-image-show" width="213px" height="160px" /></a></div>
 			<div class="align-center width213 padding2"><a href="javascript:void(0);" class="easyui-linkbutton js-swf-upload-button" data-options="iconCls:'icon-upload',plain:'true'"><span id="js-swf-upload"></span></a></div>
 		</td>
 	</tr>
@@ -90,7 +90,9 @@ $(function () {
 	new SWFUpload(swfUploadSettings);
 
 	$('.js-image-url').bind('change', function () {
-		$('.js-image-show').attr('src', Web_fullUrl($(this).textbox('getValue')));
+		var url = Web_fullUrl($(this).textbox('getValue'));
+		$('.js-image-show').attr('src', url);
+		$('.js-image-show').parent().attr('href', url);
 	});
 
 	$('input[name="columnId"]').combotree({
