@@ -64,15 +64,15 @@ public class LabelService extends ServiceBase {
 			sb.append(" and action = :action");
 			paramMap.put("action", action);
 		}
-		Object group = map.get("group");
-		if(!DPUtil.empty(group)) {
-			sb.append(" and group = :group");
-			paramMap.put("group", group);
+		Object keyGroup = map.get("keyGroup");
+		if(!DPUtil.empty(keyGroup)) {
+			sb.append(" and key_group = :keyGroup");
+			paramMap.put("keyGroup", keyGroup);
 		}
-		Object key = map.get("key");
-		if(!DPUtil.empty(key)) {
-			sb.append(" and key = :key");
-			paramMap.put("key", key);
+		Object keyName = map.get("keyName");
+		if(!DPUtil.empty(keyName)) {
+			sb.append(" and key_name = :keyName");
+			paramMap.put("keyName", keyName);
 		}
 		Object effect = map.get("effect");
 		if(!DPUtil.empty(effect)) {
@@ -101,12 +101,14 @@ public class LabelService extends ServiceBase {
 	 * @param module 模块名称
 	 * @param controller 控制器名称
 	 * @param action 方法名称
-	 * @param group 标签组，仅用于筛选
-	 * @param key 标签名称，在同一页面中唯一
+	 * @param keyGroup 标签组，仅用于筛选
+	 * @param keyName 标签名称，在同一页面中唯一
+	 * @param bStatusNormal 仅获取正常状态的记录
 	 * @param bConvert 转换标签内容，生成数据
 	 * @return
 	 */
-	public Map<String, Object> getContentMap(String module, String controller, String action, String group, String key, boolean bConvert) {
+	public Map<String, Object> getContentMap(String module, String controller,
+			String action, String keyGroup, String keyName, boolean bStatusNormal, boolean bConvert) {
 		StringBuilder sb = new StringBuilder("select * from ")
 			.append(labelDao.tableName()).append(" where 1 = 1");
 		Map<String, Object> paramMap = new HashMap<String, Object>();
@@ -122,18 +124,21 @@ public class LabelService extends ServiceBase {
 			sb.append(" and action = :action");
 			paramMap.put("action", action);
 		}
-		if(!DPUtil.empty(group)) {
-			sb.append(" and group = :group");
-			paramMap.put("group", group);
+		if(!DPUtil.empty(keyGroup)) {
+			sb.append(" and key_group = :keyGroup");
+			paramMap.put("keyGroup", keyGroup);
 		}
-		if(!DPUtil.empty(key)) {
-			sb.append(" and key = :key");
-			paramMap.put("key", key);
+		if(!DPUtil.empty(keyName)) {
+			sb.append(" and key_name = :keyName");
+			paramMap.put("keyName", keyName);
+		}
+		if(bStatusNormal) {
+			sb.append(" and status = 1");
 		}
 		List<Map<String, Object>> rows = labelDao.npJdbcTemplate().queryForList(sb.toString(), paramMap);
 		Map<String, Object> contentMap = new HashMap<String, Object>(DPUtil.parseInt(rows.size() / 0.75f));
 		for (Map<String, Object> map : rows) {
-			String labelKey = DPUtil.parseString(map.get("key"));
+			String labelKey = DPUtil.parseString(map.get("key_name"));
 			Object labelContent = bConvert ? map.get("content") : map.get("content"); // 转换功能待处理
 			contentMap.put(labelKey, labelContent);
 		}

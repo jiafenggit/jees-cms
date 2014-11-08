@@ -31,24 +31,10 @@ $(function () {
 			{field:'module',title:'模块'},
 			{field:'controller',title:'控制器'},
 			{field:'action',title:'方法'},
-			{field:'group',title:'分组'},
-			{field:'key',title:'标签'},
+			{field:'key_group',title:'分组'},
+			{field:'key_name',title:'标签'},
 			{field:'effect_text',title:'效果'},
 			{field:'status_text',title:'状态'},
-			{field:'create_id',title:'创建者',formatter:function (value, row, index) {
-				if(!row.create_id_rel) return '';
-				return '[' + row.create_id_rel.serial + ']' + row.create_id_rel.name;
-			}},
-			{field:'create_time',title:'创建时间',formatter:function (value, row, index) {
-				return Web_formatDateTime(value);
-			}},
-			{field:'update_id',title:'修改者',formatter:function (value, row, index) {
-				if(!row.update_id_rel) return '';
-				return '[' + row.update_id_rel.serial + ']' + row.update_id_rel.name;
-			}},
-			{field:'update_time',title:'修改时间',formatter:function (value, row, index) {
-				return Web_formatDateTime(value);
-			}},
 			{field:'operate',title:'操作',formatter:function (value, row, index) {
 				return '[#if _BASE_.hasPermit("show")]<a href="${_BASE_.url("show")}?id='
 					+ row.id + '" class="js-list-button" data-options="iconCls:\'icon-detail\'">查看</a>[/#if]'
@@ -101,9 +87,9 @@ $(function () {
 	</tr>
 	<tr>
 		<th>分组</th>
-		<td><input class="easyui-textbox width150" type="text" name="group" value="" /></td>
+		<td><input class="easyui-textbox width150" type="text" name="key_group" value="" /></td>
 		<th>标签</th>
-		<td><input class="easyui-textbox width150" type="text" name="key" value="" /></td>
+		<td><input class="easyui-textbox width150" type="text" name="key_name" value="" /></td>
 	</tr>
 	<tr>
 		<th>展示效果</th>

@@ -3,32 +3,44 @@
 [#include "../../base/public/resource.inc.htm"]
 <table cellspacing="1" cellpadding="0" class="table-line td-left td-break-word">
 	<tr>
-		<th>类型</th>
-		<td>${(info.type_id_rel.name)!""}</td>
+		<th class="width130">名称</th>
+		<td>${(info.name)!""}</td>
 	</tr>
 	<tr>
-		<th class="width130">称呼</th>
-		<td>${info.nickname!""}</td>
+		<th class="width130">模块</th>
+		<td>${(info.module)!""}</td>
 	</tr>
 	<tr>
-		<th class="width130">联系方式</th>
-		<td>${info.contact!""}</td>
+		<th class="width130">控制器</th>
+		<td>${(info.controller)!""}</td>
 	</tr>
 	<tr>
-		<th class="width130">IP</th>
-		<td>${info.ip!""}</td>
+		<th class="width130">方法</th>
+		<td>${(info.action)!""}</td>
+	</tr>
+	<tr>
+		<th class="width130">分组</th>
+		<td>${(info.keyGroup)!""}</td>
+	</tr>
+	<tr>
+		<th class="width130">标签</th>
+		<td>${(info.key_name)!""}</td>
+	</tr>
+	<tr>
+		<th>效果</th>
+		<td>${(info.effect_text)!""}</td>
 	</tr>
 	<tr>
 		<th>排序</th>
-		<td>${info.sort}</td>
+		<td>${(info.sort)!0}</td>
 	</tr>
 	<tr>
 		<th>状态</th>
-		<td>${info.status_text!""}</td>
+		<td>${(info.status_text)!""}</td>
 	</tr>
 	<tr>
-		<th>内容</th>
-		<td>${info.content!""}</td>
+		<th>备注</th>
+		<td>${info.remark!""}</td>
 	</tr>
 	<tr>
 		<th>创建者</th>

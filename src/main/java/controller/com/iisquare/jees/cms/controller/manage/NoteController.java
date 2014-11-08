@@ -80,11 +80,11 @@ public class NoteController extends PermitController {
 		String typeId = get("typeId");
 		if(ValidateUtil.isNull(typeId, true)) return displayMessage(3003, "请选择所属类型");
 		persist.setTypeId(ValidateUtil.filterInteger(typeId, true, 1, null, 0));
-		String nickname = DPUtil.trim(get("nickname"));
-		if(nickname.length() > 32) return displayMessage(3002, "称呼项字数太多了，请写在内容处");
+		String nickname = ValidateUtil.filterSimpleString(get("nickname"), true, 0, 32, null);
+		if(null == nickname) return displayMessage(3002, "称呼项字数太多或含有特殊字符，请在内容处填写");
 		persist.setNickname(nickname);
-		String contact = DPUtil.trim(get("contact"));
-		if(contact.length() > 255) return displayMessage(3002, "联系方式项字数太多了，请写在内容处");
+		String contact = ValidateUtil.filterSimpleString(get("contact"), true, 0, 255, null);
+		if(null == contact) return displayMessage(3002, "联系方式项字数太多或含有特殊字符，请在内容处填写");
 		persist.setContact(contact);
 		if(DPUtil.empty(id)) persist.setIp(ServletUtil.getRemoteAddr(request)); // 创建者IP
 		String content = get("content");

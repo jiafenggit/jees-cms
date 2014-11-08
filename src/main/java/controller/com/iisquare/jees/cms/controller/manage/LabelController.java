@@ -91,15 +91,19 @@ public class LabelController extends PermitController {
 		String action = ValidateUtil.filterSimpleString(get("action"), true, 0, 64, null);
 		if(null == action) return displayMessage(3002, "方法参数错误");
 		persist.setAction(action);
-		String group = ValidateUtil.filterSimpleString(get("group"), true, 0, 64, null);
-		if(null == group) return displayMessage(3002, "标签组参数错误");
-		persist.setGroup(group);
-		String key = ValidateUtil.filterSimpleString(get("key"), true, 1, 64, null);
-		if(null == key) return displayMessage(3002, "标签名称参数错误");
-		persist.setKey(key);
-		if(!DPUtil.empty(labelService.getContentMap(_MODULE_, _CONTROLLER_, _ACTION_, null, key, false))) {
+		String keyGroup = ValidateUtil.filterSimpleString(get("keyGroup"), true, 0, 64, null);
+		if(null == keyGroup) return displayMessage(3002, "标签组参数错误");
+		persist.setKeyGroup(keyGroup);
+		String keyName = ValidateUtil.filterSimpleString(get("keyName"), true, 1, 64, null);
+		if(DPUtil.empty(keyName)) return displayMessage(3002, "标签名称参数错误");
+		persist.setKeyName(keyName);
+		if(!DPUtil.empty(labelService.getContentMap(_MODULE_, _CONTROLLER_, _ACTION_, null, keyName, false, false))) {
 			return displayMessage(3006, "对应标签已存在");
 		}
+		String effect = ValidateUtil.filterItem(get("effect"), false,
+				DPUtil.collectionToStringArray(labelService.getEffectMap().keySet()), null);
+		if(null == effect) return displayMessage(3002, "展示效果参数错误");
+		persist.setEffect(effect);
 		persist.setRemark(get("remark"));
 		persist.setSort(ValidateUtil.filterInteger(get("sort"), true, null, null, null));
 		String status = get("status");

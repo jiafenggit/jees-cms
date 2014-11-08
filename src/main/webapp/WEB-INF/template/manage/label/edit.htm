@@ -6,16 +6,36 @@
 <input type="hidden" name="id" value="${info.id!0}" />
 <table cellspacing="1" cellpadding="0" class="table-line td-left td-break-word">
 	<tr>
-		<th>类型</th>
-		<td><input name="typeId" class="js-select-type width250" value="${info.typeId!0}" /></td>
+		<th class="width130">名称</th>
+		<td><input class="easyui-textbox width250" type="text" name="name" data-options="required:true" value="${(info.name)!""}" /></td>
 	</tr>
 	<tr>
-		<th class="width130">称呼</th>
-		<td><input class="easyui-textbox width250" type="text" name="nickname" data-options="required:true" value="${(info.nickname)!""}" /></td>
+		<th class="width130">模块</th>
+		<td><input class="easyui-textbox width250" type="text" name="module" value="${(info.module)!""}" /></td>
 	</tr>
 	<tr>
-		<th class="width130">联系方式</th>
-		<td><input class="easyui-textbox width250" type="text" name="contact" data-options="required:true" value="${(info.contact)!""}" /></td>
+		<th class="width130">控制器</th>
+		<td><input class="easyui-textbox width250" type="text" name="controller" value="${(info.controller)!""}" /></td>
+	</tr>
+	<tr>
+		<th class="width130">方法</th>
+		<td><input class="easyui-textbox width250" type="text" name="action" value="${(info.action)!""}" /></td>
+	</tr>
+	<tr>
+		<th class="width130">分组</th>
+		<td><input class="easyui-textbox width250" type="text" name="keyGroup" value="${(info.keyGroup)!""}" /></td>
+	</tr>
+	<tr>
+		<th class="width130">标签</th>
+		<td><input class="easyui-textbox width250" type="text" name="keyName" data-options="required:true" value="${(info.keyName)!""}" /></td>
+	</tr>
+	<tr>
+		<th>效果</th>
+		<td>
+			<select class="easyui-combobox" name="effect" data-options="required:true,editable:false">
+				[@getMapOption map=effectMap default=info.effect!"" tips="请选择展示效果" /]
+			</select>
+		</td>
 	</tr>
 	<tr>
 		<th>排序</th>
@@ -30,8 +50,8 @@
 		</td>
 	</tr>
 	<tr>
-		<th>内容</th>
-		<td><textarea name="content" class="w668h280">${(info.content)!""}</textarea></td>
+		<th>备注</th>
+		<td><textarea name="remark" class="easyui-textbox width300" data-options="multiline:true,height:80">${info.remark!""}</textarea></td>
 	</tr>
 	<tr>
 		<th>操作</th>
@@ -45,13 +65,6 @@
 </form>
 <script type="text/javascript">
 $(function () {
-	$('input[name="typeId"]').combotree({
-		url : '${_BASE_.url("noteType", "list")}',
-		loadFilter : function (data, parent) {
-			return Web_formatComboTree(data.rows, [], '请选择所属类型', 'name');
-		}
-	});
-	var editor = KindEditor.create('textarea[name="content"]');
 	var $submitForm = $('#submitForm');
 	$submitForm.form({
 		success : function (data) {
@@ -64,7 +77,6 @@ $(function () {
 		}
 	});
 	$('#buttonOk').bind('click', function () {
-		$('textarea[name="content"]').html(editor.html());
 		if($submitForm.form('validate')) $submitForm.form('submit');
 	});
 	$('#buttonCancel').bind('click', function () {
