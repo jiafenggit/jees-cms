@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+[#include "../../base/public/common.inc.htm"]
+[#include "../../base/public/resource.inc.htm"]
+<script type="text/javascript" src="${_WEB_URL_}/api/KindEditor/kindeditor.custom.all.min.js"></script>
+<table cellspacing="1" cellpadding="0" class="table-line td-left td-break-word">
+	<tr>
+		<th class="width130">名称</th>
+		<td>${(info.name)!""}</td>
+	</tr>
+	<tr>
+		<th class="width130">展示效果</th>
+		<td>${(info.effect_text)!""}</td>
+	</tr>
+	<tr>
+		<th class="width130">HTML</th>
+		<td><textarea name="content" class="w668h280">${(info.content)!""}</textarea></td>
+	</tr>
+	<tr>
+		<th>操作</th>
+		<td>
+			<a id="buttonOk" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true">保存</a>
+			<a href="javascript:void(0);" onclick="Web_redirectPage(-1);" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true">返回</a>
+		</td>
+	</tr>
+</table>
+<script type="text/javascript">
+$(function () {
+	var editor = KindEditor.create('textarea[name="content"]');
+	$('#buttonOk').bind('click', function () {
+		var content = editor.html();
+		$.post('${_BASE_.url("saveEffect")}', {
+			id : '${info.id}',
+			content : content
+		}, function (data) {
+			if(data.status) {
+				Web_alertInfo(data.message);
+			} else {
+				Web_redirectPage(data.message);
+			}
+		}, 'json');
+	});
+});
+</script>

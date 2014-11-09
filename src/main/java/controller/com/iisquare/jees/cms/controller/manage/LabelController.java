@@ -25,6 +25,29 @@ public class LabelController extends PermitController {
 	@Autowired
 	public LabelService labelService;
 	
+	public String editEffectAction() throws Exception {
+		Integer id = ValidateUtil.filterInteger(get("id"), true, 0, null, null);
+		Map<String, Object> info = labelService.getById(id, true);
+		if(DPUtil.empty(info)) return displayInfo("信息不存在，请刷新后再试", null);
+		String effect = ValidateUtil.filterItem(DPUtil.parseString(info.get("effect")),
+				false, DPUtil.collectionToStringArray(labelService.getEffectMap().keySet()), null);
+		if(null == effect) return displayInfo("展示效果类型异常，请修改后再试", null);
+		assign("info", info);
+		return displayTemplate(DPUtil.stringConcat(_ACTION_, "-", effect));
+	}
+	
+	public String saveEffectAction() throws Exception {
+		Integer id = ValidateUtil.filterInteger(get("id"), true, 0, null, null);
+		Label persist = labelService.getById(id);
+		if(DPUtil.empty(persist)) return displayMessage(3001, "信息不存在，请刷新后再试");
+		int result = labelService.updateContent(persist.getId(), get("content"));
+		if(result > 0) {
+			return displayMessage(0, url("layout"));
+		} else {
+			return displayMessage(500, "操作失败");
+		}
+	}
+	
 	public String layoutAction() throws Exception {
 		assign("statusMap", labelService.getStatusMap());
 		assign("effectMap", labelService.getEffectMap());

@@ -35,6 +35,8 @@ public class LabelService extends ServiceBase {
 		Map<String, String> map = new LinkedHashMap<String, String>();
 		map.put("html", "HTML代码");
 		map.put("article", "文章列表");
+		map.put("comment", "评论列表");
+		map.put("slideshow", "幻灯片列表");
 		return map;
 	}
 	
@@ -164,6 +166,10 @@ public class LabelService extends ServiceBase {
 	
 	public int update(Label persist) {
 		return labelDao.update(persist);
+	}
+	
+	public int updateContent(Object id, String content) {
+		return labelDao.updateByIds(new String[]{"content"}, new Object[]{content}, id);
 	}
 	
 	public int delete(Object... ids) {
