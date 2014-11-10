@@ -13,15 +13,25 @@ public class Article {
 	private String url; // 链接地址
 	private String keywords; // 页面关键词
 	private String description; // 页面描述
+	private String fromName; // 来源名称
+	private String fromUrl; // 来源地址
+	private String label; // 标签（逗号分隔）
 	private String logo; // 预览图片
 	private String content; // 内容
+	private Integer commentEnable; // 启用评论
+	private Integer commentAllow; // 允许评论
+	private Integer countComment; // 评论数
+	private Integer countPV; // 页面访问数
+	private Integer countUV; // 访问人数（需要用户独立标示支持）
+	private Integer countIP; // 独立IP数
+	private Integer isTop; // 置顶
 	private Long sort; // 排序（从高到低）
 	private Integer status; // 状态
 	private Integer createId; // 添加者
 	private Long createTime; // 添加时间
 	private Integer updateId; // 修改者
 	private Long updateTime; // 修改时间
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -78,6 +88,30 @@ public class Article {
 		this.description = description;
 	}
 
+	public String getFromName() {
+		return fromName;
+	}
+
+	public void setFromName(String fromName) {
+		this.fromName = fromName;
+	}
+
+	public String getFromUrl() {
+		return fromUrl;
+	}
+
+	public void setFromUrl(String fromUrl) {
+		this.fromUrl = fromUrl;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
 	public String getLogo() {
 		return logo;
 	}
@@ -92,6 +126,62 @@ public class Article {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public Integer getCommentEnable() {
+		return commentEnable;
+	}
+
+	public void setCommentEnable(Integer commentEnable) {
+		this.commentEnable = commentEnable;
+	}
+
+	public Integer getCommentAllow() {
+		return commentAllow;
+	}
+
+	public void setCommentAllow(Integer commentAllow) {
+		this.commentAllow = commentAllow;
+	}
+
+	public Integer getCountComment() {
+		return countComment;
+	}
+
+	public void setCountComment(Integer countComment) {
+		this.countComment = countComment;
+	}
+
+	public Integer getCountPV() {
+		return countPV;
+	}
+
+	public void setCountPV(Integer countPV) {
+		this.countPV = countPV;
+	}
+
+	public Integer getCountUV() {
+		return countUV;
+	}
+
+	public void setCountUV(Integer countUV) {
+		this.countUV = countUV;
+	}
+
+	public Integer getCountIP() {
+		return countIP;
+	}
+
+	public void setCountIP(Integer countIP) {
+		this.countIP = countIP;
+	}
+
+	public Integer getIsTop() {
+		return isTop;
+	}
+
+	public void setIsTop(Integer isTop) {
+		this.isTop = isTop;
 	}
 
 	public Long getSort() {
