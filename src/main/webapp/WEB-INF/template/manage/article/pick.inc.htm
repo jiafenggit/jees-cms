@@ -131,6 +131,7 @@ $(function () {
 		for(var i = 0; i < size; i++) {
 			$pickSelected.datagrid('appendRow', rows[i]);
 		}
+		$pickSelected.datagrid('autoSizeColumn');
 	});
 	$('.js-pick-article-remove').bind('click', function () {
 		var rows = $pickSelected.datagrid('getChecked');
@@ -142,6 +143,7 @@ $(function () {
 		for(var i = size - 1; i >= 0; i--) {
 			$pickSelected.datagrid('deleteRow', $pickSelected.datagrid('getRowIndex', rows[i]));
 		}
+		$pickSelected.datagrid('autoSizeColumn');
 	});
 	
 	var bSearchDialog = false;
