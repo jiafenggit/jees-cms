@@ -79,7 +79,14 @@ $(function () {
 		}
 	});
 	$('#buttonOk').bind('click', function () {
-		var content = '';
+		var content = {
+			total : $('input[name="total"]').val(),
+			space : $('input[name="space"]').val(),
+			sortName : $('select[name="sortName"]').val(),
+			sortOrder : $('select[name="sortOrder"]').val(),
+			columnIdArray : Web_getDatagridIdArray($('.js-list-table-column'), 'checked'),
+			articleIdArray : Web_getDatagridIdArray($('.js-pick-article-selected'), null)
+		};
 		$.post('${_BASE_.url("saveEffect")}', {
 			id : '${info.id}',
 			content : content

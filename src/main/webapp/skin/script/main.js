@@ -177,10 +177,21 @@ function Web_formatComboTree(data, valueArray, tips, valueField, idField, childr
 }
 
 /**
- * 获取datagrid已Checked的主键数组
+ * 获取datagrid的主键数组
+ * @param $datagrid jQuery对象
+ * @param type 提取类型
+ * 		checked - 选择框选择的记录
+ * 		default - 当前页中的全部记录
  */
-function Web_getDatagridCheckedIdArray($datagrid) {
-	var rows = $datagrid.datagrid('getChecked');
+function Web_getDatagridIdArray($datagrid, type) {
+	var rows;
+	switch (type) {
+	case 'checked' :
+		rows = $datagrid.datagrid('getChecked');
+	break;
+	default :
+		rows = $datagrid.datagrid('getRows');
+	}
 	var idField = $datagrid.datagrid('options')['idField'];
 	var idArray = [], size = rows.length;
 	for(var i = 0; i < size; i++) {

@@ -81,14 +81,7 @@ $(function () {
 			{field:'column_id',title:'所在栏目',formatter:function (value, row, index) {
 				return row.column_id_rel ? row.column_id_rel.name : row.column_id;
 			}}
-		]],
-		onLoadSuccess : function (data) {
-			var ids = '${resourceIds!""}'.split(',');
-			for (var key in ids) {
-				if(!Web_empty(ids[key])) $(this).datagrid('checkRow', ids[key]);
-			}
-			$(this).datagrid('autoSizeColumn');
-		}
+		]]
 	});
 	$pickList.datagrid({
 		url : '${_BASE_.url("article", "list")}',
@@ -112,14 +105,7 @@ $(function () {
 				return row.column_id_rel ? row.column_id_rel.name : row.column_id;
 			}},
 			{field:'status_text',title:'状态'}
-		]],
-		onLoadSuccess : function (data) {
-			var ids = '${menuIds!""}'.split(',');
-			for (var key in ids) {
-				if(!Web_empty(ids[key])) $(this).datagrid('checkRow', ids[key]);
-			}
-			$(this).datagrid('autoSizeColumn');
-		}
+		]]
 	});
 	$('.js-pick-article-add').bind('click', function () {
 		var rows = $pickList.datagrid('getChecked');
