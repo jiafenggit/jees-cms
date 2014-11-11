@@ -33,6 +33,10 @@ public class LabelController extends PermitController {
 				false, DPUtil.collectionToStringArray(labelService.getEffectMap().keySet()), null);
 		if(null == effect) return displayInfo("展示效果类型异常，请修改后再试", null);
 		assign("info", info);
+		if("article".equals(effect)) {
+			assign("sortNameMap", labelService.getSortNameMap());
+			assign("sortOrderMap", labelService.getSortOrderMap());
+		}
 		return displayTemplate(DPUtil.stringConcat(_ACTION_, "-", effect));
 	}
 	

@@ -40,6 +40,25 @@ public class LabelService extends ServiceBase {
 		return map;
 	}
 	
+	public Map<String, String> getSortNameMap() {
+		Map<String, String> map = new LinkedHashMap<String, String>();
+		map.put("sort", "默认排序");
+		map.put("update_time", "修改时间");
+		map.put("create_time", "发布时间");
+		map.put("count_comment", "评论数");
+		map.put("count_pv", "页面访问数");
+		map.put("count_uv", "访问人数");
+		map.put("count_ip", "独立IP数");
+		return map;
+	}
+	
+	public Map<String, String> getSortOrderMap() {
+		Map<String, String> map = new LinkedHashMap<String, String>();
+		map.put("desc", "降序");
+		map.put("asc", "升序");
+		return map;
+	}
+	
 	public LabelService() {}
 	
 	public Map<Object, Object> search(Map<String, Object> map, String orderBy, int page, int pageSize) {

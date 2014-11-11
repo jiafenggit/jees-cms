@@ -1,0 +1,174 @@
+<div class="easyui-layout height400" data-options="fit:true,border:true,plain:true">
+	<div data-options="region:'west',split:true" class="width480">
+		<table class="js-pick-article-selected"></table>
+		<div id="toolbar-article-selected">
+			<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-tip',plain:true">当前选择：</a>
+			<a href="javascript:void(0);" class="easyui-linkbutton js-pick-article-remove" data-options="iconCls:'icon-remove',plain:true">移除所选</a>
+		</div>
+	</div>
+	<div data-options="region:'center'">
+		<table class="js-pick-article-list"></table>
+		<div id="toolbar-article-list">
+			<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-tip',plain:true">筛选列表：</a>
+			<a href="javascript:void(0);" class="easyui-linkbutton js-pick-article-add" data-options="iconCls:'icon-add',plain:true">添加所选</a>
+			<a href="javascript:void(0);" class="easyui-linkbutton js-pick-article-search" data-options="iconCls:'icon-search',plain:true">搜索</a>
+		</div>
+	</div>
+</div>
+<div class="hidden">
+<div id="js-pick-article-search-dialog" style="width:462px;height:225px" data-options="buttons:'#js-pick-article-search-button',modal:true,resizable:true">
+<form id="articlePickSearchForm" method="post" action="">
+<table align="center" class="table-horizontal tr-height25">
+	<tr>
+		<th>标题</th>
+		<td><input class="easyui-textbox width150" type="text" name="title" value="" /></td>
+		<th>栏目</th>
+		<td><input name="columnId" class="js-select-type width150" value="" /></td>
+	</tr>
+	<tr>
+		<th>创建时间</th>
+		<td><input class="easyui-datetimebox width150" type="text" name="timeStartCreate" value="" /></td>
+		<th>～</th>
+		<td><input class="easyui-datetimebox width150" type="text" name="timeEndCreate" value="" /></td>
+	</tr>
+	<tr>
+		<th>修改时间</th>
+		<td><input class="easyui-datetimebox width150" type="text" name="timeStartModify" value="" /></td>
+		<th>～</th>
+		<td><input class="easyui-datetimebox width150" type="text" name="timeEndModify" value="" /></td>
+	</tr>
+	<tr>
+		<th>作者</th>
+		<td><input class="easyui-textbox width150" type="text" name="serialCreate" value="" /></td>
+		<th>修改者</th>
+		<td><input class="easyui-textbox width150" type="text" name="serialModify" value="" /></td>
+	</tr>
+	<tr>
+		<th>关键词</th>
+		<td><input class="easyui-textbox width150" type="text" name="keywords" value="" /></td>
+		<th>描述</th>
+		<td><input class="easyui-textbox width150" type="text" name="description" value="" /></td>
+	</tr>
+</table>
+</form>
+</div>
+<div id="js-pick-article-search-button">
+	<a href="javascript:void(0);" class="easyui-linkbutton js-control-ok" data-options="iconCls:'icon-search'">搜索</a>
+	<a href="javascript:void(0);" class="easyui-linkbutton js-control-cancel" data-options="iconCls:'icon-cancel'">取消</a>
+</div>
+</div>
+<script type="text/javascript">
+$(function () {
+	var $pickSelected = $('.js-pick-article-selected');
+	var $pickList = $('.js-pick-article-list');
+	$pickSelected.datagrid({
+		idField : 'id',
+		treeField : 'name',
+		toolbar : '#toolbar-article-selected',
+		rownumbers : true,
+		fitcolumns : true,
+		fit : true,
+		nowrap : true,
+		singleSelect : true,
+		checkOnSelect : false,
+		selectOnCheck : false,
+		columns:[[
+			{field:'id',checkbox:true},
+			{field:'show_id',title:'ID',formatter:function (value, row, index) {
+				return row.id;
+			}},
+			{field:'title',title:'标题'},
+			{field:'column_id',title:'所在栏目',formatter:function (value, row, index) {
+				return row.column_id_rel ? row.column_id_rel.name : row.column_id;
+			}}
+		]],
+		onLoadSuccess : function (data) {
+			var ids = '${resourceIds!""}'.split(',');
+			for (var key in ids) {
+				if(!Web_empty(ids[key])) $(this).datagrid('checkRow', ids[key]);
+			}
+			$(this).datagrid('autoSizeColumn');
+		}
+	});
+	$pickList.datagrid({
+		url : '${_BASE_.url("article", "list")}',
+		idField : 'id',
+		treeField : 'name',
+		toolbar : '#toolbar-article-list',
+		rownumbers : true,
+		fitcolumns : true,
+		fit : true,
+		nowrap : true,
+		singleSelect : true,
+		checkOnSelect : false,
+		selectOnCheck : false,
+		columns:[[
+			{field:'id',checkbox:true},
+			{field:'show_id',title:'ID',formatter:function (value, row, index) {
+				return row.id;
+			}},
+			{field:'title',title:'标题'},
+			{field:'column_id',title:'所在栏目',formatter:function (value, row, index) {
+				return row.column_id_rel ? row.column_id_rel.name : row.column_id;
+			}},
+			{field:'status_text',title:'状态'}
+		]],
+		onLoadSuccess : function (data) {
+			var ids = '${menuIds!""}'.split(',');
+			for (var key in ids) {
+				if(!Web_empty(ids[key])) $(this).datagrid('checkRow', ids[key]);
+			}
+			$(this).datagrid('autoSizeColumn');
+		}
+	});
+	$('.js-pick-article-add').bind('click', function () {
+		var rows = $pickList.datagrid('getChecked');
+		var size = rows.length;
+		if(size < 1) {
+			Web_alertInfo('请选择要添加的记录！');
+			return ;
+		}
+		for(var i = 0; i < size; i++) {
+			$pickSelected.datagrid('appendRow', rows[i]);
+		}
+	});
+	$('.js-pick-article-remove').bind('click', function () {
+		var rows = $pickSelected.datagrid('getChecked');
+		var size = rows.length;
+		if(size < 1) {
+			Web_alertInfo('请选择要移除的记录！');
+			return ;
+		}
+		for(var i = size - 1; i >= 0; i--) {
+			$pickSelected.datagrid('deleteRow', $pickSelected.datagrid('getRowIndex', rows[i]));
+		}
+	});
+	
+	var bSearchDialog = false;
+	var $searchDialog = $('#js-pick-article-search-dialog');
+	$('.js-pick-article-search').bind('click', function () {
+		$searchDialog.dialog({
+			title : '筛选条件',
+			iconCls : 'icon-search',
+			onOpen : function () {
+				if(bSearchDialog) return false;
+				bSearchDialog = true;
+				$('#articlePickSearchForm').find('input[name="columnId"]').combotree({
+					checkbox : true,
+					url : '${_BASE_.url("column", "list")}',
+					loadFilter : function (data, parent) {
+						return Web_formatComboTree(data.rows, [], '全部', 'name');
+					}
+				});
+			}
+		});
+	});
+	$('#js-pick-article-search-button').find('.js-control-ok').unbind('click.action').bind('click.action' ,function () {
+		$('.js-list-table').datagrid('load', $('#articlePickSearchForm').form('getData'));
+		$searchDialog.dialog('close');
+	});
+	$('#js-pick-article-search-button').find('.js-control-cancel').unbind('click.action').bind('click.action' ,function () {
+		$searchDialog.dialog('close');
+	});
+});
+</script>

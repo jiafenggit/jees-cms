@@ -31,12 +31,14 @@ a:hover { text-decoration:underline;}
 .width300 { width:300px;}
 .width350 { width:350px;}
 .width353 { width:353px;}
+.width400 { width:400px;}
 .width430 { width:430px;}
 .width480 { width:480px;}
 .width550 { width:550px;}
 .width-percent50 { width: 50%;}
 .width-percent98 { width:98%;}
 .width-percent100 { width: 100%;}
+.height300 { height:300px;}
 .height400 { height:400px;}
 .height500 { height:500px;}
 .w195h100 { width:195px; height:100px;}

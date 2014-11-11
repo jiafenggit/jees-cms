@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+[#include "../../base/public/common.inc.htm"]
+[#include "../../base/public/resource.inc.htm"]
+<table cellspacing="1" cellpadding="0" class="table-line td-left td-break-word">
+	<tr>
+		<th class="width130">名称</th>
+		<td>${(info.name)!""}</td>
+	</tr>
+	<tr>
+		<th class="width130">展示效果</th>
+		<td>${(info.effect_text)!""}</td>
+	</tr>
+	<tr>
+		<th class="width130">提取条数</th>
+		<td><input class="easyui-numberspinner width150" type="text" name="total" data-options="required:true,min:1,max:100" value="10" /></td>
+	</tr>
+	<tr>
+		<th class="width130">截取宽度</th>
+		<td><input class="easyui-numberspinner width150" type="text" name="space" data-options="required:true,min:0" value="0" /><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-tip',plain:true">默认不截取</a></td>
+	</tr>
+	<tr>
+		<th class="width130">排序方式</th>
+		<td>
+			<select class="easyui-combobox" name="sortName" data-options="required:true,editable:false">
+				[@getMapOption map=sortNameMap default="" tips="" /]
+			</select>
+			<select class="easyui-combobox" name="sortOrder" data-options="required:true,editable:false">
+				[@getMapOption map=sortOrderMap default="" tips="" /]
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<th class="width130">栏目选择</th>
+		<td class="td-clear height300">
+			<table class="js-list-table-column"></table>
+			<div id="toolbar-column"><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-tip',plain:true">栏目 - 留空默认为从全部栏目中选取</a></div>
+		</td>
+	</tr>
+	<tr>
+		<th class="width130">文章选择</th>
+		<td class="td-clear">[#include "../article/pick.inc.htm"]</td>
+	</tr>
+	<tr>
+		<th>操作</th>
+		<td>
+			<a id="buttonOk" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true">保存</a>
+			<a href="javascript:void(0);" onclick="Web_redirectPage(-1);" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true">返回</a>
+		</td>
+	</tr>
+</table>
+<script type="text/javascript">
+$(function () {
+	$('.js-list-table-column').treegrid({
+		url : '${_BASE_.url("column", "list")}',
+		idField : 'id',
+		treeField : 'name',
+		toolbar : '#toolbar-column',
+		rownumbers : true,
+		fitcolumns : true,
+		fit : true,
+		nowrap : true,
+		singleSelect : true,
+		checkOnSelect : false,
+		selectOnCheck : false,
+		columns:[[
+			{field:'id',checkbox:true},
+			{field:'show_id',title:'ID',formatter:function (value, row, index) {
+				return row.id;
+			}},
+			{field:'name',title:'名称'},
+			{field:'status_text',title:'状态'}
+		]],
+		onLoadSuccess : function (data) {
+			var ids = '${resourceIds!""}'.split(',');
+			for (var key in ids) {
+				if(!Web_empty(ids[key])) $(this).treegrid('checkRow', ids[key]);
+			}
+			$(this).treegrid('autoSizeColumn');
+		}
+	});
+	$('#buttonOk').bind('click', function () {
+		var content = '';
+		$.post('${_BASE_.url("saveEffect")}', {
+			id : '${info.id}',
+			content : content
+		}, function (data) {
+			if(data.status) {
+				Web_alertInfo(data.message);
+			} else {
+				Web_redirectPage(data.message);
+			}
+		}, 'json');
+	});
+});
+</script>
