@@ -40,7 +40,7 @@ public class LabelService extends ServiceBase {
 		return map;
 	}
 	
-	public Map<String, String> getSortNameMap() {
+	public Map<String, String> getArticleSortNameMap() {
 		Map<String, String> map = new LinkedHashMap<String, String>();
 		map.put("sort", "默认排序");
 		map.put("update_time", "修改时间");
@@ -49,6 +49,13 @@ public class LabelService extends ServiceBase {
 		map.put("count_pv", "页面访问数");
 		map.put("count_uv", "访问人数");
 		map.put("count_ip", "独立IP数");
+		return map;
+	}
+	
+	public Map<String, String> getCommentSortNameMap() {
+		Map<String, String> map = new LinkedHashMap<String, String>();
+		map.put("create_time", "发布时间");
+		map.put("update_time", "修改时间");
 		return map;
 	}
 	

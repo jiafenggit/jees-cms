@@ -36,7 +36,10 @@ public class LabelController extends PermitController {
 		if(null == effect) return displayInfo("展示效果类型异常，请修改后再试", null);
 		assign("info", info);
 		if("article".equals(effect)) {
-			assign("sortNameMap", labelService.getSortNameMap());
+			assign("sortNameMap", labelService.getArticleSortNameMap());
+			assign("sortOrderMap", labelService.getSortOrderMap());
+		} else if("comment".equals(effect)){
+			assign("sortNameMap", labelService.getCommentSortNameMap());
 			assign("sortOrderMap", labelService.getSortOrderMap());
 		}
 		return displayTemplate(DPUtil.stringConcat(_ACTION_, "-", effect));
@@ -47,10 +50,10 @@ public class LabelController extends PermitController {
 		Label persist = labelService.getById(id);
 		if(DPUtil.empty(persist)) return displayMessage(3001, "信息不存在，请刷新后再试");
 		String content;
-		if("article".equals(persist.getEffect())) {
-			content = JSONObject.fromObject(getMap("content")).toString();
-		} else {
+		if("html".equals(persist.getEffect())) {
 			content = get("content");
+		} else {
+			content = JSONObject.fromObject(getMap("content")).toString();
 		}
 		int result = labelService.updateContent(persist.getId(), content);
 		if(result > 0) {
