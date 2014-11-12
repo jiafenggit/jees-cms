@@ -74,7 +74,7 @@ $(function () {
 		for(var i = 0; i < length; i++) {
 			ids[i] = 'ids[]=' + ids[i];
 		}
-		var url = '${_BASE_.url("delete")}?' + ids.join(',');
+		var url = '${_BASE_.url("delete")}?' + ids.join('&');
 		Web_redirectPage(url);
 	});
 	
