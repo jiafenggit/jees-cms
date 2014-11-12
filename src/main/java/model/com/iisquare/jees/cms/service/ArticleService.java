@@ -130,11 +130,8 @@ public class ArticleService extends ServiceBase {
 		return DPUtil.buildMap(new String[]{"total", "rows"}, new Object[]{total, rows});
 	}
 	
-	public List<Article> getList(Map<String, Object> where, Map<String, String> operators, String orderBy, int page, int pageSize) {
-		String append = null;
-		if(!DPUtil.empty(orderBy)) append = DPUtil.stringConcat(" order by ", orderBy);
-		List<Article> list = noticeDao.getList(where, operators, append, page, pageSize);
-		return list;
+	public List<Map<String, Object>> getListByIds(Object... ids) {
+		return noticeDao.getByIds("*", ids);
 	}
 	
 	public Article getById(Object id) {

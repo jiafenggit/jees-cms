@@ -48,6 +48,13 @@ public class ArticleController extends PermitController {
 		return displayJSON();
 	}
 	
+	public String listIdsAction () throws Exception {
+		List<Map<String, Object>> list = articleService.getListByIds((Object[]) getArray("ids"));
+		assign("total", list.size());
+		assign("rows", DPUtil.collectionToArray(list));
+		return displayJSON();
+	}
+	
 	public String showAction() throws Exception {
 		Integer id = ValidateUtil.filterInteger(get("id"), true, 0, null, null);
 		Map<String, Object> info = articleService.getById(id, true);

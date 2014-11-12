@@ -12,19 +12,19 @@
 	</tr>
 	<tr>
 		<th class="width130">提取条数</th>
-		<td><input class="easyui-numberspinner width150" type="text" name="total" data-options="required:true,min:1,max:100" value="10" /></td>
+		<td><input class="easyui-numberspinner width150 js-input-total" type="text" data-options="required:true,min:1,max:100" value="10" /></td>
 	</tr>
 	<tr>
 		<th class="width130">截取宽度</th>
-		<td><input class="easyui-numberspinner width150" type="text" name="space" data-options="required:true,min:0" value="0" /><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-tip',plain:true">默认不截取</a></td>
+		<td><input class="easyui-numberspinner width150 js-input-space" type="text" data-options="required:true,min:0" value="0" /><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-tip',plain:true">默认不截取</a></td>
 	</tr>
 	<tr>
 		<th class="width130">排序方式</th>
 		<td>
-			<select class="easyui-combobox" name="sortName" data-options="required:true,editable:false">
+			<select class="easyui-combobox js-select-sort-name" data-options="required:true,editable:false">
 				[@getMapOption map=sortNameMap default="" tips="" /]
 			</select>
-			<select class="easyui-combobox" name="sortOrder" data-options="required:true,editable:false">
+			<select class="easyui-combobox js-select-sort-order" data-options="required:true,editable:false">
 				[@getMapOption map=sortOrderMap default="" tips="" /]
 			</select>
 		</td>
@@ -50,6 +50,12 @@
 </table>
 <script type="text/javascript">
 $(function () {
+	var contentObj = $.parseJSON('${info.content!""}');
+	if(contentObj && contentObj.total) $('.js-input-total').numberspinner('setValue', contentObj.total);
+	if(contentObj && contentObj.space) $('.js-input-space').numberspinner('setValue', contentObj.space);
+	if(contentObj && contentObj.sortName) $('.js-select-sort-name').combobox('setValue', contentObj.sortName);
+	if(contentObj && contentObj.sortOrder) $('.js-select-sort-order').combobox('setValue', contentObj.sortOrder);
+	console.log(contentObj);
 	$('.js-list-table-column').treegrid({
 		url : '${_BASE_.url("column", "list")}',
 		idField : 'id',
@@ -71,19 +77,29 @@ $(function () {
 			{field:'status_text',title:'状态'}
 		]],
 		onLoadSuccess : function (data) {
-			var ids = '${resourceIds!""}'.split(',');
+			if(!contentObj || !contentObj.columnIdArray) return false;
+			var ids = contentObj.columnIdArray;
 			for (var key in ids) {
 				if(!Web_empty(ids[key])) $(this).treegrid('checkRow', ids[key]);
 			}
 			$(this).treegrid('autoSizeColumn');
 		}
 	});
+	if(contentObj && contentObj.articleIdArray && contentObj.articleIdArray.length > 0) {
+		var ids = contentObj.articleIdArray;
+		var length = ids.length;
+		for(var i = 0; i < length; i++) {
+			ids[i] = 'ids[]=' + ids[i];
+		}
+		var url = '${_BASE_.url("article", "listIds")}?' + ids.join('&');
+		$('.js-pick-article-selected').datagrid({url:url});
+	}
 	$('#buttonOk').bind('click', function () {
 		var content = {
-			total : $('input[name="total"]').val(),
-			space : $('input[name="space"]').val(),
-			sortName : $('select[name="sortName"]').val(),
-			sortOrder : $('select[name="sortOrder"]').val(),
+			total : $('.js-input-total').val(),
+			space : $('.js-input-space').val(),
+			sortName : $('.js-select-sort-name').combobox('getValue'),
+			sortOrder : $('.js-select-sort-order').combobox('getValue'),
 			columnIdArray : Web_getDatagridIdArray($('.js-list-table-column'), 'checked'),
 			articleIdArray : Web_getDatagridIdArray($('.js-pick-article-selected'), null)
 		};
