@@ -113,7 +113,7 @@ public class NoteController extends PermitController {
 	}
 	
 	public String deleteAction() throws Exception {
-		Object[] idArray = DPUtil.explode(get("ids"), ",", " ", true);
+		Object[] idArray = getArray("ids");
 		int result = noteService.delete(idArray);
 		if(result > 0) {
 			return displayInfo("操作成功", url("layout"));

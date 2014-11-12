@@ -111,7 +111,7 @@ public class ColumnController extends PermitController {
 	}
 	
 	public String deleteAction() throws Exception {
-		Object[] idArray = DPUtil.explode(get("ids"), ",", " ", true);
+		Object[] idArray = getArray("ids");
 		int result = columnService.delete(idArray);
 		if(-1 == result) return displayInfo("该节点拥有下级节点，不允许删除", null);
 		if(-2 == result) return displayInfo("该节点从属文章不为空，不允许删除", null);
