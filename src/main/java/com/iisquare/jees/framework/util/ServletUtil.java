@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sf.json.JSONObject;
+
 /**
  * Servlet操作类
  */
@@ -22,38 +24,9 @@ public class ServletUtil {
 	public static final String regexParameterMapKey = "((?<!\\[)[^\\[\\]]+(?!\\])|(?<=\\[)[^\\[\\]]*(?=\\]))";
 	
 	/**
-	 * 将parameterMap转换为单值，数组方式通过在key后添加[]提交
-	 */
-	public static Map<String, Object> singleParameterMap(HttpServletRequest request) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		for (Map.Entry<String, String[]> entry : request.getParameterMap().entrySet()) {
-			String key = entry.getKey();
-			String[] value = entry.getValue();
-			if(key.endsWith("[]")) {
-				map.put(key.substring(0, key.length() - 2), value);
-			} else {
-				map.put(key, value[0]);
-			}
-		}
-		return map;
-	}
-	
-	public static void main(String[] args) {
-		Map<String, String[]> parameterMap = new LinkedHashMap<String, String[]>();
-		parameterMap.put("id", new String[]{"124"});
-		parameterMap.put("x1[y1]", new String[]{"asag"});
-		parameterMap.put("x1[y2][]", new String[]{"gdgdg"});
-		parameterMap.put("x1[y2][]", new String[]{"hdfhd"});
-		parameterMap.put("x1[y3][z1]", new String[]{"1dg24"});
-		parameterMap.put("x1[y3][z2]", new String[]{"wtcb"});
-		parameterMap.put("x1[y3][z3][]", new String[]{"asff"});
-		parameterMap.put("x2[y 3]", new String[]{"asdsff"});
-		parseParameterMap(parameterMap);
-	}
-	
-	/**
 	 * 解析ParameterMap，将中括号[]中的字符串转换为下标
 	 * 下标支持非中括号[]的任意字符，包括空格等
+	 * 若存在多个相同的下标（以中括号[]标识的数组除外），默认取最后一个下标对应的值
 	 * @param parameterMap 参数Map
 	 * @return
 	 */
@@ -61,11 +34,41 @@ public class ServletUtil {
 		Map<String, Object> map = new LinkedHashMap<String, Object>();
 		System.out.println(regexParameterMapKey);
 		for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
-			String key = entry.getKey();
-			//String[] value = entry.getValue();
-			List<String> fields = DPUtil.getMatcher(regexParameterMapKey, key, true);
-			System.out.println(key + ":" + DPUtil.implode(",", DPUtil.collectionToArray(fields)));
+			List<String> keys = DPUtil.getMatcher(regexParameterMapKey, entry.getKey(), true);
+			System.out.println(entry.getKey() + ":" + DPUtil.implode(",", DPUtil.collectionToArray(keys)));
+			generateParameterMap(map, keys, entry.getValue(), 0, keys.size());
 		}
+		System.out.println(JSONObject.fromObject(map).toString());
+		return map;
+	}
+	
+	/**
+	 * 按照KV形式，递归生成ParameterMap
+	 * @param map 当前层级的LinkedHashMap<String, Object>
+	 * @param keyList 下标列表
+	 * @param valueArray 下标对应值
+	 * @param index 下标当前位置
+	 * @param length 处理深度
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public static Object generateParameterMap(Map<String, Object> map,
+			List<String> keyList, String[] valueArray, int index, int length) {
+		int indexNext = index + 1;
+		String key = keyList.get(index);
+		if(indexNext >= length) { // 当前为最终位置，不存在下级元素
+			map.put(key, valueArray.length > 0 ? valueArray[valueArray.length - 1] : ""); // 默认取最后一个值
+			return map;
+		}
+		String keyNext = keyList.get(indexNext); // 存在下级元素
+		if(0 == keyNext.length()) { // 下级元素为[]数组形式，应为最终位置
+			map.put(key, valueArray);
+			return map;
+		}
+		/* 下级元素为KV形式，继续递归处理 */
+		Map<String, Object> subMap = (Map<String, Object>) map.get(key);
+		if(null == subMap) subMap = new LinkedHashMap<String, Object>(); // 初始化下级Map
+		map.put(key, generateParameterMap(subMap, keyList, valueArray, indexNext, length));
 		return map;
 	}
 	

@@ -3,6 +3,8 @@ package com.iisquare.jees.cms.controller.manage;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -44,7 +46,13 @@ public class LabelController extends PermitController {
 		Integer id = ValidateUtil.filterInteger(get("id"), true, 0, null, null);
 		Label persist = labelService.getById(id);
 		if(DPUtil.empty(persist)) return displayMessage(3001, "信息不存在，请刷新后再试");
-		int result = labelService.updateContent(persist.getId(), get("content"));
+		String content;
+		if("article".equals(persist.getEffect())) {
+			content = JSONObject.fromObject(getMap("content")).toString();
+		} else {
+			content = get("content");
+		}
+		int result = labelService.updateContent(persist.getId(), content);
 		if(result > 0) {
 			return displayMessage(0, url("layout"));
 		} else {
