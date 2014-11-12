@@ -5,6 +5,8 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpSession;
 public class ServletUtil {
 	
 	public static final String cookieEncoding = "UTF-8";
+	public static final String regexParameterMapKey = "((?<!\\[)[^\\[\\]]+(?!\\])|(?<=\\[)[^\\[\\]]*(?=\\]))";
 	
 	/**
 	 * 将parameterMap转换为单值，数组方式通过在key后添加[]提交
@@ -31,6 +34,37 @@ public class ServletUtil {
 			} else {
 				map.put(key, value[0]);
 			}
+		}
+		return map;
+	}
+	
+	public static void main(String[] args) {
+		Map<String, String[]> parameterMap = new LinkedHashMap<String, String[]>();
+		parameterMap.put("id", new String[]{"124"});
+		parameterMap.put("x1[y1]", new String[]{"asag"});
+		parameterMap.put("x1[y2][]", new String[]{"gdgdg"});
+		parameterMap.put("x1[y2][]", new String[]{"hdfhd"});
+		parameterMap.put("x1[y3][z1]", new String[]{"1dg24"});
+		parameterMap.put("x1[y3][z2]", new String[]{"wtcb"});
+		parameterMap.put("x1[y3][z3][]", new String[]{"asff"});
+		parameterMap.put("x2[y 3]", new String[]{"asdsff"});
+		parseParameterMap(parameterMap);
+	}
+	
+	/**
+	 * 解析ParameterMap，将中括号[]中的字符串转换为下标
+	 * 下标支持非中括号[]的任意字符，包括空格等
+	 * @param parameterMap 参数Map
+	 * @return
+	 */
+	public static Map<String, Object> parseParameterMap(Map<String, String[]> parameterMap) {
+		Map<String, Object> map = new LinkedHashMap<String, Object>();
+		System.out.println(regexParameterMapKey);
+		for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
+			String key = entry.getKey();
+			//String[] value = entry.getValue();
+			List<String> fields = DPUtil.getMatcher(regexParameterMapKey, key, true);
+			System.out.println(key + ":" + DPUtil.implode(",", DPUtil.collectionToArray(fields)));
 		}
 		return map;
 	}
