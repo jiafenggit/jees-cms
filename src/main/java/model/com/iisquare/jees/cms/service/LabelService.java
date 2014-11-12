@@ -43,8 +43,9 @@ public class LabelService extends ServiceBase {
 	public Map<String, String> getArticleSortNameMap() {
 		Map<String, String> map = new LinkedHashMap<String, String>();
 		map.put("sort", "默认排序");
+		map.put("publish_time", "发布时间");
 		map.put("update_time", "修改时间");
-		map.put("create_time", "发布时间");
+		map.put("create_time", "创建时间");
 		map.put("count_comment", "评论数");
 		map.put("count_pv", "页面访问数");
 		map.put("count_uv", "访问人数");
@@ -54,7 +55,7 @@ public class LabelService extends ServiceBase {
 	
 	public Map<String, String> getCommentSortNameMap() {
 		Map<String, String> map = new LinkedHashMap<String, String>();
-		map.put("create_time", "发布时间");
+		map.put("create_time", "创建时间");
 		map.put("update_time", "修改时间");
 		return map;
 	}

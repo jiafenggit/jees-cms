@@ -44,13 +44,6 @@ public class ArticleService extends ServiceBase {
 		return map;
 	}
 	
-	public Map<String, String> getGoalMap() {
-		Map<String, String> map = new LinkedHashMap<String, String>();
-		map.put("_blank", "新窗口打开");
-		map.put("_self", "当前页打开");
-		return map;
-	}
-	
 	public ArticleService() {}
 	
 	public Map<Object, Object> search(Map<String, Object> map, String orderBy, int page, int pageSize) {
@@ -124,7 +117,7 @@ public class ArticleService extends ServiceBase {
 		int total = noticeDao.getCount(sql, paramMap, true);
 		sql = DPUtil.stringConcat(sql, SqlUtil.buildLimit(page, pageSize));
 		List<Map<String, Object>> rows = noticeDao.npJdbcTemplate().queryForList(sql, paramMap);
-		rows = ServiceUtil.fillFields(rows, new String[]{"status", "goal"}, new Map<?, ?>[]{getStatusMap(true), getGoalMap()}, null);
+		rows = ServiceUtil.fillFields(rows, new String[]{"status"}, new Map<?, ?>[]{getStatusMap(true)}, null);
 		rows = ServiceUtil.fillRelations(rows, columnDao, new String[]{"column_id"}, new String[]{"name"}, null);
 		rows = ServiceUtil.fillRelations(rows, memberDao, new String[]{"create_id", "update_id"}, new String[]{"serial", "name"}, null);
 		return DPUtil.buildMap(new String[]{"total", "rows"}, new Object[]{total, rows});
@@ -141,7 +134,7 @@ public class ArticleService extends ServiceBase {
 	public Map<String, Object> getById(Object id, boolean bFill) {
 		Map<String, Object> map = noticeDao.getById("*", id);
 		if(null != map && bFill) {
-			map = ServiceUtil.fillFields(map, new String[]{"status", "goal"}, new Map<?, ?>[]{getStatusMap(true), getGoalMap()}, null);
+			map = ServiceUtil.fillFields(map, new String[]{"status"}, new Map<?, ?>[]{getStatusMap(true)}, null);
 			map = ServiceUtil.fillRelations(map, columnDao, new String[]{"column_id"}, new String[]{"name"}, null);
 			map = ServiceUtil.fillRelations(map, memberDao, new String[]{"create_id", "update_id"}, new String[]{"serial", "name"}, null);
 		}

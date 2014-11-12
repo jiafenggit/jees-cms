@@ -30,7 +30,6 @@ public class ArticleController extends PermitController {
 	
 	public String layoutAction() throws Exception {
 		assign("statusMap", articleService.getStatusMap(false));
-		assign("goalMap", articleService.getGoalMap());
 		return displayTemplate();
 	}
 	
@@ -82,7 +81,6 @@ public class ArticleController extends PermitController {
 		if(DPUtil.empty(fullUrl)) fullUrl = UrlUtil.concat(_WEB_URL_, articleService.defaultLogo);
 		assign("info", info);
 		assign("statusMap", articleService.getStatusMap(false));
-		assign("goalMap", articleService.getGoalMap());
 		assign("fullUrl", fullUrl);
 		assign("sessionId", request.getSession().getId());
 		return displayTemplate();
@@ -106,10 +104,6 @@ public class ArticleController extends PermitController {
 		String title = ValidateUtil.filterSimpleString(get("title"), true, 1, 64, null);
 		if(DPUtil.empty(title)) return displayMessage(3002, "标题参数错误");
 		persist.setTitle(title);
-		String goal = ValidateUtil.filterItem(get("goal"), false,
-				DPUtil.collectionToStringArray(articleService.getGoalMap().keySet()), null);
-		if(null == goal) return displayMessage(3002, "打开方式参数错误");
-		persist.setGoal(goal);
 		persist.setUrl(DPUtil.trim(get("url")));
 		persist.setKeywords(DPUtil.trim(get("keywords")));
 		persist.setDescription(DPUtil.trim(get("description")));

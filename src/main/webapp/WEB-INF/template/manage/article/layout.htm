@@ -32,8 +32,10 @@ $(function () {
 			{field:'column_id',title:'所在栏目',formatter:function (value, row, index) {
 				return row.column_id_rel ? row.column_id_rel.name : row.column_id;
 			}},
-			{field:'goal_text',title:'打开方式'},
 			{field:'status_text',title:'状态'},
+			{field:'publish_time',title:'发布时间',formatter:function (value, row, index) {
+				return Web_formatDateTime(value);
+			}},
 			{field:'create_id',title:'创建者',formatter:function (value, row, index) {
 				if(!row.create_id_rel) return '';
 				return '[' + row.create_id_rel.serial + ']' + row.create_id_rel.name;
@@ -89,6 +91,12 @@ $(function () {
 		<td><input name="columnId" class="js-select-type width150" value="" /></td>
 	</tr>
 	<tr>
+		<th>发布时间</th>
+		<td><input class="easyui-datetimebox width150" type="text" name="timeStartPublish" value="" /></td>
+		<th>～</th>
+		<td><input class="easyui-datetimebox width150" type="text" name="timeEndPublish" value="" /></td>
+	</tr>
+	<tr>
 		<th>创建时间</th>
 		<td><input class="easyui-datetimebox width150" type="text" name="timeStartCreate" value="" /></td>
 		<th>～</th>
@@ -113,12 +121,8 @@ $(function () {
 		<td><input class="easyui-textbox width150" type="text" name="description" value="" /></td>
 	</tr>
 	<tr>
-		<th>打开方式</th>
-		<td>
-			<select class="easyui-combobox" name="goal" data-options="editable:false">
-				[@getMapOption map=goalMap default="" tips="全部" /]
-			</select>
-		</td>
+		<th>-</th>
+		<td>-</td>
 		<th>状态</th>
 		<td>
 			<select class="easyui-combobox" name="status" data-options="editable:false">

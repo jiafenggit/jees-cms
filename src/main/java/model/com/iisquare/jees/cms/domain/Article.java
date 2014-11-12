@@ -9,7 +9,6 @@ public class Article {
 	private Integer id; // 主键
 	private String title; // 标题
 	private Integer columnId; // 栏目主键
-	private String goal; // 打开方式
 	private String url; // 链接地址
 	private String keywords; // 页面关键词
 	private String description; // 页面描述
@@ -27,6 +26,7 @@ public class Article {
 	private Integer isTop; // 置顶
 	private Long sort; // 排序（从高到低）
 	private Integer status; // 状态
+	private Long publishTime; // 发布时间（由用户直接修改）
 	private Integer createId; // 添加者
 	private Long createTime; // 添加时间
 	private Integer updateId; // 修改者
@@ -54,14 +54,6 @@ public class Article {
 
 	public void setColumnId(Integer columnId) {
 		this.columnId = columnId;
-	}
-
-	public String getGoal() {
-		return goal;
-	}
-
-	public void setGoal(String goal) {
-		this.goal = goal;
 	}
 
 	public String getUrl() {
@@ -198,6 +190,14 @@ public class Article {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	public Long getPublishTime() {
+		return publishTime;
+	}
+
+	public void setPublishTime(Long publishTime) {
+		this.publishTime = publishTime;
 	}
 
 	public Integer getCreateId() {
