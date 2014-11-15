@@ -17,19 +17,23 @@
 				<div data-options="region:'south',split:true,plain:true" class="height200">
 					<table class="td-break-word full-w-h">
 						<tr>
-							<td rowspan="3" align="center" class="width213">
+							<td rowspan="4" align="center" class="width213">
 								<a href="javascript:void(0);" target="_blank" title="点击查看大图"><img src="${_WEB_URL_}/skin/images/nopic_article.jpg" class="img js-image-show" width="213px" height="160px" /></a>
 							</td>
-							<th class="width130">图片地址</th>
-							<td><textarea class="easyui-textbox width300 js-image-url" data-options="multiline:true,height:55"></textarea></td>
-						</tr>
-						<tr>
-							<th>链接地址</th>
-							<td><textarea class="easyui-textbox width300 js-input-url" data-options="multiline:true,height:55"></textarea></td>
+							<th>标题名称</th>
+							<td><input class="easyui-textbox width300 js-input-title" type="text" value="" /></td>
 						</tr>
 						<tr>
 							<th>截取宽度</th>
 							<td><input class="easyui-numberspinner width100 js-input-space" type="text" data-options="min:0" value="0" /><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-tip',plain:true">默认不截取</a></td>
+						</tr>
+						<tr>
+							<th class="width130">图片地址</th>
+							<td><textarea class="easyui-textbox width300 js-image-url" data-options="multiline:true,height:50"></textarea></td>
+						</tr>
+						<tr>
+							<th>链接地址</th>
+							<td><textarea class="easyui-textbox width300 js-input-url" data-options="multiline:true,height:50"></textarea></td>
 						</tr>
 						<tr>
 							<td><div class="align-center"><a href="javascript:void(0);" class="easyui-linkbutton js-swf-upload-button" data-options="iconCls:'icon-upload',plain:'true'"><span id="js-swf-upload"></span></a></div></td>
@@ -45,17 +49,7 @@
 					</table>
 				</div>
 				<div data-options="region:'center',split:true,plain:true">
-					<table class="easyui-datagrid js-slideshow-list" data-options="rownumbers:true,fit:true,fitcolumns:true">
-					<thead>
-						<tr>
-							<th data-options="field:'title'">标题</th>
-							<th data-options="field:'space'">截取宽度</th>
-							<th data-options="field:'picture'">图片地址</th>
-							<th data-options="field:'url'">链接地址</th>
-							<th data-options="field:'goal'">打开方式</th>
-						</tr>
-					</thead>
-					</table>
+					<table class="js-slideshow-list"></table>
 				</div>
 			</div>
 		</td>
@@ -92,8 +86,94 @@ $(function () {
 		$('.js-image-show').attr('src', url);
 		$('.js-image-show').parent().attr('href', url);
 	});
+	
+	function setData(data) {
+		$('.js-input-title').textbox('setValue', data.title);
+		$('.js-input-space').numberspinner('setValue', data.space);
+		$('.js-image-url').textbox('setValue', data.image);
+		$('.js-image-url').trigger('change');
+		$('.js-input-url').textbox('setValue', data.url);
+	}
+	
+	function getData() {
+		return {
+			title : $.trim($('.js-input-title').textbox('getValue')),
+			space : $.trim($('.js-input-space').numberspinner('getValue')),
+			image : $.trim($('.js-image-url').textbox('getValue')),
+			url : $.trim($('.js-input-url').textbox('getValue')),
+		};
+	}
+	var $slideshowList = $('.js-slideshow-list');
+	var selectIndex = -1;
+	$slideshowList.datagrid({
+		rownumbers : true,
+		fit : true,
+		fitcolumns : true,
+		singleSelect : true,
+		columns : [[
+			{field:'title',title:'标题名称'},
+			{field:'space',title:'截取宽度'},
+			{field:'image',title:'图片地址'},
+			{field:'url',title:'链接地址'}
+		]],
+		onSelect : function (rowIndex, rowData) {
+			selectIndex = rowIndex;
+			setData(rowData);
+		}
+	});
+	try {
+		var data = $.parseJSON('${info.content!""}');
+		if(data && data['0']) {
+			var rows = [];
+			for (var key in data) {
+				rows.push(data[key]);
+			}
+			$slideshowList.datagrid('loadData', rows);	
+		}
+	} catch (e) {
+		Web_alertInfo('无法解析当前数据');
+	}
+	$('.js-control-add').bind('click', function () {
+		$slideshowList.datagrid('appendRow', getData());
+		$slideshowList.datagrid('autoSizeColumn');
+	});
+	$('.js-control-save').bind('click', function () {
+		if(-1 == selectIndex) return false;
+		$slideshowList.datagrid('updateRow', {
+			index : selectIndex,
+			row : getData()
+		});
+		$slideshowList.datagrid('autoSizeColumn');
+	});
+	$('.js-control-delete').bind('click', function () {
+		if(-1 == selectIndex) return false;
+		$slideshowList.datagrid('deleteRow', selectIndex);
+		selectIndex = -1;
+		$slideshowList.datagrid('autoSizeColumn');
+	});
+	$('.js-control-up').bind('click', function () {
+		if(selectIndex < 1) return false;
+		var upIndex = selectIndex - 1;
+		var rows = $slideshowList.datagrid('getRows');
+		var tempRow = rows[upIndex];
+		rows[upIndex] = rows[selectIndex];
+		rows[selectIndex] = tempRow;
+		$slideshowList.datagrid('loadData', rows);
+		selectIndex = upIndex;
+	});
+	$('.js-control-down').bind('click', function () {
+		var rows = $slideshowList.datagrid('getRows');
+		if(-1 == selectIndex || selectIndex + 1 >= rows.length) return false;
+		var downIndex = selectIndex + 1;
+		var tempRow = rows[downIndex];
+		rows[downIndex] = rows[selectIndex];
+		rows[selectIndex] = tempRow;
+		$slideshowList.datagrid('loadData', rows);
+		selectIndex = downIndex;
+	});
+	
 	$('#buttonOk').bind('click', function () {
-		var content = '';
+		var content = $slideshowList.datagrid('getRows');
 		$.post('${_BASE_.url("saveEffect")}', {
 			id : '${info.id}',
 			content : content
