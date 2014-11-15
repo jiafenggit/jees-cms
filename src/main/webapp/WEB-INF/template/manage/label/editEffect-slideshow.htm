@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+[#include "../../base/public/common.inc.htm"]
+[#include "../../base/public/resource.inc.htm"]
+<table cellspacing="1" cellpadding="0" class="table-line td-left td-break-word">
+	<tr>
+		<th class="width130">名称</th>
+		<td>${(info.name)!""}</td>
+	</tr>
+	<tr>
+		<th class="width130">展示效果</th>
+		<td>${(info.effect_text)!""}</td>
+	</tr>
+	<tr>
+		<th class="width130">信息列表</th>
+		<td class="td-clear height400">
+			<div class="easyui-layout" data-options="fit:true,border:true,plain:true">
+				<div data-options="region:'south',split:true,plain:true" class="height200">
+					<table class="td-break-word full-w-h">
+						<tr>
+							<td rowspan="3" align="center" class="width213">
+								<a href="javascript:void(0);" target="_blank" title="点击查看大图"><img src="${_WEB_URL_}/skin/images/nopic_article.jpg" class="img js-image-show" width="213px" height="160px" /></a>
+							</td>
+							<th class="width130">图片地址</th>
+							<td><textarea class="easyui-textbox width300 js-image-url" data-options="multiline:true,height:55"></textarea></td>
+						</tr>
+						<tr>
+							<th>链接地址</th>
+							<td><textarea class="easyui-textbox width300 js-input-url" data-options="multiline:true,height:55"></textarea></td>
+						</tr>
+						<tr>
+							<th>截取宽度</th>
+							<td><input class="easyui-numberspinner width100 js-input-space" type="text" data-options="min:0" value="0" /><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-tip',plain:true">默认不截取</a></td>
+						</tr>
+						<tr>
+							<td><div class="align-center"><a href="javascript:void(0);" class="easyui-linkbutton js-swf-upload-button" data-options="iconCls:'icon-upload',plain:'true'"><span id="js-swf-upload"></span></a></div></td>
+							<th>列表操作</th>
+							<td>
+								<a href="javascript:void(0);" class="easyui-linkbutton js-control-add" data-options="iconCls:'icon-add'">添加</a>
+								<a href="javascript:void(0);" class="easyui-linkbutton js-control-save" data-options="iconCls:'icon-edit'">修改</a>
+								<a href="javascript:void(0);" class="easyui-linkbutton js-control-delete" data-options="iconCls:'icon-remove'">删除</a>
+								<a href="javascript:void(0);" class="easyui-linkbutton js-control-up" data-options="iconCls:'icon-arrow-up'">上移</a>
+								<a href="javascript:void(0);" class="easyui-linkbutton js-control-down" data-options="iconCls:'icon-arrow-down'">下移</a>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div data-options="region:'center',split:true,plain:true">
+					<table class="easyui-datagrid js-slideshow-list" data-options="rownumbers:true,fit:true,fitcolumns:true">
+					<thead>
+						<tr>
+							<th data-options="field:'title'">标题</th>
+							<th data-options="field:'space'">截取宽度</th>
+							<th data-options="field:'picture'">图片地址</th>
+							<th data-options="field:'url'">链接地址</th>
+							<th data-options="field:'goal'">打开方式</th>
+						</tr>
+					</thead>
+					</table>
+				</div>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<th>操作</th>
+		<td>
+			<a id="buttonOk" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true">保存</a>
+			<a href="javascript:void(0);" onclick="Web_redirectPage(-1);" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true">返回</a>
+		</td>
+	</tr>
+</table>
+[#include "../../base/upload/swfUpload.htm"]
+<script type="text/javascript">
+$(function () {
+	swfUploadSettings.post_params['dir'] = 'image';
+	swfUploadSettings.upload_success_handler = function (file, serverData) {
+		isSWFUploading = false;
+		try {
+			var data = $.parseJSON(serverData);
+			if(0 == data.error) {
+				$('.js-image-url').textbox('setValue', data.uri).trigger('change');
+			} else {
+				Web_alertInfo(data.message);
+			}
+		} catch (ex) {
+			Web_alertInfo('上传失败！');
+		}
+	};
+	new SWFUpload(swfUploadSettings);
+
+	$('.js-image-url').bind('change', function () {
+		var url = Web_fullUrl($(this).textbox('getValue'));
+		$('.js-image-show').attr('src', url);
+		$('.js-image-show').parent().attr('href', url);
+	});
+	$('#buttonOk').bind('click', function () {
+		var content = '';
+		$.post('${_BASE_.url("saveEffect")}', {
+			id : '${info.id}',
+			content : content
+		}, function (data) {
+			if(data.status) {
+				Web_alertInfo(data.message);
+			} else {
+				Web_redirectPage(data.message);
+			}
+		}, 'json');
+	});
+});
+</script>

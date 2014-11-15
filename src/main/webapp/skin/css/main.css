@@ -38,6 +38,8 @@ a:hover { text-decoration:underline;}
 .width-percent50 { width: 50%;}
 .width-percent98 { width:98%;}
 .width-percent100 { width: 100%;}
+.height160 { height:160px;}
+.height200 { height:200px;}
 .height300 { height:300px;}
 .height400 { height:400px;}
 .height500 { height:500px;}
@@ -128,3 +130,11 @@ form { width:100%; height:100%;}
 .icon-setting { background:url('../images/icons/setting.png') no-repeat center center;}
 .icon-tool { background:url('../images/icons/tool.png') no-repeat center center;}
 .icon-effect { background:url('../images/icons/effect.png') no-repeat center center;}
+.icon-arrow-up { background:url('../images/icons/arrow_up.png') no-repeat center center;}
+.icon-arrow-down { background:url('../images/icons/arrow_down.png') no-repeat center center;}
+.icon-arrow-left { background:url('../images/icons/arrow_left.png') no-repeat center center;}
+.icon-arrow-right { background:url('../images/icons/arrow_right.png') no-repeat center center;}
+.icon-arrow-left-up { background:url('../images/icons/arrow_left_up.png') no-repeat center center;}
+.icon-arrow-left-down { background:url('../images/icons/arrow_left_down.png') no-repeat center center;}
+.icon-arrow-right-up { background:url('../images/icons/arrow_right_up.png') no-repeat center center;}
+.icon-arrow-right-down { background:url('../images/icons/arrow_right_down.png') no-repeat center center;}
