@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+[#include "../../base/public/common.inc.htm"]
+[#include "../../base/public/resource.inc.htm"]
+<form id="submitForm" method="post" action="${_BASE_.url("saveSetting")}">
+<input type="hidden" name="id" value="${id!0}" />
+<table cellspacing="1" cellpadding="0" class="table-line td-left td-break-word">
+	<tr>
+		<th class="width130">网站标题</th>
+		<td><input class="easyui-textbox width300" type="text" name="title" data-options="required:true" value="${(title)!""}" /></td>
+	</tr>
+	<tr>
+		<th>关键词</th>
+		<td><input class="easyui-textbox width300" type="text" name="keywords" value="${(keywords)!""}" /></td>
+	</tr>
+	<tr>
+		<th>页面描述</th>
+		<td><textarea name="description" class="easyui-textbox width300" data-options="multiline:true,height:80">${description!""}</textarea></td>
+	</tr>
+	<tr>
+		<th>用户登录</th>
+		<td><input class="input-checkbox" type="checkbox" name="loginEnable" value="1"[#if !empty(loginEnable)] checked="checked"[/#if] />允许用户登录</td>
+	</tr>
+	<tr>
+		<th>用户注册</th>
+		<td><input class="input-checkbox" type="checkbox" name="registerEnable" value="1"[#if !empty(registerEnable)] checked="checked"[/#if] />允许用户注册</td>
+	</tr>
+	<tr>
+		<th>在线留言</th>
+		<td><input class="input-checkbox" type="checkbox" name="noteEnable" value="1"[#if !empty(noteEnable)] checked="checked"[/#if] />启用在线留言功能</td>
+	</tr>
+	<tr>
+		<th>文章评论</th>
+		<td><input class="input-checkbox" type="checkbox" name="commentEnable" value="1"[#if !empty(commentEnable)] checked="checked"[/#if] />启用文章评论功能</td>
+	</tr>
+	<tr>
+		<th>文章反馈</th>
+		<td><input class="input-checkbox" type="checkbox" name="feedbackEnable" value="1"[#if !empty(feedbackEnable)] checked="checked"[/#if] />启用文章反馈（如举报、投诉、建议等）功能</td>
+	</tr>
+	<tr>
+		<th>友链申请</th>
+		<td><input class="input-checkbox" type="checkbox" name="partnerEnable" value="1"[#if !empty(partnerEnable)] checked="checked"[/#if] />启用友情链接申请功能</td>
+	</tr>
+	<tr>
+		<th>操作</th>
+		<td>
+			<a id="buttonOk" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true">确定</a>
+			<a id="buttonCancel" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true">重置</a>
+		</td>
+	</tr>
+</table>
+</form>
+<script type="text/javascript">
+$(function () {
+	var $submitForm = $('#submitForm');
+	$submitForm.form({
+		success : function (data) {
+			data = $.parseJSON(data);
+			if(data.status) {
+				Web_alertInfo(data.message);
+			} else {
+				Web_refreshCurrentPage();
+			}
+		}
+	});
+	$('#buttonOk').bind('click', function () {
+		if($submitForm.form('validate')) $submitForm.form('submit');
+	});
+	$('#buttonCancel').bind('click', function () {
+		$submitForm.form('reset');
+	});
+});
+</script>

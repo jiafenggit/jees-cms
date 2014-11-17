@@ -17,6 +17,9 @@ public class IndexController extends PermitController {
 	
 	@RequestMapping(value="/")
 	public String indexAction() throws Exception {
+		assign("title", settingService.get("web", "title")); // 网站标题
+		assign("keywords", settingService.get("web", "keywords")); // 网站关键词
+		assign("description", settingService.get("web", "description")); // 网站描述
 		return displayTemplate();
 	}
 	

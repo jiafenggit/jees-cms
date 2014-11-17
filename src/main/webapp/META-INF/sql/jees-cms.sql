@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50525
 File Encoding         : 65001
 
-Date: 2014-11-12 15:42:08
+Date: 2014-11-17 16:24:44
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -124,7 +124,7 @@ CREATE TABLE `cms_icon` (
   `update_id` int(11) NOT NULL DEFAULT '0',
   `update_time` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of cms_icon
@@ -157,7 +157,7 @@ CREATE TABLE `cms_label` (
 -- ----------------------------
 -- Records of cms_label
 -- ----------------------------
-INSERT INTO `cms_label` VALUES ('1', '首页最新动态文本', 'index', 'index', 'index', '', 'newsText', 'slideshow', '{\"sortOrder\":\"desc\",\"total\":\"5\",\"space\":\"0\",\"sortName\":\"create_time\",\"columnIdArray\":[\"3\",\"2\",\"4\"]}', '', '0', '1', '1', '1415418678539', '1', '1415776941357');
+INSERT INTO `cms_label` VALUES ('1', '首页最新动态文本', 'index', 'index', 'index', '', 'newsText', 'slideshow', '{\"0\":{\"space\":\"0\",\"image\":\"files/attached/image/20141115/1416034293316.jpg\",\"url\":\"gsgs\",\"title\":\"室内装修\"},\"1\":{\"image\":\"files/attached/image/20141115/1416034293316.jpg\",\"space\":\"2\",\"title\":\"卧室\",\"url\":\"gsgs\"},\"2\":{\"space\":\"0\",\"url\":\"saasgdg\",\"title\":\"餐厅\",\"image\":\"files/attached/image/20141115/1416034298605.jpg\"}}', '', '0', '1', '1', '1415418678539', '1', '1415776941357');
 
 -- ----------------------------
 -- Table structure for `cms_log`
@@ -182,7 +182,7 @@ CREATE TABLE `cms_log` (
   `operate_ip` varchar(64) NOT NULL DEFAULT '',
   `operate_time` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of cms_log
@@ -215,6 +215,10 @@ INSERT INTO `cms_log` VALUES ('25', '用户登陆', 'service', 'base', 'member',
 INSERT INTO `cms_log` VALUES ('27', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1415667529406');
 INSERT INTO `cms_log` VALUES ('30', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1415768993348');
 INSERT INTO `cms_log` VALUES ('31', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1415773059188');
+INSERT INTO `cms_log` VALUES ('32', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1416016923217');
+INSERT INTO `cms_log` VALUES ('33', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1416024509031');
+INSERT INTO `cms_log` VALUES ('34', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1416030882779');
+INSERT INTO `cms_log` VALUES ('35', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1416210235062');
 
 -- ----------------------------
 -- Table structure for `cms_log_setting`
@@ -264,7 +268,7 @@ CREATE TABLE `cms_member` (
 -- ----------------------------
 -- Records of cms_member
 -- ----------------------------
-INSERT INTO `cms_member` VALUES ('1', 'admin', '管理员', '0f4e8ac95b5c1fc48dc98004c7525bc7', '888888', '0', '1', '1415777719676', '127.0.0.1', '1', '127.0.0.1', '1411090286300', '1', '1415760761046');
+INSERT INTO `cms_member` VALUES ('1', 'admin', '管理员', '0f4e8ac95b5c1fc48dc98004c7525bc7', '888888', '0', '1', '1416212353164', '127.0.0.1', '1', '127.0.0.1', '1411090286300', '1', '1415760761046');
 INSERT INTO `cms_member` VALUES ('2', 'guest', '访客', '793a507822c9ec991c3418dfb7950f07', '338043', '0', '1', '1414550595011', '127.0.0.1', '1', '127.0.0.1', '1414546536140', '1', '1414546536140');
 
 -- ----------------------------
@@ -972,7 +976,7 @@ CREATE TABLE `cms_setting` (
   `operate_ip` varchar(64) NOT NULL DEFAULT '',
   `operate_time` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of cms_setting
@@ -980,6 +984,15 @@ CREATE TABLE `cms_setting` (
 INSERT INTO `cms_setting` VALUES ('1', 'webName', 'system', '内容管理系统', '系统名称', '1', '127.0.0.1', '1414641138607');
 INSERT INTO `cms_setting` VALUES ('2', 'pageSize', 'system', '15', '分页大小', '1', '127.0.0.1', '1413018859640');
 INSERT INTO `cms_setting` VALUES ('3', 'guestSerial', 'system', 'guest', '访客模式账号', '1', '127.0.0.1', '1414549233193');
+INSERT INTO `cms_setting` VALUES ('4', 'title', 'web', 'Jees-CMS演示站', '网站标题', '1', '127.0.0.1', '1416212352748');
+INSERT INTO `cms_setting` VALUES ('5', 'keywords', 'web', 'java,j2ee,cms,开源,免费,jees', '网站关键词', '1', '127.0.0.1', '1416212342872');
+INSERT INTO `cms_setting` VALUES ('6', 'description', 'web', 'Jees-CMS演示站', '网站描述', '1', '127.0.0.1', '1416212334431');
+INSERT INTO `cms_setting` VALUES ('7', 'loginEnable', 'web', '1', '是否开启登陆', '1', '127.0.0.1', '1416212324752');
+INSERT INTO `cms_setting` VALUES ('8', 'registerEnable', 'web', '1', '是否开启注册', '1', '127.0.0.1', '1416212315472');
+INSERT INTO `cms_setting` VALUES ('9', 'noteEnable', 'web', '1', '是否开启在线留言', '1', '127.0.0.1', '1416212307380');
+INSERT INTO `cms_setting` VALUES ('10', 'commentEnable', 'web', '1', '是否开启文章评论（全局）', '1', '127.0.0.1', '1416212298435');
+INSERT INTO `cms_setting` VALUES ('11', 'feedbackEnable', 'web', '1', '是否开启文章投诉举报', '1', '127.0.0.1', '1416212280762');
+INSERT INTO `cms_setting` VALUES ('12', 'partnerEnable', 'web', '1', '是否开启友情链接申请', '1', '127.0.0.1', '1416212271324');
 
 -- ----------------------------
 -- Table structure for `cms_upload`
@@ -993,7 +1006,7 @@ CREATE TABLE `cms_upload` (
   `operate_ip` varchar(64) NOT NULL DEFAULT '',
   `operate_time` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of cms_upload
@@ -1010,3 +1023,9 @@ INSERT INTO `cms_upload` VALUES ('9', 'd1a20cf431adcbeff66cbaf1aeaf2edda2cc9fe9.
 INSERT INTO `cms_upload` VALUES ('10', '314e251f95cad1c8771b2ece7d3e6709c83d51b3.jpg', 'files/attached/icon/20141110/1415603200385.jpg', '1', '127.0.0.1', '1415603200385');
 INSERT INTO `cms_upload` VALUES ('11', '314e251f95cad1c8771b2ece7d3e6709c83d51b3.jpg', 'files/attached/image/20141110/1415603381022.jpg', '1', '127.0.0.1', '1415603381022');
 INSERT INTO `cms_upload` VALUES ('12', 'd1a20cf431adcbeff66cbaf1aeaf2edda2cc9fe9.jpg', 'files/attached/image/20141110/1415603381170.jpg', '1', '127.0.0.1', '1415603381170');
+INSERT INTO `cms_upload` VALUES ('13', '314e251f95cad1c8771b2ece7d3e6709c83d51b3.jpg', 'files/attached/image/20141115/1416024512581.jpg', '1', '127.0.0.1', '1416024512581');
+INSERT INTO `cms_upload` VALUES ('14', '314e251f95cad1c8771b2ece7d3e6709c83d51b3.jpg', 'files/attached/image/20141115/1416030892024.jpg', '1', '127.0.0.1', '1416030892024');
+INSERT INTO `cms_upload` VALUES ('15', '314e251f95cad1c8771b2ece7d3e6709c83d51b3.jpg', 'files/attached/image/20141115/1416034266294.jpg', '1', '127.0.0.1', '1416034266294');
+INSERT INTO `cms_upload` VALUES ('16', 'd1a20cf431adcbeff66cbaf1aeaf2edda2cc9fe9.jpg', 'files/attached/image/20141115/1416034272186.jpg', '1', '127.0.0.1', '1416034272186');
+INSERT INTO `cms_upload` VALUES ('17', '314e251f95cad1c8771b2ece7d3e6709c83d51b3.jpg', 'files/attached/image/20141115/1416034293316.jpg', '1', '127.0.0.1', '1416034293316');
+INSERT INTO `cms_upload` VALUES ('18', 'd1a20cf431adcbeff66cbaf1aeaf2edda2cc9fe9.jpg', 'files/attached/image/20141115/1416034298605.jpg', '1', '127.0.0.1', '1416034298605');
