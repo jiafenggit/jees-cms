@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+[#include "../../base/public/common.inc.htm"]
+[#include "../../base/public/resource.inc.htm"]
+<table class="js-list-table"></table>
+<div id="toolbar">
+	[#if _BASE_.hasPermit("edit")]<a href="${_BASE_.url("edit")}" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">添加</a>[/#if]
+	[#if _BASE_.hasPermit("delete")]<a href="javascript:void(0);" class="easyui-linkbutton js-control-delete" data-options="iconCls:'icon-remove',plain:true">批量删除</a>[/#if]
+	<a href="javascript:void(0);" class="easyui-linkbutton js-control-search" data-options="iconCls:'icon-search',plain:true">搜索</a>
+</div>
+<script type="text/javascript">
+$(function () {
+	$('.js-list-table').datagrid({
+		url : '${_BASE_.url("list")}',
+		pagination : true,
+		idField : 'id',
+		toolbar : '#toolbar',
+		rownumbers : true,
+		fitcolumns : true,
+		fit : true,
+		nowrap : true,
+		singleSelect : true,
+		checkOnSelect : false,
+		selectOnCheck : false,
+		columns:[[
+			{field:'id',checkbox:true},
+			{field:'show_id',title:'ID',formatter:function (value, row, index) {
+				return row.id;
+			}},
+			{field:'word',title:'词汇'},
+			{field:'type',title:'类型'},
+			{field:'status_text',title:'状态'},
+			{field:'create_id',title:'创建者',formatter:function (value, row, index) {
+				if(!row.create_id_rel) return '';
+				return '[' + row.create_id_rel.serial + ']' + row.create_id_rel.name;
+			}},
+			{field:'create_time',title:'创建时间',formatter:function (value, row, index) {
+				return Web_formatDateTime(value);
+			}},
+			{field:'update_id',title:'修改者',formatter:function (value, row, index) {
+				if(!row.update_id_rel) return '';
+				return '[' + row.update_id_rel.serial + ']' + row.update_id_rel.name;
+			}},
+			{field:'update_time',title:'修改时间',formatter:function (value, row, index) {
+				return Web_formatDateTime(value);
+			}},
+			{field:'operate',title:'操作',formatter:function (value, row, index) {
+				return '[#if _BASE_.hasPermit("show")]<a href="${_BASE_.url("show")}?id='
+					+ row.id + '" class="js-list-button" data-options="iconCls:\'icon-detail\'">查看</a>[/#if]'
+					+ '[#if _BASE_.hasPermit("edit")]<a href="${_BASE_.url("edit")}?id='
+					+ row.id + '" class="js-list-button" data-options="iconCls:\'icon-edit\'">修改</a>[/#if]'
+					+ '[#if _BASE_.hasPermit("delete")]<a href="${_BASE_.url("delete")}?ids[]='
+					+ row.id + '" class="js-list-button" data-options="iconCls:\'icon-remove\'">删除</a>[/#if]';
+			}}
+		]],
+		onLoadSuccess : function (data) {
+			$('.js-list-button').linkbutton({plain : true});
+			$(this).datagrid('autoSizeColumn', 'operate');
+		}
+	});
+	
+	$('.js-control-delete').bind('click', function () {
+		var ids = Web_getDatagridIdArray($('.js-list-table'), 'checked');
+		var length = ids.length;
+		if(length < 1) {
+			Web_alertInfo('请选择要删除的记录！');
+			return ;
+		}
+		for(var i = 0; i < length; i++) {
+			ids[i] = 'ids[]=' + ids[i];
+		}
+		var url = '${_BASE_.url("delete")}?' + ids.join('&');
+		Web_redirectPage(url);
+	});
+});
+</script>
+<div class="hidden">
+<div id="js-search-dialog" style="width:462px;height:200px" data-options="buttons:'#js-search-button',modal:true,resizable:true">
+<form id="searchForm" method="post" action="">
+<table align="center" class="table-horizontal tr-height25">
+	<tr>
+		<th>词汇</th>
+		<td><input class="easyui-textbox width150" type="text" name="word" value="" /></td>
+		<th>类型</th>
+		<td><input class="easyui-textbox width150" type="text" name="type" value="" /></td>
+	</tr>
+	<tr>
+		<th>创建时间</th>
+		<td><input class="easyui-datetimebox width150" type="text" name="timeStartCreate" value="" /></td>
+		<th>～</th>
+		<td><input class="easyui-datetimebox width150" type="text" name="timeEndCreate" value="" /></td>
+	</tr>
+	<tr>
+		<th>修改时间</th>
+		<td><input class="easyui-datetimebox width150" type="text" name="timeStartModify" value="" /></td>
+		<th>～</th>
+		<td><input class="easyui-datetimebox width150" type="text" name="timeEndModify" value="" /></td>
+	</tr>
+	<tr>
+		<th>创建者</th>
+		<td><input class="easyui-textbox width150" type="text" name="serialCreate" value="" /></td>
+		<th>修改者</th>
+		<td><input class="easyui-textbox width150" type="text" name="serialModify" value="" /></td>
+	</tr>
+</table>
+</form>
+</div>
+<div id="js-search-button">
+	<a href="javascript:void(0);" class="easyui-linkbutton js-control-ok" data-options="iconCls:'icon-search'">搜索</a>
+	<a href="javascript:void(0);" class="easyui-linkbutton js-control-cancel" data-options="iconCls:'icon-cancel'">取消</a>
+</div>
+</div>
+<script type="text/javascript">
+$(function () {
+	var $searchDialog = $('#js-search-dialog');
+	$('.js-control-search').bind('click', function () {
+		$searchDialog.dialog({
+			title : '筛选条件',
+			iconCls : 'icon-search'
+		});
+	});
+	$('#js-search-button').find('.js-control-ok').unbind('click.action').bind('click.action' ,function () {
+		$('.js-list-table').datagrid('load', $('#searchForm').form('getData'));
+		$searchDialog.dialog('close');
+	});
+	$('#js-search-button').find('.js-control-cancel').unbind('click.action').bind('click.action' ,function () {
+		$searchDialog.dialog('close');
+	});
+});
+</script>
