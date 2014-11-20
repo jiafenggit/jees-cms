@@ -1,5 +1,6 @@
 package com.iisquare.jees.framework.controller;
 
+import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -17,6 +18,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 
 import com.iisquare.jees.framework.Configuration;
 import com.iisquare.jees.framework.util.DPUtil;
@@ -26,7 +29,7 @@ import com.iisquare.jees.framework.util.ServletUtil;
 @Scope("prototype")
 public abstract class ControllerBase {
 	
-	public static final class ResultType {
+	public static final class ResultType { // 当前支持的视图资源类型
 		public static final String _FREEMARKER_ = "_FREEMARKER_";
 		public static final String _REDIRECT_ = "_REDIRECT_";
 		public static final String _TEXT_ = "_TEXT_";
@@ -36,13 +39,17 @@ public abstract class ControllerBase {
 	public static final String CONTENT_TYPE = "text/html;charset=utf-8";
 	
 	@Autowired
-	protected Configuration configuration;
-	protected HttpServletRequest request;
-	protected HttpServletResponse response;
-	protected Map<String, Object> parameterMap;
+	protected Configuration configuration; // 框架配置对象
+	@Autowired
+	protected FreeMarkerViewResolver viewResolver; // 视图解析对象
+	@Autowired
+	protected FreeMarkerConfigurer freeMarkerConfigurer; // 视图配置对象
+	protected HttpServletRequest request; // HTTP请求对象
+	protected HttpServletResponse response; // HTTP响应对象
+	protected Map<String, Object> parameterMap; // 请求参数Map对象
 
 	public String _MODULE_, _CONTROLLER_, _ACTION_;
-	public Map<String, Object> _ASSIGN_;
+	public Map<String, Object> _ASSIGN_; // 视图数据Map对象
 	public String _WEB_ROOT_, _WEB_URL_, _SKIN_URL_, _THEME_URL_, _DIRECTORY_SEPARATOR_;
 
 	public Configuration getConfiguration() {
@@ -200,13 +207,16 @@ public abstract class ControllerBase {
 	 * @throws Exception
 	 */
 	protected String displayTemplate(String module, String controller, String action) throws Exception {
-		StringBuilder sb = new StringBuilder("/");
-		String themeName = configuration.getThemeName();
-		if(!DPUtil.empty(themeName)) {
-			sb.append(themeName).append("/");
+		String themeName = configuration.getThemeName(); // 主题名称
+		String viewName = DPUtil.stringConcat("/", module, "/", controller, "/", action); // 模板路径
+		if(DPUtil.empty(themeName)) return display(viewName, ResultType._FREEMARKER_); // 未启用主题
+		String themeViewName = DPUtil.stringConcat("/", themeName, viewName); // 主题模板路径
+		try { // 尝试获取主题模板
+			freeMarkerConfigurer.getConfiguration().getTemplate(themeViewName);
+		} catch (FileNotFoundException e) { // 主题模板文件不存在，采用默认主题模板
+			themeViewName = DPUtil.stringConcat("/", "default", viewName);
 		}
-		sb.append(module).append("/").append(controller).append("/").append(action);
-		return display(sb.toString(), ResultType._FREEMARKER_);
+		return display(themeViewName, ResultType._FREEMARKER_);
 	}
 	
 	/**
@@ -285,18 +295,14 @@ public abstract class ControllerBase {
 	 * @throws Exception
 	 */
 	protected String display(String result, String type) throws Exception {
-		if(ResultType._FREEMARKER_.equals(type)) {
-			String themeName = configuration.getThemeName();
-			if(!DPUtil.empty(themeName)) return DPUtil.stringConcat("/", themeName, result);
-			return result;
-		} else if(ResultType._TEXT_.equals(type)){
+		if(ResultType._FREEMARKER_.equals(type)) return result;
+		if(ResultType._TEXT_.equals(type)){
 			PrintWriter out = response.getWriter();
 			out.print(result);
 			out.flush();
 			return "";
-		} else if (ResultType._REDIRECT_.equals(type)) {
-			return DPUtil.stringConcat("redirect:", result);
 		}
+		if(ResultType._REDIRECT_.equals(type)) return DPUtil.stringConcat("redirect:", result);
 		return null;
 	}
 	
