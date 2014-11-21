@@ -48,6 +48,12 @@ public class TemplateController extends PermitController {
 	}
 	
 	public String saveAction() throws Exception {
-		return null;
+		String path = get("path");
+		String content = get("content");
+		if(templateService.updateTempalteContent(getTemplateLoaderPath(), path, configuration.getTemplateSuffix(), content)) {
+			return displayMessage(0, url("layout"));
+		} else {
+			return displayMessage(500, "修改失败");
+		}
 	}
 }
