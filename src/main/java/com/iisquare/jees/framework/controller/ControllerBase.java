@@ -1,6 +1,5 @@
 package com.iisquare.jees.framework.controller;
 
-import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -18,11 +17,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
-import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
-
 import com.iisquare.jees.framework.Configuration;
 import com.iisquare.jees.framework.util.DPUtil;
+import com.iisquare.jees.framework.util.FileUtil;
 import com.iisquare.jees.framework.util.ServletUtil;
 
 @Controller
@@ -40,10 +37,6 @@ public abstract class ControllerBase {
 	
 	@Autowired
 	protected Configuration configuration; // 框架配置对象
-	@Autowired
-	protected FreeMarkerViewResolver viewResolver; // 视图解析对象
-	@Autowired
-	protected FreeMarkerConfigurer freeMarkerConfigurer; // 视图配置对象
 	protected HttpServletRequest request; // HTTP请求对象
 	protected HttpServletResponse response; // HTTP响应对象
 	protected Map<String, Object> parameterMap; // 请求参数Map对象
@@ -211,10 +204,10 @@ public abstract class ControllerBase {
 		String viewName = DPUtil.stringConcat("/", module, "/", controller, "/", action); // 模板路径
 		if(DPUtil.empty(themeName)) return display(viewName, ResultType._FREEMARKER_); // 未启用主题
 		String themeViewName = DPUtil.stringConcat("/", themeName, viewName); // 主题模板路径
-		try { // 尝试获取主题模板
-			freeMarkerConfigurer.getConfiguration().getTemplate(themeViewName);
-		} catch (FileNotFoundException e) { // 主题模板文件不存在，采用默认主题模板
-			themeViewName = DPUtil.stringConcat("/", "default", viewName);
+		String themeViewPath = DPUtil.stringConcat("/".equals(_DIRECTORY_SEPARATOR_) ? _WEB_ROOT_ : _WEB_ROOT_.replaceAll("\\\\", "/"),
+				"/", DPUtil.trim(configuration.getTemplateLoaderPath(), "/"), themeViewName, configuration.getTemplateSuffix());
+		if(!"default".equals(themeName) && !FileUtil.isExists(themeViewPath)) { // 设定主题模板文件不存在
+			themeViewName = DPUtil.stringConcat("/", "default", viewName); // 采用默认模板文件
 		}
 		return display(themeViewName, ResultType._FREEMARKER_);
 	}
