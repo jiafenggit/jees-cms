@@ -79,6 +79,7 @@ public class TemplateService extends ServiceBase {
 	public String getTempalteContent(String templateLoaderPath, String path, String suffix) {
 		if(!isLegalPath(path)) return null;
 		if(!path.endsWith(suffix)) return null;
+		templateLoaderPath = convertLoaderPath(templateLoaderPath);
 		return FileUtil.getContent(DPUtil.stringConcat(templateLoaderPath, "/", path), null);
 	}
 	
@@ -93,6 +94,7 @@ public class TemplateService extends ServiceBase {
 	public boolean updateTempalteContent(String templateLoaderPath, String path, String suffix, String content) {
 		if(!isLegalPath(path)) return false;
 		if(!path.endsWith(suffix)) return false;
+		templateLoaderPath = convertLoaderPath(templateLoaderPath);
 		return FileUtil.putContent(DPUtil.stringConcat(templateLoaderPath, "/", path), content, false, false, null);
 	}
 }
