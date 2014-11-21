@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+[#include "../../base/public/common.inc.htm"]
+[#include "../../base/public/resource.inc.htm"]
+<table class="js-list-table"></table>
+<div id="toolbar">
+	<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-tip',plain:true">数据无价，谨慎操作</a>
+	<a href="javascript:void(0);" class="easyui-linkbutton js-control-edit" data-options="iconCls:'icon-edit',plain:true">编辑</a>
+</div>
+<script type="text/javascript">
+$(function () {
+	var isLoading = false;
+	$('.js-list-table').treegrid({
+		url : '${_BASE_.url("list")}',
+		idField : 'id',
+		treeField : 'fileName',
+		toolbar : '#toolbar',
+		rownumbers : true,
+		fitcolumns : true,
+		fit : true,
+		nowrap : true,
+		columns:[[
+			{field:'fileName',title:'名称'},
+			{field:'filePath',title:'路径'},
+			{field:'lastModified',title:'修改日期',formatter:function (value, row, index) {
+				return Web_formatDateTime(value);
+			}}
+		]],
+		onBeforeExpand : function (row) {
+			if(row.children && row.children.length > 0) return false;
+			if(isLoading) {
+				Web_alertInfo('加载中，请稍后...');
+				return false;
+			}
+			isLoading = true;
+			$.post('${_BASE_.url("list")}', {
+				path : row.filePath
+			}, function (data) {
+				isLoading = false;
+				if(!data) {
+					Web_alertInfo('加载失败');
+					return false;
+				}
+				if(data.total < 1) {
+					Web_alertInfo('目录' + row.filePath + '下无任何文件');
+					return false;
+				}
+				$('.js-list-table').treegrid('append', {
+					parent : row.id,
+					data : data.rows
+				});
+			}, 'json');
+			return false;
+		}
+	});
+	
+	$('.js-control-edit').bind('click', function () {
+		var row = $('.js-list-table').treegrid('getSelected');
+		if(!row || 'file' != row.type) {
+			Web_alertInfo('请选择模板文件');
+			return false;
+		}
+		var url = '${_BASE_.url("edit")}?path=' + encodeURIComponent(row.filePath);
+		Web_redirectPage(url);
+	});
+});
+</script>
