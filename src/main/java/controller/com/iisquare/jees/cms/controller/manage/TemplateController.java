@@ -39,6 +39,11 @@ public class TemplateController extends PermitController {
 	}
 	
 	public String editAction() throws Exception {
+		String path = get("path");
+		String content = templateService.getTempalteContent(getTemplateLoaderPath(), path, configuration.getTemplateSuffix());
+		if(null == content) return displayInfo("读取文件失败", null);
+		assign("path", path);
+		assign("content", content);
 		return displayTemplate();
 	}
 	
