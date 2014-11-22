@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 [#include "../../base/public/common.inc.htm"]
 [#include "../../base/public/resource.inc.htm"]
-<script type="text/javascript" src="${_WEB_URL_}/api/KindEditor/kindeditor.custom.all.min.js"></script>
 <form id="submitForm" method="post" action="${_BASE_.url("save")}">
 <table cellspacing="1" cellpadding="0" class="table-line td-left td-break-word">
 	<tr>
@@ -10,7 +9,7 @@
 	</tr>
 	<tr>
 		<th>内容</th>
-		<td><textarea name="content" class="w668h280">${content!""}</textarea></td>
+		<td><textarea name="content" class="easyui-textbox" data-options="multiline:true,width:600,height:380">${content!""}</textarea></td>
 	</tr>
 	<tr>
 		<th>操作</th>
@@ -23,7 +22,6 @@
 </form>
 <script type="text/javascript">
 $(function () {
-	var editor = KindEditor.create('textarea[name="content"]');
 	var $submitForm = $('#submitForm');
 	$submitForm.form({
 		success : function (data) {
@@ -36,7 +34,6 @@ $(function () {
 		}
 	});
 	$('#buttonOk').bind('click', function () {
-		$('textarea[name="content"]').html(editor.html());
 		if($submitForm.form('validate')) $submitForm.form('submit');
 	});
 });

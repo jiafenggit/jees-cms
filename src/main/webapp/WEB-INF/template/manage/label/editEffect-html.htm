@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 [#include "../../base/public/common.inc.htm"]
 [#include "../../base/public/resource.inc.htm"]
-<script type="text/javascript" src="${_WEB_URL_}/api/KindEditor/kindeditor.custom.all.min.js"></script>
 <table cellspacing="1" cellpadding="0" class="table-line td-left td-break-word">
 	<tr>
 		<th class="width130">名称</th>
@@ -13,7 +12,7 @@
 	</tr>
 	<tr>
 		<th class="width130">HTML</th>
-		<td><textarea name="content" class="w668h280">${(info.content)!""}</textarea></td>
+		<td><textarea name="content" class="easyui-textbox js-input-content" data-options="multiline:true,width:600,height:380">${(info.content)!""}</textarea></td>
 	</tr>
 	<tr>
 		<th>操作</th>
@@ -25,9 +24,8 @@
 </table>
 <script type="text/javascript">
 $(function () {
-	var editor = KindEditor.create('textarea[name="content"]');
 	$('#buttonOk').bind('click', function () {
-		var content = editor.html();
+		var content = $('.js-input-content').textbox('getValue');
 		$.post('${_BASE_.url("saveEffect")}', {
 			id : '${info.id}',
 			content : content
