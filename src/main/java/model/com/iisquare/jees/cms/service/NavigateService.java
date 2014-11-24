@@ -39,6 +39,16 @@ public class NavigateService extends ServiceBase {
 	
 	public NavigateService() {}
 	
+	public List<Map<String, Object>> getWebList(String currentUrl) {
+		String append = " order by sort desc";
+		List<Map<String, Object>> list;
+		list = navigateDao.getList("*", new String[]{"status"}, new Object[]{1}, null, append, 0, 0);
+		for (Map<String, Object> map : list) { // 判断当前菜单是否为激活状态
+			map.put("is_active", DPUtil.isMatcher(DPUtil.parseString(map.get("active")), currentUrl));
+		}
+		return ServiceUtil.formatRelation(list, 0);
+	}
+	
 	public List<Map<String, Object>> getList(String columns, String orderBy, int page, int pageSize) {
 		String append = null;
 		if(!DPUtil.empty(orderBy)) append = DPUtil.stringConcat(" order by ", orderBy);

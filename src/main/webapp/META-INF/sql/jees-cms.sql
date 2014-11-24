@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50525
 File Encoding         : 65001
 
-Date: 2014-11-19 14:41:44
+Date: 2014-11-24 12:05:24
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -181,7 +181,7 @@ CREATE TABLE `cms_label` (
 -- ----------------------------
 -- Records of cms_label
 -- ----------------------------
-INSERT INTO `cms_label` VALUES ('1', '首页最新动态文本', 'index', 'index', 'index', '', 'newsText', 'slideshow', '{\"0\":{\"space\":\"0\",\"image\":\"files/attached/image/20141115/1416034293316.jpg\",\"url\":\"gsgs\",\"title\":\"室内装修\"},\"1\":{\"image\":\"files/attached/image/20141115/1416034293316.jpg\",\"space\":\"2\",\"title\":\"卧室\",\"url\":\"gsgs\"},\"2\":{\"space\":\"0\",\"url\":\"saasgdg\",\"title\":\"餐厅\",\"image\":\"files/attached/image/20141115/1416034298605.jpg\"}}', '', '0', '1', '1', '1415418678539', '1', '1415776941357');
+INSERT INTO `cms_label` VALUES ('1', '首页最新动态文本', 'index', 'index', 'index', '', 'newsText', 'html', 'test', '', '0', '1', '1', '1415418678539', '1', '1416633653975');
 
 -- ----------------------------
 -- Table structure for `cms_log`
@@ -206,7 +206,7 @@ CREATE TABLE `cms_log` (
   `operate_ip` varchar(64) NOT NULL DEFAULT '',
   `operate_time` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of cms_log
@@ -245,6 +245,14 @@ INSERT INTO `cms_log` VALUES ('34', '用户登陆', 'service', 'base', 'member',
 INSERT INTO `cms_log` VALUES ('35', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1416210235062');
 INSERT INTO `cms_log` VALUES ('36', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1416376200989');
 INSERT INTO `cms_log` VALUES ('37', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1416379008123');
+INSERT INTO `cms_log` VALUES ('38', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1416461579671');
+INSERT INTO `cms_log` VALUES ('39', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1416545930234');
+INSERT INTO `cms_log` VALUES ('40', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1416545940531');
+INSERT INTO `cms_log` VALUES ('41', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1416546368089');
+INSERT INTO `cms_log` VALUES ('42', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1416547972335');
+INSERT INTO `cms_log` VALUES ('43', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1416633651304');
+INSERT INTO `cms_log` VALUES ('44', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1416800739090');
+INSERT INTO `cms_log` VALUES ('45', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1416801238115');
 
 -- ----------------------------
 -- Table structure for `cms_log_setting`
@@ -294,7 +302,7 @@ CREATE TABLE `cms_member` (
 -- ----------------------------
 -- Records of cms_member
 -- ----------------------------
-INSERT INTO `cms_member` VALUES ('1', 'admin', '管理员', '0f4e8ac95b5c1fc48dc98004c7525bc7', '888888', '0', '1', '1416379292801', '127.0.0.1', '1', '127.0.0.1', '1411090286300', '1', '1415760761046');
+INSERT INTO `cms_member` VALUES ('1', 'admin', '管理员', '0f4e8ac95b5c1fc48dc98004c7525bc7', '888888', '0', '1', '1416801281876', '127.0.0.1', '1', '127.0.0.1', '1411090286300', '1', '1415760761046');
 INSERT INTO `cms_member` VALUES ('2', 'guest', '访客', '793a507822c9ec991c3418dfb7950f07', '338043', '0', '1', '1414550595011', '127.0.0.1', '1', '127.0.0.1', '1414546536140', '1', '1414546536140');
 
 -- ----------------------------
@@ -384,6 +392,7 @@ CREATE TABLE `cms_navigate` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL DEFAULT '',
   `parent_id` int(11) NOT NULL DEFAULT '0',
+  `active` varchar(255) NOT NULL DEFAULT '',
   `goal` varchar(8) NOT NULL DEFAULT '',
   `url` tinytext,
   `sort` int(11) NOT NULL DEFAULT '0',
@@ -393,11 +402,26 @@ CREATE TABLE `cms_navigate` (
   `update_id` int(11) NOT NULL DEFAULT '0',
   `update_time` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of cms_navigate
 -- ----------------------------
+INSERT INTO `cms_navigate` VALUES ('1', '首页', '0', '', '_self', '/', '0', '1', '1', '1416800828248', '1', '1416800828248');
+INSERT INTO `cms_navigate` VALUES ('2', '新闻动态', '0', '', '_self', '/', '0', '1', '1', '1416800897427', '1', '1416800897427');
+INSERT INTO `cms_navigate` VALUES ('3', '编程开发', '0', '', '_self', '/', '0', '1', '1', '1416800904248', '1', '1416800904248');
+INSERT INTO `cms_navigate` VALUES ('4', '架构设计', '0', '', '_self', '/', '0', '1', '1', '1416800913824', '1', '1416800913824');
+INSERT INTO `cms_navigate` VALUES ('5', '项目管理', '0', '', '_self', '/', '0', '1', '1', '1416800920433', '1', '1416800920433');
+INSERT INTO `cms_navigate` VALUES ('6', '运维监控', '0', '', '_self', '/', '0', '1', '1', '1416800927527', '1', '1416800927527');
+INSERT INTO `cms_navigate` VALUES ('7', '信息安全', '0', '', '_self', '/', '0', '1', '1', '1416800934879', '1', '1416800934879');
+INSERT INTO `cms_navigate` VALUES ('8', '软件测试', '0', '', '_self', '/', '0', '1', '1', '1416800940679', '1', '1416800940679');
+INSERT INTO `cms_navigate` VALUES ('9', '数据库', '0', '', '_self', '/', '0', '1', '1', '1416800953830', '1', '1416800953830');
+INSERT INTO `cms_navigate` VALUES ('10', '算法结构', '0', '', '_self', '/', '0', '1', '1', '1416800969964', '1', '1416800969964');
+INSERT INTO `cms_navigate` VALUES ('11', 'Java', '3', '', '_self', '/', '0', '1', '1', '1416801001904', '1', '1416801001904');
+INSERT INTO `cms_navigate` VALUES ('12', 'PHP', '3', '', '_self', '/', '0', '1', '1', '1416801007262', '1', '1416801007262');
+INSERT INTO `cms_navigate` VALUES ('13', 'JavaScript', '3', '', '_self', '/', '0', '1', '1', '1416801014605', '1', '1416801014605');
+INSERT INTO `cms_navigate` VALUES ('14', 'C/C++', '3', '', '_self', '/', '0', '1', '1', '1416801240713', '1', '1416801240713');
+INSERT INTO `cms_navigate` VALUES ('15', 'HTML5', '3', '', '_self', '/', '0', '1', '1', '1416801279836', '1', '1416801279836');
 
 -- ----------------------------
 -- Table structure for `cms_note`

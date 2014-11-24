@@ -9,6 +9,7 @@ public class Navigate {
 	private Integer id; // 主键
 	private String name; // 名称
 	private Integer parentId; // 父级
+	private String active; // 激活条件（正则）
 	private String goal; // 打开方式
 	private String url; // 链接地址
 	private Integer sort; // 排序（从高到低）
@@ -40,6 +41,14 @@ public class Navigate {
 
 	public void setParentId(Integer parentId) {
 		this.parentId = parentId;
+	}
+
+	public String getActive() {
+		return active;
+	}
+
+	public void setActive(String active) {
+		this.active = active;
 	}
 
 	public String getGoal() {

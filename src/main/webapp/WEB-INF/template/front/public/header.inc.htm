@@ -23,7 +23,7 @@
 <body>
 <header>
 	<div class="top-menu">
-		<div class="container">
+		<div class="main-container">
 			<ul class="left">
 				<li><a class="js-set-home" href="javascript:void(0);">设为首页</a></li>
 				<li><a class="js-add-favorite" href="javascript:void(0);">加入收藏</a></li>
@@ -35,10 +35,33 @@
 			</ul>
 		</div>
 	</div>
-	<div class="top-banner">
-		<div class="container">
+	<div class="main-container">
+		<div class="top-banner">
 			<div class="left js-go-forward" data-forward="${_WEB_URL_}"></div>
 			<div class="right"></div>
 		</div>
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					[#macro parseNavigateList navigateList]
+						[#list navigateList as navigate]
+							[#if empty(navigate.children)]
+							<li class="[#if navigate.is_active] active[/#if]">
+								<a target="${navigate.goal}" href="${navigate.url}">${navigate.name}</a>
+							</li>
+							[#else]
+							<li class="dropdown[#if navigate.is_active] active[/#if]">
+								<a target="${navigate.goal}" href="${navigate.url}" class="dropdown-toggle" data-toggle="dropdown">${navigate.name}<span class="caret"></span></a>
+								<ul class="dropdown-menu" role="menu">
+									[@parseNavigateList navigateList=navigate.children /]
+								</ul>
+							</li>
+							[/#if]
+						[/#list]
+					[/#macro]
+					[@parseNavigateList navigateList=navigateList /]
+				</ul>
+			</div>
+		</nav>
 	</div>
 </header>
