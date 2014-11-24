@@ -44,7 +44,8 @@ public class NavigateService extends ServiceBase {
 		List<Map<String, Object>> list;
 		list = navigateDao.getList("*", new String[]{"status"}, new Object[]{1}, null, append, 0, 0);
 		for (Map<String, Object> map : list) { // 判断当前菜单是否为激活状态
-			map.put("is_active", DPUtil.isMatcher(DPUtil.parseString(map.get("active")), currentUrl));
+			String active = DPUtil.parseString(map.get("active"));
+			map.put("is_active", !DPUtil.empty(active) && DPUtil.isMatcher(active, currentUrl));
 		}
 		return ServiceUtil.formatRelation(list, 0);
 	}

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.iisquare.jees.cms.service.NavigateService;
 import com.iisquare.jees.core.component.PermitController;
+import com.iisquare.jees.framework.util.DPUtil;
 import com.iisquare.jees.framework.util.ServletUtil;
 
 /**
@@ -31,6 +32,6 @@ public class IndexController extends PermitController {
 		assign("title", settingService.get("web", "title")); // 网站标题
 		assign("keywords", settingService.get("web", "keywords")); // 网站关键词
 		assign("description", settingService.get("web", "description")); // 网站描述
-		assign("navigateList", navigateService.getWebList(ServletUtil.getFullUrl(request))); // 导航菜单
+		assign("navigateList", navigateService.getWebList(DPUtil.subString(ServletUtil.getFullUrl(request), _WEB_URL_.length()))); // 导航菜单
 	}
 }
