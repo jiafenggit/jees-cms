@@ -40,21 +40,21 @@
 			<div class="left js-go-forward" data-forward="${_WEB_URL_}"></div>
 			<div class="right"></div>
 		</div>
-		<nav class="navbar navbar-default" role="navigation">
+		<nav class="top-navigate navbar navbar-default" role="navigation">
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
 					[#macro parseNavigateList navigateList]
 						[#list navigateList as navigate]
-							[#if empty(navigate.children)]
-							<li class="[#if navigate.is_active] active[/#if]">
-								<a target="${navigate.goal}" href="${navigate.url}">${navigate.name}</a>
-							</li>
-							[#else]
+							[#if navigate.children?size > 0]
 							<li class="dropdown[#if navigate.is_active] active[/#if]">
-								<a target="${navigate.goal}" href="${navigate.url}" class="dropdown-toggle" data-toggle="dropdown">${navigate.name}<span class="caret"></span></a>
+								<a target="${navigate.goal}" href="${navigate.full_url}" class="dropdown-toggle" data-toggle="dropdown">${navigate.name}<span class="caret"></span></a>
 								<ul class="dropdown-menu" role="menu">
 									[@parseNavigateList navigateList=navigate.children /]
 								</ul>
+							</li>
+							[#else]
+							<li class="[#if navigate.is_active] active[/#if]">
+								<a target="${navigate.goal}" href="${navigate.full_url}">${navigate.name}</a>
 							</li>
 							[/#if]
 						[/#list]

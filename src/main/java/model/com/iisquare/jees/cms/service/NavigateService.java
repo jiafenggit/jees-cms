@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.iisquare.jees.cms.dao.MemberDao;
 import com.iisquare.jees.cms.dao.NavigateDao;
 import com.iisquare.jees.cms.domain.Navigate;
+import com.iisquare.jees.core.util.UrlUtil;
 import com.iisquare.jees.framework.model.ServiceBase;
 import com.iisquare.jees.framework.util.DPUtil;
 import com.iisquare.jees.framework.util.ServiceUtil;
@@ -39,11 +40,12 @@ public class NavigateService extends ServiceBase {
 	
 	public NavigateService() {}
 	
-	public List<Map<String, Object>> getWebList(String currentUrl) {
+	public List<Map<String, Object>> getWebList(String webUrl, String currentUrl) {
 		String append = " order by sort desc";
 		List<Map<String, Object>> list;
 		list = navigateDao.getList("*", new String[]{"status"}, new Object[]{1}, null, append, 0, 0);
 		for (Map<String, Object> map : list) { // 判断当前菜单是否为激活状态
+			map.put("full_url", UrlUtil.concat(webUrl, DPUtil.parseString(map.get("url"))));
 			String active = DPUtil.parseString(map.get("active"));
 			map.put("is_active", !DPUtil.empty(active) && DPUtil.isMatcher(active, currentUrl));
 		}
