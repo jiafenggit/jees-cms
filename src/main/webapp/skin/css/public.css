@@ -14,3 +14,5 @@ body {font-size:12px; font-family:arial, 'Hiragino Sans GB', 'Microsoft Yahei', 
 .top-banner .right { width:660px; height:100%; float:right; background:url(../images/banner.png) right no-repeat;}
 
 .top-navigate {font-size:14px;}
+
+.content-slideshow {width:580px; height:240px;}
