@@ -41,8 +41,10 @@ $(function () {
 	$('.js-add-favorite').bind('click', function () { // 添加收藏
 		IndexUtil.sddFavorite(window.location, document.title);
 	});
-	
 	$('.js-set-home').bind('click', function () { // 设为首页
 		IndexUtil.setHome(this, window.location);
+	});
+	$('.js-go-forward').bind('click', function () {
+		window.location.href = $(this).data('forward');
 	});
 });
