@@ -14,7 +14,7 @@ a {text-decoration:none;}
 .top-banner .left { width:310px; height:100%; float:left; background:url(../images/logo.png) center no-repeat; cursor:pointer;}
 .top-banner .right { width:660px; height:100%; float:right; background:url(../images/banner.png) right no-repeat;}
 
-.top-navigate {font-size:14px;}
+.top-navigate {font-size:14px; margin-bottom: 0;}
 
 /* focus */
 #focus{position: relative;height: 240px;width: 580px;}
@@ -41,3 +41,5 @@ _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingM
 #focus .hdicon{position: absolute;left:10px;bottom: 10px;width: 59px;height: 59px;background: url(../images/focus/play-btn.png) no-repeat;_background: 0;
 filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=image, src="../images/focus/play-btn.png")}
 #focus .focus-title a{display: none;color: #fff}
+
+.margin-top5 {margin-top:5px;}
