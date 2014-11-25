@@ -5,12 +5,15 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.iisquare.jees.cms.dao.MemberDao;
 import com.iisquare.jees.cms.dao.LabelDao;
 import com.iisquare.jees.cms.domain.Label;
+import com.iisquare.jees.framework.controller.ControllerBase;
 import com.iisquare.jees.framework.model.ServiceBase;
 import com.iisquare.jees.framework.util.DPUtil;
 import com.iisquare.jees.framework.util.ServiceUtil;
@@ -125,6 +128,11 @@ public class LabelService extends ServiceBase {
 		return list;
 	}
 	
+	public Map<String, Object> getContentMap(ControllerBase base,
+			String keyGroup, String keyName, boolean bStatusNormal, boolean bConvert) {
+		return getContentMap(base._MODULE_, base._CONTROLLER_, base._ACTION_, keyGroup, keyName, bStatusNormal, bConvert);
+	}
+	
 	/**
 	 * 获取页面标签记录
 	 * @param module 模块名称
@@ -168,10 +176,43 @@ public class LabelService extends ServiceBase {
 		Map<String, Object> contentMap = new HashMap<String, Object>(DPUtil.parseInt(rows.size() / 0.75f));
 		for (Map<String, Object> map : rows) {
 			String labelKey = DPUtil.parseString(map.get("key_name"));
-			Object labelContent = bConvert ? map.get("content") : map.get("content"); // 转换功能待处理
+			Object labelContent = bConvert ? convertLabel(DPUtil.parseString(map.get("effect")), DPUtil.parseString(map.get("content"))) : map.get("content");
 			contentMap.put(labelKey, labelContent);
 		}
 		return contentMap;
+	}
+	
+	/**
+	 * 转换标签内容
+	 * @param effect
+	 * @param content
+	 * @return
+	 */
+	public Object convertLabel(String effect, String content) {
+		if("html".equals(effect)) return convertLabelHtml(content);
+		if("article".equals(effect)) return convertLabelArticle(content);
+		if("comment".equals(effect)) return convertLabelComment(content);
+		if("slideshow".equals(effect)) return convertLabelSlideshow(content);
+		return "";
+	}
+	
+	public String convertLabelHtml(String content) {
+		if(null == content) return "";
+		return content;
+	}
+	
+	public String convertLabelArticle(String content) { // 待处理
+		if(null == content) return "";
+		return content;
+	}
+	
+	public String convertLabelComment(String content) { // 待处理
+		if(null == content) return "";
+		return content;
+	}
+	
+	public Map<?, ?> convertLabelSlideshow(String content) {
+		return JSONObject.fromObject(content);
 	}
 	
 	public Label getById(Object id) {

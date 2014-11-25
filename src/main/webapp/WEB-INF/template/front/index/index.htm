@@ -1,5 +1,51 @@
 [#include "../public/header.inc.htm"]
 <div class="main-container">
-
+	<div id="focus">
+		<div class="hd">
+			<div class="focus-title" id="focus-title"></div>
+		</div>
+		<div class="focus-bar-box" id="focus-bar-box">
+			<ul class="focus-bar">
+				[#list label.slideshow?keys as key]
+				<li><a class="item" target="_blank" href="${label.slideshow[key].url!""}" title="${label.slideshow[key].title!""}" data-content="${label.slideshow[key].title!""}"><img src="${label.slideshow[key].image!""}" /></a></li>
+				[/#list]
+			</ul>
+		</div>
+		<a href="javascript:void(0);" class="btn-prev" id="focus-prev"></a>
+		<a href="javascript:void(0);" class="btn-next" id="focus-next"></a>
+		<div class="ft">
+			<div class="ftbg"></div>
+			<div id="focus-num" class="change"></div>
+		</div>
+	</div>
 </div>
+<script src="${_WEB_URL_}/api/jQuery/jquery.SuperSlide.2.1.1.js"></script>
+<script type="text/javascript">
+$(function(){
+	/* 首页幻灯 */
+	$('#focus-bar-box').find('.item').each(function () {
+		var tileHtml = '<a target="' + $(this).attr('target') + '" href="' + $(this).attr('href')
+				+ '" title="' + $(this).attr('title') + '">' + $(this).data('content') + '</a>';
+		$('#focus-title').append(tileHtml);
+		var numHtml = '<a class=""></a>';
+		$('#focus-num').append(numHtml);
+	});
+	$('#focus').hover(function () {
+		$('#focus-prev, #focus-next').show();
+	}, function () {
+		$('#focus-prev, #focus-next').hide();
+	});
+	$('#focus').slide({ 
+		mainCell : '#focus-bar-box ul',
+		targetCell : '#focus-title a',
+		titCell : '#focus-num a',
+		prevCell : '#focus-prev',
+		nextCell : '#focus-next',
+		effect : 'left',
+		easing : 'easeInOutCirc',
+		autoPlay : true,
+		delayTime : 200
+	});
+});
+</script>
 [#include "../public/footer.inc.htm"]

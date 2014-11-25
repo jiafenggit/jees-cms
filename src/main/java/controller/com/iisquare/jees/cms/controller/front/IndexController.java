@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.iisquare.jees.cms.service.LabelService;
 import com.iisquare.jees.cms.service.NavigateService;
 import com.iisquare.jees.core.component.PermitController;
 import com.iisquare.jees.framework.util.DPUtil;
@@ -21,10 +22,13 @@ public class IndexController extends PermitController {
 	
 	@Autowired
 	public NavigateService navigateService;
+	@Autowired
+	public LabelService labelService;
 	
 	@RequestMapping(value="/")
 	public String indexAction() throws Exception {
 		assignWeb();
+		assign("label", labelService.getContentMap(this, null, null, true, true));
 		return displayTemplate();
 	}
 	

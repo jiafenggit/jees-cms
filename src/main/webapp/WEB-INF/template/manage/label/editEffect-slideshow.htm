@@ -11,29 +11,33 @@
 		<td>${(info.effect_text)!""}</td>
 	</tr>
 	<tr>
+		<th class="width130">截取宽度</th>
+		<td><input class="easyui-numberspinner width80 js-input-space" type="text" data-options="required:true,min:0" value="0" /><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-tip',plain:true">默认不截取</a></td>
+	</tr>
+	<tr>
+		<th>补充后缀</th>
+		<td><input class="easyui-textbox width150 js-input-suffix" type="text" value="" /></td>
+	</tr>
+	<tr>
 		<th class="width130">信息列表</th>
 		<td class="td-clear height400">
 			<div class="easyui-layout" data-options="fit:true,border:true,plain:true">
 				<div data-options="region:'south',split:true,plain:true" class="height200">
 					<table class="td-break-word full-w-h">
 						<tr>
-							<td rowspan="4" align="center" class="width213">
+							<td rowspan="3" align="center" class="width213">
 								<a href="javascript:void(0);" target="_blank" title="点击查看大图"><img src="${_WEB_URL_}/skin/images/nopic_article.jpg" class="img js-image-show" width="213px" height="160px" /></a>
 							</td>
 							<th>标题名称</th>
 							<td><input class="easyui-textbox width300 js-input-title" type="text" value="" /></td>
 						</tr>
 						<tr>
-							<th>截取宽度</th>
-							<td><input class="easyui-numberspinner width100 js-input-space" type="text" data-options="min:0" value="0" /><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-tip',plain:true">默认不截取</a></td>
-						</tr>
-						<tr>
 							<th class="width130">图片地址</th>
-							<td><textarea class="easyui-textbox width300 js-image-url" data-options="multiline:true,height:50"></textarea></td>
+							<td><textarea class="easyui-textbox width300 js-image-url" data-options="multiline:true,height:60"></textarea></td>
 						</tr>
 						<tr>
 							<th>链接地址</th>
-							<td><textarea class="easyui-textbox width300 js-input-url" data-options="multiline:true,height:50"></textarea></td>
+							<td><textarea class="easyui-textbox width300 js-input-url" data-options="multiline:true,height:60"></textarea></td>
 						</tr>
 						<tr>
 							<td><div class="align-center"><a href="javascript:void(0);" class="easyui-linkbutton js-swf-upload-button" data-options="iconCls:'icon-upload',plain:'true'"><span id="js-swf-upload"></span></a></div></td>
@@ -89,7 +93,6 @@ $(function () {
 	
 	function setData(data) {
 		$('.js-input-title').textbox('setValue', data.title);
-		$('.js-input-space').numberspinner('setValue', data.space);
 		$('.js-image-url').textbox('setValue', data.image);
 		$('.js-image-url').trigger('change');
 		$('.js-input-url').textbox('setValue', data.url);
@@ -98,7 +101,6 @@ $(function () {
 	function getData() {
 		return {
 			title : $.trim($('.js-input-title').textbox('getValue')),
-			space : $.trim($('.js-input-space').numberspinner('getValue')),
 			image : $.trim($('.js-image-url').textbox('getValue')),
 			url : $.trim($('.js-input-url').textbox('getValue')),
 		};
@@ -112,7 +114,6 @@ $(function () {
 		singleSelect : true,
 		columns : [[
 			{field:'title',title:'标题名称'},
-			{field:'space',title:'截取宽度'},
 			{field:'image',title:'图片地址'},
 			{field:'url',title:'链接地址'}
 		]],
@@ -123,10 +124,12 @@ $(function () {
 	});
 	try {
 		var data = $.parseJSON('${info.content!""}');
-		if(data && data['0']) {
+		if(data && data.rows && data.rows['0']) {
+			$('.js-input-space').numberspinner('setValue', data.space);
+			$('.js-input-suffix').textbox('setValue', data.suffix);
 			var rows = [];
-			for (var key in data) {
-				rows.push(data[key]);
+			for (var key in data.rows) {
+				rows.push(data.rows[key]);
 			}
 			$slideshowList.datagrid('loadData', rows);	
 		}
@@ -173,7 +176,11 @@ $(function () {
 	});
 	
 	$('#buttonOk').bind('click', function () {
-		var content = $slideshowList.datagrid('getRows');
+		var content = {
+			space : $.trim($('.js-input-space').numberspinner('getValue')),
+			suffix : $.trim($('.js-input-suffix').textbox('getValue')),
+			rows : $slideshowList.datagrid('getRows')
+		};
 		$.post('${_BASE_.url("saveEffect")}', {
 			id : '${info.id}',
 			content : content
