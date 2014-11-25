@@ -16,8 +16,10 @@ a {text-decoration:none;}
 
 .top-navigate {font-size:14px; margin-bottom: 0;}
 
+.article-row-focus {height:240px;}
+
 /* focus */
-#focus{position: relative;height: 240px;width: 580px;}
+#focus{position: relative;height:100%;width: 580px; float:left;}
 #focus .bd{position: relative}
 #focus .btn-prev, #focus .btn-next{display: none;position: absolute;top: 80px;width: 40px;height: 80px;z-index: 2}
 #focus .btn-prev{left: 0;background: url(../images/focus/left-arrow.png) no-repeat;_background: 0;
@@ -41,5 +43,7 @@ _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingM
 #focus .hdicon{position: absolute;left:10px;bottom: 10px;width: 59px;height: 59px;background: url(../images/focus/play-btn.png) no-repeat;_background: 0;
 filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=image, src="../images/focus/play-btn.png")}
 #focus .focus-title a{display: none;color: #fff}
+
+.article-panel-news {width: 410px; height:100%; float:right; text-align:left;}
 
 .margin-top5 {margin-top:5px;}
