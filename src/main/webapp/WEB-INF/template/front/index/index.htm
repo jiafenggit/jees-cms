@@ -6,8 +6,8 @@
 		</div>
 		<div class="focus-bar-box" id="focus-bar-box">
 			<ul class="focus-bar">
-				[#list label.slideshow?keys as key]
-				<li><a class="item" target="_blank" href="${label.slideshow[key].url!""}" title="${label.slideshow[key].title!""}" data-content="${label.slideshow[key].title!""}"><img src="${label.slideshow[key].image!""}" /></a></li>
+				[#list (label.slideshow)![] as slideshow]
+				<li><a class="item" target="_blank" href="${slideshow.url!""}" title="${slideshow.title!""}" data-short="${slideshow.short_title!""}"><img src="${slideshow.image!""}" /></a></li>
 				[/#list]
 			</ul>
 		</div>
@@ -25,7 +25,7 @@ $(function(){
 	/* 首页幻灯 */
 	$('#focus-bar-box').find('.item').each(function () {
 		var tileHtml = '<a target="' + $(this).attr('target') + '" href="' + $(this).attr('href')
-				+ '" title="' + $(this).attr('title') + '">' + $(this).data('content') + '</a>';
+				+ '" title="' + $(this).attr('title') + '">' + $(this).data('short') + '</a>';
 		$('#focus-title').append(tileHtml);
 		var numHtml = '<a class=""></a>';
 		$('#focus-num').append(numHtml);

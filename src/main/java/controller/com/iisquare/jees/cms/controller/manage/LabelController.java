@@ -53,7 +53,12 @@ public class LabelController extends PermitController {
 		if("html".equals(persist.getEffect())) {
 			content = get("content");
 		} else {
-			content = JSONObject.fromObject(getMap("content")).toString();
+			Map<String, Object> map = getMap("content");
+			if("slideshow".equals(persist.getEffect())) {
+				labelService.convertLabelSlideshow(DPUtil.parseInt(
+						map.get("space")), DPUtil.parseString(map.get("suffix")), map.get("rows"));
+			}
+			content = JSONObject.fromObject(map).toString();
 		}
 		int result = labelService.updateContent(persist.getId(), content);
 		if(result > 0) {

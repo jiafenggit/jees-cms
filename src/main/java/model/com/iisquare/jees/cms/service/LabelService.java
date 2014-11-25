@@ -1,9 +1,11 @@
 package com.iisquare.jees.cms.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import net.sf.json.JSONObject;
 
@@ -176,7 +178,7 @@ public class LabelService extends ServiceBase {
 		Map<String, Object> contentMap = new HashMap<String, Object>(DPUtil.parseInt(rows.size() / 0.75f));
 		for (Map<String, Object> map : rows) {
 			String labelKey = DPUtil.parseString(map.get("key_name"));
-			Object labelContent = bConvert ? convertLabel(DPUtil.parseString(map.get("effect")), DPUtil.parseString(map.get("content"))) : map.get("content");
+			Object labelContent = bConvert ? parseLabel(DPUtil.parseString(map.get("effect")), DPUtil.parseString(map.get("content"))) : map.get("content");
 			contentMap.put(labelKey, labelContent);
 		}
 		return contentMap;
@@ -188,31 +190,52 @@ public class LabelService extends ServiceBase {
 	 * @param content
 	 * @return
 	 */
-	public Object convertLabel(String effect, String content) {
-		if("html".equals(effect)) return convertLabelHtml(content);
-		if("article".equals(effect)) return convertLabelArticle(content);
-		if("comment".equals(effect)) return convertLabelComment(content);
-		if("slideshow".equals(effect)) return convertLabelSlideshow(content);
+	public Object parseLabel(String effect, String content) {
+		if("html".equals(effect)) return parseLabelHtml(content);
+		if("article".equals(effect)) return parseLabelArticle(content);
+		if("comment".equals(effect)) return parseLabelComment(content);
+		if("slideshow".equals(effect)) return parseLabelSlideshow(content);
 		return "";
 	}
 	
-	public String convertLabelHtml(String content) {
+	public String parseLabelHtml(String content) {
 		if(null == content) return "";
 		return content;
 	}
 	
-	public String convertLabelArticle(String content) { // 待处理
+	public String parseLabelArticle(String content) { // 待处理
 		if(null == content) return "";
 		return content;
 	}
 	
-	public String convertLabelComment(String content) { // 待处理
+	public String parseLabelComment(String content) { // 待处理
 		if(null == content) return "";
 		return content;
 	}
 	
-	public Map<?, ?> convertLabelSlideshow(String content) {
-		return JSONObject.fromObject(content);
+	@SuppressWarnings("unchecked")
+	public Map<String, Map<String, Object>> convertLabelSlideshow(int space, String suffix, Object rowsMap) {
+		Map<String, Map<String, Object>> map = (Map<String, Map<String, Object>>) rowsMap;
+		for (Entry<String, Map<String, Object>> entry : map.entrySet()) {
+			Map<String, Object> subMap = entry.getValue();
+			String title = DPUtil.parseString(subMap.get("title"));
+			String shortTitle = space > 0 ? DPUtil.subStringWithByte(title, space, suffix, null) : title;
+			subMap.put("short_title", shortTitle);
+		}
+		return map;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> parseLabelSlideshow(String content) {
+		Map<?, ?> map = JSONObject.fromObject(content);
+		if(DPUtil.empty(map)) return null;
+		Map<String, Map<String, Object>> rowsMap = (Map<String, Map<String, Object>>) map.get("rows");
+		int size = rowsMap.size();
+		List<Map<String, Object>> list = new ArrayList<Map<String,Object>>(size);
+		for (int i = 0; i < size; i++) {
+			list.add(rowsMap.get(new Integer(i).toString()));
+		}
+		return list;
 	}
 	
 	public Label getById(Object id) {
