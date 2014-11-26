@@ -11,10 +11,6 @@
 		<td>${(info.column_id_rel.name)!""}</td>
 	</tr>
 	<tr>
-		<th>打开方式</th>
-		<td>${info.goal_text!""}</td>
-	</tr>
-	<tr>
 		<th>链接地址</th>
 		<td>${info.url!""}</td>
 	</tr>
@@ -27,12 +23,36 @@
 		<td>${info.description!""}</td>
 	</tr>
 	<tr>
+		<th>来源</th>
+		<td>${(info.from_name)!""}</td>
+	</tr>
+	<tr>
+		<th>来源地址</th>
+		<td>${info.from_url!""}</td>
+	</tr>
+	<tr>
+		<th>启用评论</th>
+		<td><input class="input-checkbox" type="checkbox" name="comment_enable" value="1"[#if !empty(info.comment_enable)] checked="checked"[/#if] />启用评论，用户可以进行评论操作</td>
+	</tr>
+	<tr>
+		<th>允许评论</th>
+		<td><input class="input-checkbox" type="checkbox" name="comment_allow" value="1"[#if !empty(info.comment_allow)] checked="checked"[/#if] />允许用户发表评论</td>
+	</tr>
+	<tr>
+		<th>是否置顶</th>
+		<td><input class="input-checkbox" type="checkbox" name="is_top" value="1"[#if !empty(info.is_top)] checked="checked"[/#if] />将该文章至于本栏目顶部</td>
+	</tr>
+	<tr>
 		<th>排序</th>
 		<td>${info.sort}</td>
 	</tr>
 	<tr>
 		<th>状态</th>
 		<td>${info.status_text!""}</td>
+	</tr>
+	<tr>
+		<th>发布时间</th>
+		<td>${millisToDateTime(info.publish_time)!""}</td>
 	</tr>
 	<tr>
 		<th>缩略图</th>

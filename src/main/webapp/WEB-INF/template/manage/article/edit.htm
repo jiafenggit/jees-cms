@@ -14,14 +14,6 @@
 		<td><input class="easyui-textbox width300" type="text" name="title" data-options="required:true" value="${(info.title)!""}" /></td>
 	</tr>
 	<tr>
-		<th>打开方式</th>
-		<td>
-			<select class="easyui-combobox" name="goal" data-options="required:true,editable:false">
-				[@getMapOption map=goalMap default=info.goal!"" tips="请选择打开方式" /]
-			</select>
-		</td>
-	</tr>
-	<tr>
 		<th>链接地址</th>
 		<td><textarea name="url" class="easyui-textbox width300" data-options="multiline:true,height:80">${info.url!""}</textarea></td>
 	</tr>
@@ -34,6 +26,26 @@
 		<td><textarea name="description" class="easyui-textbox width300" data-options="multiline:true,height:80">${info.description!""}</textarea></td>
 	</tr>
 	<tr>
+		<th>来源</th>
+		<td><input class="easyui-textbox width300" type="text" name="fromName" value="${(info.fromName)!""}" /></td>
+	</tr>
+	<tr>
+		<th>来源地址</th>
+		<td><textarea name="fromUrl" class="easyui-textbox width300" data-options="multiline:true,height:80">${info.fromUrl!""}</textarea></td>
+	</tr>
+	<tr>
+		<th>启用评论</th>
+		<td><input class="input-checkbox" type="checkbox" name="commentEnable" value="1"[#if !empty(info.commentEnable)] checked="checked"[/#if] />启用评论，用户可以进行评论操作</td>
+	</tr>
+	<tr>
+		<th>允许评论</th>
+		<td><input class="input-checkbox" type="checkbox" name="commentAllow" value="1"[#if !empty(info.commentAllow)] checked="checked"[/#if] />允许用户发表评论</td>
+	</tr>
+	<tr>
+		<th>是否置顶</th>
+		<td><input class="input-checkbox" type="checkbox" name="isTop" value="1"[#if !empty(info.isTop)] checked="checked"[/#if] />将该文章至于本栏目顶部</td>
+	</tr>
+	<tr>
 		<th>排序</th>
 		<td><input class="easyui-numberspinner width150" type="text" name="sort" data-options="required:true,min:0" value="${(info.sort)!0}" /></td>
 	</tr>
@@ -44,6 +56,10 @@
 				[@getMapOption map=statusMap default=info.status!"" tips="请选择记录状态" /]
 			</select>
 		</td>
+	</tr>
+	<tr>
+		<th>发布时间</th>
+		<td><input class="easyui-datetimebox width150" type="text" name="publishTime" value="${millisToDateTime(info.publishTime)}" /></td>
 	</tr>
 	<tr>
 		<th>缩略图</th>

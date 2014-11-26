@@ -55,10 +55,9 @@ public class ArticleService extends ServiceBase {
 			sb.append(" and title like :title");
 			paramMap.put("title", DPUtil.stringConcat("%", title, "%"));
 		}
-		int columnId = ValidateUtil.filterInteger(DPUtil.parseString(map.get("columnId")), true, 0, null, 0);
-		if(!DPUtil.empty(columnId)) {
-			sb.append(" and column_id = :columnId");
-			paramMap.put("columnId", columnId);
+		String columnIds = SqlUtil.buildSafeWhere(",", (Object[]) map.get("columnIds"));
+		if(!DPUtil.empty(columnIds)) {
+			sb.append(" and column_id in (").append(columnIds).append(")");
 		}
 		Object keywords = map.get("keywords");
 		if(!DPUtil.empty(keywords)) {
@@ -70,10 +69,10 @@ public class ArticleService extends ServiceBase {
 			sb.append(" and description like :description");
 			paramMap.put("description", DPUtil.stringConcat("%", description, "%"));
 		}
-		Object goal = map.get("goal");
-		if(!DPUtil.empty(goal)) {
-			sb.append(" and goal = :goal");
-			paramMap.put("goal", goal);
+		Object fromName = map.get("fromName");
+		if(!DPUtil.empty(fromName)) {
+			sb.append(" and from_name = :fromName");
+			paramMap.put("fromName", fromName);
 		}
 		String status = DPUtil.parseString(map.get("status"));
 		if(!ValidateUtil.isNull(status, true)) {

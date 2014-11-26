@@ -29,6 +29,9 @@ $(function () {
 			}},
 			{field:'title',title:'标题'},
 			{field:'sort',title:'排序'},
+			{field:'is_top',title:'置顶',formatter:function (value, row, index) {
+				return value ? '是' : '否';
+			}},
 			{field:'column_id',title:'所在栏目',formatter:function (value, row, index) {
 				return row.column_id_rel ? row.column_id_rel.name : row.column_id;
 			}},
@@ -36,20 +39,20 @@ $(function () {
 			{field:'publish_time',title:'发布时间',formatter:function (value, row, index) {
 				return Web_formatDateTime(value);
 			}},
-			{field:'create_id',title:'创建者',formatter:function (value, row, index) {
-				if(!row.create_id_rel) return '';
-				return '[' + row.create_id_rel.serial + ']' + row.create_id_rel.name;
-			}},
-			{field:'create_time',title:'创建时间',formatter:function (value, row, index) {
-				return Web_formatDateTime(value);
-			}},
-			{field:'update_id',title:'修改者',formatter:function (value, row, index) {
+			{field:'update_id',title:'操作者',formatter:function (value, row, index) {
 				if(!row.update_id_rel) return '';
 				return '[' + row.update_id_rel.serial + ']' + row.update_id_rel.name;
 			}},
-			{field:'update_time',title:'修改时间',formatter:function (value, row, index) {
-				return Web_formatDateTime(value);
+			{field:'from_name',title:'来源'},
+			{field:'comment_enable',title:'启用评论',formatter:function (value, row, index) {
+				return value ? '是' : '否';
 			}},
+			{field:'comment_allow',title:'允许评论',formatter:function (value, row, index) {
+				return value ? '是' : '否';
+			}},
+			{field:'count_view',title:'浏览数'},
+			{field:'count_comment',title:'评论数'},
+			{field:'count_partake',title:'参与数'},
 			{field:'operate',title:'操作',formatter:function (value, row, index) {
 				return '[#if _BASE_.hasPermit("show")]<a href="${_BASE_.url("show")}?id='
 					+ row.id + '" class="js-list-button" data-options="iconCls:\'icon-detail\'">查看</a>[/#if]'
@@ -81,14 +84,14 @@ $(function () {
 });
 </script>
 <div class="hidden">
-<div id="js-search-dialog" style="width:462px;height:258px" data-options="buttons:'#js-search-button',modal:true,resizable:true">
+<div id="js-search-dialog" style="width:462px;height:283px" data-options="buttons:'#js-search-button',modal:true,resizable:true">
 <form id="searchForm" method="post" action="">
 <table align="center" class="table-horizontal tr-height25">
 	<tr>
 		<th>标题</th>
 		<td><input class="easyui-textbox width150" type="text" name="title" value="" /></td>
 		<th>栏目</th>
-		<td><input name="columnId" class="js-select-type width150" value="" /></td>
+		<td><input name="columnIds[]" class="width150" value="" multiple /></td>
 	</tr>
 	<tr>
 		<th>发布时间</th>
@@ -121,8 +124,8 @@ $(function () {
 		<td><input class="easyui-textbox width150" type="text" name="description" value="" /></td>
 	</tr>
 	<tr>
-		<th>-</th>
-		<td>-</td>
+		<th>来源</th>
+		<td><input class="easyui-textbox width150" type="text" name="fromName" value="" /></td>
 		<th>状态</th>
 		<td>
 			<select class="easyui-combobox" name="status" data-options="editable:false">
@@ -140,8 +143,8 @@ $(function () {
 </div>
 <script type="text/javascript">
 $(function () {
-	$('input[name="columnId"]').combotree({
-		checkbox : true,
+	$('input[name="columnIds[]"]').combotree({
+		cascadeCheck : false,
 		url : '${_BASE_.url("column", "list")}',
 		loadFilter : function (data, parent) {
 			return Web_formatComboTree(data.rows, [], '全部', 'name');

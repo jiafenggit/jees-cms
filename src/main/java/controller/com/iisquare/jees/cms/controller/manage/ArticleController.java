@@ -72,7 +72,9 @@ public class ArticleController extends PermitController {
 		Article info;
 		if(DPUtil.empty(id)) {
 			info = new Article();
-			info.setSort(System.currentTimeMillis());
+			long time = System.currentTimeMillis();
+			info.setSort(time);
+			info.setPublishTime(time);
 		} else {
 			info = articleService.getById(id);
 			if(DPUtil.empty(info)) return displayInfo("信息不存在，请刷新后再试", null);
@@ -91,6 +93,9 @@ public class ArticleController extends PermitController {
 		Article persist;
 		if(DPUtil.empty(id)) {
 			persist = new Article();
+			persist.setCountView(0);
+			persist.setCountComment(0);
+			persist.setCountPartake(0);
 		} else {
 			persist = articleService.getById(id);
 			if(DPUtil.empty(persist)) return displayMessage(3001, "信息不存在，请刷新后再试");
@@ -107,9 +112,15 @@ public class ArticleController extends PermitController {
 		persist.setUrl(DPUtil.trim(get("url")));
 		persist.setKeywords(DPUtil.trim(get("keywords")));
 		persist.setDescription(DPUtil.trim(get("description")));
+		persist.setFromName(DPUtil.trim(get("fromName")));
+		persist.setFromUrl(DPUtil.trim(get("fromUrl")));
 		persist.setLogo(DPUtil.trim(get("logo")));
 		String content = get("content");
 		persist.setContent(content);
+		persist.setCommentEnable(ValidateUtil.filterInteger(get("commentEnable"), true, 0, 1, 0));
+		persist.setCommentAllow(ValidateUtil.filterInteger(get("commentAllow"), true, 0, 1, 0));
+		persist.setIsTop(ValidateUtil.filterInteger(get("isTop"), true, 0, 1, 0));
+		persist.setPublishTime(DPUtil.dateTimeToMillis(get("publishTime"), configuration.getDateTimeFormat()));
 		persist.setSort(ValidateUtil.filterLong(get("sort"), true, null, null, null));
 		String status = get("status");
 		if(ValidateUtil.isNull(status, true)) return displayMessage(3003, "请选择记录状态");

@@ -14,15 +14,13 @@ public class Article {
 	private String description; // 页面描述
 	private String fromName; // 来源名称
 	private String fromUrl; // 来源地址
-	private String label; // 标签（逗号分隔）
 	private String logo; // 预览图片
 	private String content; // 内容
 	private Integer commentEnable; // 启用评论
 	private Integer commentAllow; // 允许评论
+	private Integer countView; // 页面访问数
 	private Integer countComment; // 评论数
-	private Integer countPV; // 页面访问数
-	private Integer countUV; // 访问人数（需要用户独立标示支持）
-	private Integer countIP; // 独立IP数
+	private Integer countPartake; // 参数人数
 	private Integer isTop; // 置顶
 	private Long sort; // 排序（从高到低）
 	private Integer status; // 状态
@@ -96,14 +94,6 @@ public class Article {
 		this.fromUrl = fromUrl;
 	}
 
-	public String getLabel() {
-		return label;
-	}
-
-	public void setLabel(String label) {
-		this.label = label;
-	}
-
 	public String getLogo() {
 		return logo;
 	}
@@ -136,6 +126,14 @@ public class Article {
 		this.commentAllow = commentAllow;
 	}
 
+	public Integer getCountView() {
+		return countView;
+	}
+
+	public void setCountView(Integer countView) {
+		this.countView = countView;
+	}
+
 	public Integer getCountComment() {
 		return countComment;
 	}
@@ -144,28 +142,12 @@ public class Article {
 		this.countComment = countComment;
 	}
 
-	public Integer getCountPV() {
-		return countPV;
+	public Integer getCountPartake() {
+		return countPartake;
 	}
 
-	public void setCountPV(Integer countPV) {
-		this.countPV = countPV;
-	}
-
-	public Integer getCountUV() {
-		return countUV;
-	}
-
-	public void setCountUV(Integer countUV) {
-		this.countUV = countUV;
-	}
-
-	public Integer getCountIP() {
-		return countIP;
-	}
-
-	public void setCountIP(Integer countIP) {
-		this.countIP = countIP;
+	public void setCountPartake(Integer countPartake) {
+		this.countPartake = countPartake;
 	}
 
 	public Integer getIsTop() {
