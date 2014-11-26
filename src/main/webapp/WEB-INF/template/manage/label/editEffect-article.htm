@@ -19,6 +19,10 @@
 		<td><input class="easyui-numberspinner width150 js-input-space" type="text" data-options="required:true,min:0" value="0" /><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-tip',plain:true">默认不截取</a></td>
 	</tr>
 	<tr>
+		<th>补充后缀</th>
+		<td><input class="easyui-textbox width150 js-input-suffix" type="text" value="" /></td>
+	</tr>
+	<tr>
 		<th class="width130">排序方式</th>
 		<td>
 			<select class="easyui-combobox js-select-sort-name" data-options="required:true,editable:false">
@@ -53,6 +57,7 @@ $(function () {
 	var contentObj = $.parseJSON('${info.content!""}');
 	if(contentObj && contentObj.total) $('.js-input-total').numberspinner('setValue', contentObj.total);
 	if(contentObj && contentObj.space) $('.js-input-space').numberspinner('setValue', contentObj.space);
+	if(contentObj && contentObj.suffix) $('.js-input-suffix').textbox('setValue', contentObj.suffix);
 	if(contentObj && contentObj.sortName) $('.js-select-sort-name').combobox('setValue', contentObj.sortName);
 	if(contentObj && contentObj.sortOrder) $('.js-select-sort-order').combobox('setValue', contentObj.sortOrder);
 	console.log(contentObj);
@@ -98,6 +103,7 @@ $(function () {
 		var content = {
 			total : $('.js-input-total').val(),
 			space : $('.js-input-space').val(),
+			suffix : $('.js-input-suffix').val(),
 			sortName : $('.js-select-sort-name').combobox('getValue'),
 			sortOrder : $('.js-select-sort-order').combobox('getValue'),
 			columnIdArray : Web_getDatagridIdArray($('.js-list-table-column'), 'checked'),
