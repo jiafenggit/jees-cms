@@ -12,6 +12,8 @@ import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.iisquare.jees.cms.dao.ArticleDao;
+import com.iisquare.jees.cms.dao.ColumnDao;
 import com.iisquare.jees.cms.dao.MemberDao;
 import com.iisquare.jees.cms.dao.LabelDao;
 import com.iisquare.jees.cms.domain.Label;
@@ -20,6 +22,7 @@ import com.iisquare.jees.framework.model.ServiceBase;
 import com.iisquare.jees.framework.util.DPUtil;
 import com.iisquare.jees.framework.util.ServiceUtil;
 import com.iisquare.jees.framework.util.SqlUtil;
+import com.iisquare.jees.framework.util.ValidateUtil;
 
 @Service
 public class LabelService extends ServiceBase {
@@ -28,6 +31,10 @@ public class LabelService extends ServiceBase {
 	public MemberDao memberDao;
 	@Autowired
 	public LabelDao labelDao;
+	@Autowired
+	public ArticleDao articleDao;
+	@Autowired
+	public ColumnDao columnDao;
 	
 	public Map<String, String> getStatusMap() {
 		Map<String, String> map = new LinkedHashMap<String, String>();
@@ -202,9 +209,37 @@ public class LabelService extends ServiceBase {
 		return content;
 	}
 	
-	public String parseLabelArticle(String content) { // 待处理
-		if(null == content) return "";
-		return content;
+	public List<Map<String, Object>> parseLabelArticle(String content) {
+		Map<?, ?> map = JSONObject.fromObject(content);
+		if(DPUtil.empty(map)) return null;
+		int total = ValidateUtil.filterInteger(DPUtil.parseString(map.get("total")), true, 1, 100, 10);
+		int space = ValidateUtil.filterInteger(DPUtil.parseString(map.get("space")), true, 0, 100, 0);
+		String suffix = DPUtil.parseString(map.get("suffix"));
+		String sortName = ValidateUtil.filterItem(DPUtil.parseString(map.get("sortName")),
+				true, DPUtil.collectionToStringArray(getArticleSortNameMap().keySet()), "sort");
+		String sortOrder = ValidateUtil.filterItem(DPUtil.parseString(map.get("sortOrder")),
+				true, DPUtil.collectionToStringArray(getSortOrderMap().keySet()), "desc");
+		String columnIds = SqlUtil.buildSafeWhere(",", (Object[]) map.get("columnIdArray"));
+		String articleIds = SqlUtil.buildSafeWhere(",", (Object[]) map.get("articleIdArray"));
+		StringBuilder sb = new StringBuilder("select * from ")
+			.append(articleDao.tableName()).append(" where 1 = 1");
+		if(!DPUtil.empty(columnIds)) {
+			sb.append(" and column_id in (").append(columnIds).append(")");
+		}
+		if(!DPUtil.empty(articleIds)) {
+			sb.append(" or ").append(articleDao.getPrimaryKey()).append(" in (").append(articleIds).append(")");
+		}
+		sb.append(" order by ").append(sortName).append(" ").append(sortOrder);
+		String sql = DPUtil.stringConcat(sb.toString(), SqlUtil.buildLimit(1, total));
+		List<Map<String, Object>> rows = articleDao.queryForList(sql);
+		for (Map<String, Object> subMap : rows) {
+			String title = DPUtil.parseString(subMap.get("title"));
+			String shortTitle = space > 0 ? DPUtil.subStringWithByte(title, space, suffix, null) : title;
+			subMap.put("short_title", shortTitle);
+		}
+		rows = ServiceUtil.fillRelations(rows, columnDao, new String[]{"column_id"}, new String[]{"name"}, null);
+		rows = ServiceUtil.fillRelations(rows, memberDao, new String[]{"create_id", "update_id"}, new String[]{"serial", "name"}, null);
+		return rows;
 	}
 	
 	public String parseLabelComment(String content) { // 待处理

@@ -83,7 +83,7 @@ public class ColumnController extends PermitController {
 			if(DPUtil.empty(persist)) return displayMessage(3001, "信息不存在，请刷新后再试");
 		}
 		persist.setParentId(ValidateUtil.filterInteger(get("parentId"), true, 0, null, null));
-		String name = ValidateUtil.filterSimpleString(get("name"), true, 1, 64, null);
+		String name = ValidateUtil.filterLength(get("name"), 1, 64, null);
 		if(DPUtil.empty(name)) return displayMessage(3002, "名称参数错误");
 		persist.setName(name);
 		persist.setKeywords(DPUtil.trim(get("keywords")));

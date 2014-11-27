@@ -25,7 +25,7 @@ public class ArticleService extends ServiceBase {
 	@Autowired
 	public MemberDao memberDao;
 	@Autowired
-	public ArticleDao noticeDao;
+	public ArticleDao articleDao;
 	@Autowired
 	public ColumnDao columnDao;
 	@Autowired
@@ -48,7 +48,7 @@ public class ArticleService extends ServiceBase {
 	
 	public Map<Object, Object> search(Map<String, Object> map, String orderBy, int page, int pageSize) {
 		StringBuilder sb = new StringBuilder("select * from ")
-			.append(noticeDao.tableName()).append(" where 1 = 1");
+			.append(articleDao.tableName()).append(" where 1 = 1");
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		Object title = map.get("title");
 		if(!DPUtil.empty(title)) {
@@ -113,9 +113,9 @@ public class ArticleService extends ServiceBase {
 		}
 		if(!DPUtil.empty(orderBy)) sb.append(" order by ").append(orderBy);
 		String sql = sb.toString();
-		int total = noticeDao.getCount(sql, paramMap, true);
+		int total = articleDao.getCount(sql, paramMap, true);
 		sql = DPUtil.stringConcat(sql, SqlUtil.buildLimit(page, pageSize));
-		List<Map<String, Object>> rows = noticeDao.npJdbcTemplate().queryForList(sql, paramMap);
+		List<Map<String, Object>> rows = articleDao.npJdbcTemplate().queryForList(sql, paramMap);
 		rows = ServiceUtil.fillFields(rows, new String[]{"status"}, new Map<?, ?>[]{getStatusMap(true)}, null);
 		rows = ServiceUtil.fillRelations(rows, columnDao, new String[]{"column_id"}, new String[]{"name"}, null);
 		rows = ServiceUtil.fillRelations(rows, memberDao, new String[]{"create_id", "update_id"}, new String[]{"serial", "name"}, null);
@@ -123,15 +123,15 @@ public class ArticleService extends ServiceBase {
 	}
 	
 	public List<Map<String, Object>> getListByIds(Object... ids) {
-		return noticeDao.getByIds("*", ids);
+		return articleDao.getByIds("*", ids);
 	}
 	
 	public Article getById(Object id) {
-		return noticeDao.getById(id);
+		return articleDao.getById(id);
 	}
 	
 	public Map<String, Object> getById(Object id, boolean bFill) {
-		Map<String, Object> map = noticeDao.getById("*", id);
+		Map<String, Object> map = articleDao.getById("*", id);
 		if(null != map && bFill) {
 			map = ServiceUtil.fillFields(map, new String[]{"status"}, new Map<?, ?>[]{getStatusMap(true)}, null);
 			map = ServiceUtil.fillRelations(map, columnDao, new String[]{"column_id"}, new String[]{"name"}, null);
@@ -141,14 +141,14 @@ public class ArticleService extends ServiceBase {
 	}
 	
 	public int insert(Article persist) {
-		return noticeDao.insert(persist);
+		return articleDao.insert(persist);
 	}
 	
 	public int update(Article persist) {
-		return noticeDao.update(persist);
+		return articleDao.update(persist);
 	}
 	
 	public int delete(Object... ids) {
-		return noticeDao.deleteByIds(ids);
+		return articleDao.deleteByIds(ids);
 	}
 }

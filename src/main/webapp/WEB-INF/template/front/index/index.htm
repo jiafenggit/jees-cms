@@ -22,7 +22,9 @@
 		<div class="article-panel-news panel panel-default">
 			<div class="panel-heading">${label.newsTitle!""}</div>
 			<div class="panel-body">
-			Panel content
+			[#list label.newsList![] as item]
+			<a class="item" target="_blank" href="${item.url!""}" title="${item.title!""}">${item.short_title!""}</a>[${millisToDateTime(item.publish_time)!""}]
+			[/#list]
 			</div>
 		</div>
 	</div>
