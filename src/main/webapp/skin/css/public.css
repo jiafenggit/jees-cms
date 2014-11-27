@@ -1,22 +1,47 @@
-html, body, form, div, ul, fieldset, li, table, tr, td, span, em, lable, span, input, img {padding:0; margin:0; list-style:none; border:0;}
-body {text-align:center; font-size:14px; font-family:arial, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', '宋体', \5b8b\4f53, Tahoma, Arial, Helvetica, STHeiti;}
-a {text-decoration:none;}
-.main-container {width:1000px; margin:0 auto;}
+html, body, form, div, ul, fieldset, li, table, tr, td, span, em, lable, span, input, img{padding:0; margin:0; list-style:none; border:0;}
+body{text-align:center; font-size:14px; font-family:arial, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', '宋体', \5b8b\4f53, Tahoma, Arial, Helvetica, STHeiti;}
+a{text-decoration:none;}
 
-.top-menu {font-size:12px; width:100%; height:30px; line-height:30px; border-bottom:#d3d3d3 solid 1px; background:#f7f7f7;}
-.top-menu ul {list-style:none;}
-.top-menu ul li {float:left; margin:0 5px 0 5px;}
-.top-menu .left { float:left;}
-.top-menu .right { float:right;}
+.bs-callout{padding:10px 10px; border-left: 3px solid #eee; text-align:left;}
+.bs-callout h4{margin:0;}
+.bs-callout h5{margin:0;}
+.bs-callout p:last-child{margin-bottom: 0;}
+.bs-callout code{background-color: #fff; border-radius: 3px;}
+.bs-callout-danger{background-color: #fdf7f7; border-color: #d9534f;}
+.bs-callout-danger h4{color: #d9534f;}
+.bs-callout-warning{background-color: #fcf8f2; border-color: #f0ad4e;}
+.bs-callout-warning h4{color: #f0ad4e;}
+.bs-callout-info{background-color: #f4f8fa; border-color: #5bc0de;}
+.bs-callout-info h4{color: #5bc0de;}
 
-.top-banner {width:100%; height:120px; margin: 5px 0 5px 0;}
-.top-banner .container {height:100%;}
-.top-banner .left { width:310px; height:100%; float:left; background:url(../images/logo.png) center no-repeat; cursor:pointer;}
-.top-banner .right { width:660px; height:100%; float:right; background:url(../images/banner.png) right no-repeat;}
+.text-ellipsis{white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.clear-float{clear:both; float:none;}
+.clear-padding{padding:0;}
+.clear-margin{margin:0;}
+.float-left{float:left;}
+.float-right{float:right;}
+.margin-top5{margin-top:5px;}
+.margin-right11{margin-right:11px;}
+.width-percent100{width: 100%;}
+.width290{width:290px;}
 
-.top-navigate {margin-bottom: 0;}
+.main-container{width:1000px; margin:0 auto;}
 
-.article-row-focus {height:240px;}
+.top-menu{font-size:12px; width:100%; height:30px; line-height:30px; border-bottom:#d3d3d3 solid 1px; background:#f7f7f7;}
+.top-menu a, .top-menu a:visited{color:#4C4C4C;}
+.top-menu ul{list-style:none;}
+.top-menu ul li{float:left; margin:0 5px 0 5px;}
+.top-menu .left{float:left;}
+.top-menu .right{float:right;}
+
+.top-banner{width:100%; height:120px; margin: 5px 0 5px 0;}
+.top-banner .container{height:100%;}
+.top-banner .left{width:310px; height:100%; float:left; background:url(../images/logo.png) center no-repeat; cursor:pointer;}
+.top-banner .right{width:660px; height:100%; float:right; background:url(../images/banner.png) right no-repeat;}
+
+.top-navigate{margin-bottom: 0;}
+
+.article-row-focus{height:240px; margin-top: 5px;}
 
 /* focus */
 #focus{position: relative;height:100%;width: 580px; float:left;}
@@ -44,17 +69,10 @@ _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingM
 filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=image, src="../images/focus/play-btn.png")}
 #focus .focus-title a{display: none;color: #fff}
 
-.article-panel-news {width: 410px; height:100%; float:right; text-align:left;}
-.article-list {padding:10px 15px;}
-.article-list li {height:22px; line-height:22px;}
-.article-list a {color:#172c45;}
+.article-panel-news{width: 410px; height:100%; float:right; text-align:left; margin-bottom: 0;}
+.article-list{padding:10px 15px; text-align:left;}
+.article-list li{height:22px; line-height:22px;}
+.article-list a, .article-list a:visited{color:#172c45;}
 
-.text-ellipsis {white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
-.clear-float{ clear:both; float:none;}
-.clear-padding { padding:0;}
-.clear-margin { margin:0;}
-.float-left { float:left;}
-.float-right { float:right;}
-.margin-top5 {margin-top:5px;}
-.width-percent100 { width: 100%;}
-.width290 {width:290px;}
+.article-row-four{width: 100%;}
+.article-row-four .column-item{width: 326px;}

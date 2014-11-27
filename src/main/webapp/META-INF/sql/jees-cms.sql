@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50525
 File Encoding         : 65001
 
-Date: 2014-11-27 11:53:35
+Date: 2014-11-27 14:27:21
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -206,7 +206,7 @@ CREATE TABLE `cms_label` (
   `update_id` int(11) NOT NULL DEFAULT '0',
   `update_time` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of cms_label
@@ -214,6 +214,12 @@ CREATE TABLE `cms_label` (
 INSERT INTO `cms_label` VALUES ('1', '首页焦点图', 'front', 'index', 'index', '', 'slideshow', 'slideshow', '{\"rows\":{\"3\":{\"url\":\"/\",\"short_title\":\"李晨张馨予谱写爱之终曲\",\"image\":\"http://127.0.0.1:8080/jees-cms/skin/images/focus/04.jpg\",\"title\":\"李晨张馨予谱写爱之终曲\"},\"0\":{\"short_title\":\"于正版霸王别姬 陈乔恩变腹黑大战情敌袁姗姗\",\"url\":\"/\",\"image\":\"http://127.0.0.1:8080/jees-cms/skin/images/focus/01.jpg\",\"title\":\"于正版霸王别姬 陈乔恩变腹黑大战情敌袁姗姗\"},\"1\":{\"title\":\"刘德华、郑秀文、杜琪峰香港电影铁三角十年归来\",\"short_title\":\"刘德华、郑秀文、杜琪峰香港电影铁三角十年归来\",\"image\":\"http://127.0.0.1:8080/jees-cms/skin/images/focus/02.jpg\",\"url\":\"/\"},\"2\":{\"short_title\":\"众星爸厨艺比拼犯难（2013-10-18期）\",\"title\":\"众星爸厨艺比拼犯难（2013-10-18期）\",\"url\":\"/\",\"image\":\"http://127.0.0.1:8080/jees-cms/skin/images/focus/03.jpg\"},\"4\":{\"image\":\"http://127.0.0.1:8080/jees-cms/skin/images/focus/05.jpg\",\"title\":\"周杰伦自导自演  传递超屌正能量\",\"short_title\":\"周杰伦自导自演  传递超屌正能量\",\"url\":\"/\"}},\"space\":\"0\",\"suffix\":\"...\"}', '', '0', '1', '1', '1415418678539', '1', '1416890662460');
 INSERT INTO `cms_label` VALUES ('2', '首页最新动态标题', 'front', 'index', 'index', '', 'newsTitle', 'html', '最新动态', '', '0', '1', '1', '1416910221488', '1', '1416910221488');
 INSERT INTO `cms_label` VALUES ('3', '首页最新动态列表', 'front', 'index', 'index', '', 'newsList', 'article', '{\"sortOrder\":\"desc\",\"total\":\"8\",\"space\":\"0\",\"sortName\":\"sort\",\"suffix\":\"...\"}', '', '0', '1', '1', '1416998098427', '1', '1416998098427');
+INSERT INTO `cms_label` VALUES ('4', '首页编程开发标题', 'front', 'index', 'index', '', 'programTitle', 'html', '编程开发', '', '0', '1', '1', '1417068299564', '1', '1417068299564');
+INSERT INTO `cms_label` VALUES ('5', '首页编程开发列表', 'front', 'index', 'index', '', 'programList', 'article', '{\"sortOrder\":\"desc\",\"total\":\"8\",\"space\":\"0\",\"suffix\":\"\",\"sortName\":\"sort\"}', '', '0', '1', '1', '1417068414337', '1', '1417068414337');
+INSERT INTO `cms_label` VALUES ('6', '首页运维监控标题', 'front', 'index', 'index', '', 'operateTitle', 'html', '运维监控', '', '0', '1', '1', '1417068462230', '1', '1417068610774');
+INSERT INTO `cms_label` VALUES ('7', '首页软件测试标题', 'front', 'index', 'index', '', 'testTitle', 'html', '软件测试', '', '0', '1', '1', '1417068480832', '1', '1417068578938');
+INSERT INTO `cms_label` VALUES ('8', '首页运维监控列表', 'front', 'index', 'index', '', 'operateList', 'article', '{\"sortOrder\":\"desc\",\"total\":\"8\",\"space\":\"0\",\"suffix\":\"\",\"sortName\":\"sort\"}', '', '0', '1', '1', '1417068534594', '1', '1417068534594');
+INSERT INTO `cms_label` VALUES ('9', '首页软件测试列表', 'front', 'index', 'index', '', 'testList', 'article', '{\"sortOrder\":\"desc\",\"total\":\"8\",\"space\":\"0\",\"suffix\":\"\",\"sortName\":\"sort\"}', '', '0', '1', '1', '1417068546052', '1', '1417068546052');
 
 -- ----------------------------
 -- Table structure for `cms_log`
@@ -238,7 +244,7 @@ CREATE TABLE `cms_log` (
   `operate_ip` varchar(64) NOT NULL DEFAULT '',
   `operate_time` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of cms_log
@@ -296,6 +302,7 @@ INSERT INTO `cms_log` VALUES ('53', '用户登陆', 'service', 'base', 'member',
 INSERT INTO `cms_log` VALUES ('54', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1416998096343');
 INSERT INTO `cms_log` VALUES ('55', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1417051620757');
 INSERT INTO `cms_log` VALUES ('56', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1417057315456');
+INSERT INTO `cms_log` VALUES ('57', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1417068296876');
 
 -- ----------------------------
 -- Table structure for `cms_log_setting`
@@ -345,7 +352,7 @@ CREATE TABLE `cms_member` (
 -- ----------------------------
 -- Records of cms_member
 -- ----------------------------
-INSERT INTO `cms_member` VALUES ('1', 'admin', '管理员', '0f4e8ac95b5c1fc48dc98004c7525bc7', '888888', '0', '1', '1417060391015', '127.0.0.1', '1', '127.0.0.1', '1411090286300', '1', '1415760761046');
+INSERT INTO `cms_member` VALUES ('1', 'admin', '管理员', '0f4e8ac95b5c1fc48dc98004c7525bc7', '888888', '0', '1', '1417069626292', '127.0.0.1', '1', '127.0.0.1', '1411090286300', '1', '1415760761046');
 INSERT INTO `cms_member` VALUES ('2', 'guest', '访客', '793a507822c9ec991c3418dfb7950f07', '338043', '0', '1', '1414550595011', '127.0.0.1', '1', '127.0.0.1', '1414546536140', '1', '1414546536140');
 
 -- ----------------------------

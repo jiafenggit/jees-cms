@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.sf.json.JSONObject;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -210,8 +208,8 @@ public class LabelService extends ServiceBase {
 	}
 	
 	public List<Map<String, Object>> parseLabelArticle(String content) {
-		Map<?, ?> map = JSONObject.fromObject(content);
-		if(DPUtil.empty(map)) return null;
+		Map<?, ?> map = DPUtil.parseJSON(content);
+		if(null == map) return null;
 		int total = ValidateUtil.filterInteger(DPUtil.parseString(map.get("total")), true, 1, 100, 10);
 		int space = ValidateUtil.filterInteger(DPUtil.parseString(map.get("space")), true, 0, 100, 0);
 		String suffix = DPUtil.parseString(map.get("suffix"));
@@ -261,8 +259,8 @@ public class LabelService extends ServiceBase {
 	
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> parseLabelSlideshow(String content) {
-		Map<?, ?> map = JSONObject.fromObject(content);
-		if(DPUtil.empty(map)) return null;
+		Map<?, ?> map = DPUtil.parseJSON(content);
+		if(null == map) return null;
 		Map<String, Map<String, Object>> rowsMap = (Map<String, Map<String, Object>>) map.get("rows");
 		int size = rowsMap.size();
 		List<Map<String, Object>> list = new ArrayList<Map<String,Object>>(size);

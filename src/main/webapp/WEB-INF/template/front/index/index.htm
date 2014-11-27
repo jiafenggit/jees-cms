@@ -1,5 +1,5 @@
 [#include "../public/header.inc.htm"]
-<div class="main-container margin-top5">
+<div class="main-container">
 	<div class="article-row-focus">
 		<div id="focus">
 			<div class="hd">
@@ -30,6 +30,44 @@
 				</li>
 			</ul>
 			[/#list]
+			</div>
+		</div>
+	</div>
+	<div class="article-row-four margin-top5 clear-float">
+		<div class="column-item float-left margin-right11">
+			<div class="panel panel-default">
+				<div class="bs-callout bs-callout-info"><h5>${label.programTitle!""}</h5></div>
+				<div class="panel-body article-list">
+					<ul>
+					[#list label.programList![] as item]
+						<li class="width-percent100 text-ellipsis"><a target="_blank" href="${item.url!""}" title="${item.title!""}">${item.short_title!""}</a></li>
+					[/#list]
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="column-item float-left">
+			<div class="panel panel-default">
+				<div class="bs-callout bs-callout-info"><h5>${label.operateTitle!""}</h5></div>
+				<div class="panel-body article-list">
+					<ul>
+					[#list label.operateList![] as item]
+						<li class="width-percent100 text-ellipsis"><a target="_blank" href="${item.url!""}" title="${item.title!""}">${item.short_title!""}</a></li>
+					[/#list]
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="column-item float-right">
+			<div class="panel panel-default">
+				<div class="bs-callout bs-callout-info"><h5>${label.testTitle!""}</h5></div>
+				<div class="panel-body article-list">
+					<ul>
+					[#list label.testList![] as item]
+						<li class="width-percent100 text-ellipsis"><a target="_blank" href="${item.url!""}" title="${item.title!""}">${item.short_title!""}</a></li>
+					[/#list]
+					</ul>
+				</div>
 			</div>
 		</div>
 	</div>
