@@ -45,5 +45,16 @@ filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMe
 #focus .focus-title a{display: none;color: #fff}
 
 .article-panel-news {width: 410px; height:100%; float:right; text-align:left;}
+.article-list {padding:10px 15px;}
+.article-list li {height:22px; line-height:22px;}
+.article-list a {color:#172c45;}
 
+.text-ellipsis {white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.clear-float{ clear:both; float:none;}
+.clear-padding { padding:0;}
+.clear-margin { margin:0;}
+.float-left { float:left;}
+.float-right { float:right;}
 .margin-top5 {margin-top:5px;}
+.width-percent100 { width: 100%;}
+.width290 {width:290px;}

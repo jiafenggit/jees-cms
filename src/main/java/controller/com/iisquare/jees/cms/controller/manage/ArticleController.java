@@ -106,7 +106,7 @@ public class ArticleController extends PermitController {
 				roleService.getIdListByMemberId(currentMember.getId(), null), false, true);
 		if(!columnIdArray.contains(columnId)) return displayMessage(403, "权限不足，无该栏目发布权限");
 		persist.setColumnId(columnId);
-		String title = ValidateUtil.filterSimpleString(get("title"), true, 1, 64, null);
+		String title = ValidateUtil.filterLength(get("title"), 1, 255, null);
 		if(DPUtil.empty(title)) return displayMessage(3002, "标题参数错误");
 		persist.setTitle(title);
 		persist.setUrl(DPUtil.trim(get("url")));
