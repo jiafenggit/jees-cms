@@ -68,14 +68,14 @@ public class ForbiddenWordController extends PermitController {
 			persist = new ForbiddenWord();
 		} else {
 			persist = forbiddenWordService.getById(id);
-			if(DPUtil.empty(persist)) return displayMessage(3001, "信息不存在，请刷新后再试");
+			if(DPUtil.empty(persist)) return displayMessage(3001, "信息不存在，请刷新后再试", null);
 		}
 		persist.setWord(get("word"));
 		persist.setType(DPUtil.trim(get("type")));
 		persist.setRemark(get("remark"));
 		persist.setSort(ValidateUtil.filterInteger(get("sort"), true, null, null, null));
 		String status = get("status");
-		if(ValidateUtil.isNull(status, true)) return displayMessage(3003, "请选择记录状态");
+		if(ValidateUtil.isNull(status, true)) return displayMessage(3003, "请选择记录状态", null);
 		persist.setStatus(ValidateUtil.filterInteger(status, true, null, null, null));
 		long time = System.currentTimeMillis();
 		persist.setUpdateId(currentMember.getId());
@@ -89,9 +89,9 @@ public class ForbiddenWordController extends PermitController {
 			result = forbiddenWordService.update(persist);
 		}
 		if(result > 0) {
-			return displayMessage(0, url("layout"));
+			return displayMessage(0, "操作成功", url("layout"));
 		} else {
-			return displayMessage(500, "操作失败");
+			return displayMessage(500, "操作失败", null);
 		}
 	}
 	

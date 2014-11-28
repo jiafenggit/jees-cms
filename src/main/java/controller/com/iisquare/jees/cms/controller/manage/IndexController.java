@@ -37,6 +37,6 @@ public class IndexController extends PermitController {
 		settingService.set("web", "commentEnable", DPUtil.empty(get("commentEnable")) ? "0" : "1", null, this, currentMember);
 		settingService.set("web", "feedbackEnable", DPUtil.empty(get("feedbackEnable")) ? "0" : "1", null, this, currentMember);
 		settingService.set("web", "partnerEnable", DPUtil.empty(get("partnerEnable")) ? "0" : "1", null, this, currentMember);
-		return displayMessage(0, "修改成功");
+		return displayMessage(0, "修改成功", null);
 	}
 }

@@ -75,24 +75,24 @@ public class NoteController extends PermitController {
 			persist = new Note();
 		} else {
 			persist = noteService.getById(id);
-			if(DPUtil.empty(persist)) return displayMessage(3001, "信息不存在，请刷新后再试");
+			if(DPUtil.empty(persist)) return displayMessage(3001, "信息不存在，请刷新后再试", null);
 		}
 		String typeId = get("typeId");
-		if(ValidateUtil.isNull(typeId, true)) return displayMessage(3003, "请选择所属类型");
+		if(ValidateUtil.isNull(typeId, true)) return displayMessage(3003, "请选择所属类型", null);
 		persist.setTypeId(ValidateUtil.filterInteger(typeId, true, 1, null, 0));
 		String nickname = ValidateUtil.filterSimpleString(get("nickname"), true, 0, 32, null);
-		if(null == nickname) return displayMessage(3002, "称呼项字数太多或含有特殊字符，请在内容处填写");
+		if(null == nickname) return displayMessage(3002, "称呼项字数太多或含有特殊字符，请在内容处填写", null);
 		persist.setNickname(nickname);
 		String contact = ValidateUtil.filterSimpleString(get("contact"), true, 0, 255, null);
-		if(null == contact) return displayMessage(3002, "联系方式项字数太多或含有特殊字符，请在内容处填写");
+		if(null == contact) return displayMessage(3002, "联系方式项字数太多或含有特殊字符，请在内容处填写", null);
 		persist.setContact(contact);
 		if(DPUtil.empty(id)) persist.setIp(ServletUtil.getRemoteAddr(request)); // 创建者IP
 		String content = get("content");
-		if(content.length() < 20) return displayMessage(3002, "您输入的内容太少了，请详细描述");
+		if(content.length() < 20) return displayMessage(3002, "您输入的内容太少了，请详细描述", null);
 		persist.setContent(content);
 		persist.setSort(ValidateUtil.filterInteger(get("sort"), true, null, null, null));
 		String status = get("status");
-		if(ValidateUtil.isNull(status, true)) return displayMessage(3003, "请选择记录状态");
+		if(ValidateUtil.isNull(status, true)) return displayMessage(3003, "请选择记录状态", null);
 		persist.setStatus(ValidateUtil.filterInteger(status, true, null, null, null));
 		long time = System.currentTimeMillis();
 		persist.setUpdateId(currentMember.getId());
@@ -106,9 +106,9 @@ public class NoteController extends PermitController {
 			result = noteService.update(persist);
 		}
 		if(result > 0) {
-			return displayMessage(0, url("layout"));
+			return displayMessage(0, "操作成功", url("layout"));
 		} else {
-			return displayMessage(500, "操作失败");
+			return displayMessage(500, "操作失败", null);
 		}
 	}
 	

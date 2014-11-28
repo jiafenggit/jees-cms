@@ -84,17 +84,17 @@ public class PartnerController extends PermitController {
 			persist = new Partner();
 		} else {
 			persist = partnerService.getById(id);
-			if(DPUtil.empty(persist)) return displayMessage(3001, "信息不存在，请刷新后再试");
+			if(DPUtil.empty(persist)) return displayMessage(3001, "信息不存在，请刷新后再试", null);
 		}
 		String name = ValidateUtil.filterSimpleString(get("name"), true, 1, 64, null);
-		if(DPUtil.empty(name)) return displayMessage(3002, "名称参数错误");
+		if(DPUtil.empty(name)) return displayMessage(3002, "名称参数错误", null);
 		persist.setName(name);
 		int typeId = ValidateUtil.filterInteger(get("typeId"), true, 0, null, 0);
-		if(DPUtil.empty(typeId)) return displayMessage(3003, "请选择所属类型");
+		if(DPUtil.empty(typeId)) return displayMessage(3003, "请选择所属类型", null);
 		persist.setTypeId(typeId);
 		String goal = ValidateUtil.filterItem(get("goal"), false,
 				DPUtil.collectionToStringArray(partnerService.getGoalMap().keySet()), null);
-		if(null == goal) return displayMessage(3002, "打开方式参数错误");
+		if(null == goal) return displayMessage(3002, "打开方式参数错误", null);
 		persist.setGoal(goal);
 		persist.setUrl(DPUtil.trim(get("url")));
 		persist.setDescription(DPUtil.trim(get("description")));
@@ -103,7 +103,7 @@ public class PartnerController extends PermitController {
 		persist.setRemark(remark);
 		persist.setSort(ValidateUtil.filterInteger(get("sort"), true, null, null, null));
 		String status = get("status");
-		if(ValidateUtil.isNull(status, true)) return displayMessage(3003, "请选择记录状态");
+		if(ValidateUtil.isNull(status, true)) return displayMessage(3003, "请选择记录状态", null);
 		persist.setStatus(ValidateUtil.filterInteger(status, true, null, null, null));
 		long time = System.currentTimeMillis();
 		persist.setUpdateId(currentMember.getId());
@@ -117,9 +117,9 @@ public class PartnerController extends PermitController {
 			result = partnerService.update(persist);
 		}
 		if(result > 0) {
-			return displayMessage(0, url("layout"));
+			return displayMessage(0, "操作成功", url("layout"));
 		} else {
-			return displayMessage(500, "操作失败");
+			return displayMessage(500, "操作失败", null);
 		}
 	}
 	
