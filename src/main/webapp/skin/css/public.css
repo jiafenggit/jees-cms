@@ -74,9 +74,10 @@ filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMe
 .article-list-text{padding:10px 15px; text-align:left;}
 .article-list-text li{height:22px; line-height:22px;}
 .article-list-text a, .article-list-text a:visited{color:#172c45;}
-.article-list-pic-text {text-align: left;}
-.article-list-pic-text img{width: 150px; height: 113px;}
-.article-list-pic-text .item{ height: 120px; overflow: hidden;}
+.article-list-pic-text {text-align: left; padding:3px 2px;}
+.article-list-pic-text .item{ width:160px; margin:0 2px; padding:0; overflow: hidden;}
+.article-list-pic-text .column-title{text-align: center;}
+.article-list-pic-text .caption{height: 89px; overflow: hidden;}
 
 .article-row-three, .article-row-two{width: 100%; height: auto; overflow: hidden;}
 .article-row-three .column-item{width: 326px;}

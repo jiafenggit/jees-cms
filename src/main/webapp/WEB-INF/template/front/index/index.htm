@@ -33,6 +33,35 @@
 			</div>
 		</div>
 	</div>
+	<div class="article-row-two margin-top5 clear-float">
+		<div class="left float-left margin-right11">
+			<div class="panel panel-default margin-bottom0">
+				<div class="bs-callout bs-callout-info"><h5>${label.projectTitle!""}</h5></div>
+				<div class="panel-body article-list-text">
+					<ul>
+					[#list label.projectList![] as item]
+						<li class="width-percent100 text-ellipsis"><a target="_blank" href="${item.url!""}" title="${item.title!""}">${item.short_title!""}</a></li>
+					[/#list]
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="right float-left">
+			<div class="panel panel-default margin-bottom0">
+				<div class="bs-callout bs-callout-info"><h5>${label.architectureTitle!""}</h5></div>
+				<div class="panel-body article-list-pic-text">
+				[#list label.architectureList![] as item]
+					<div class="col-sm-6 col-md-4 item">
+						<div class="thumbnail margin-bottom0">
+							<a target="_blank" href="${item.url!""}" title="${item.title!""}"><img src="[#if empty(item.log)]${defaultLogo!""}[#else]${item.logo!""}[/#if]"></a>
+							<div class="caption"><div class="column-title">[${(item.column_id_rel.name)!""}]</div>${item.short_title!""}</div>
+						</div>
+					</div>
+				[/#list]
+				</div>
+			</div>
+		</div>
+	</div>
 	<div class="article-row-three margin-top5 clear-float">
 		<div class="column-item float-left margin-right11">
 			<div class="panel panel-default margin-bottom0">
@@ -71,32 +100,40 @@
 			</div>
 		</div>
 	</div>
-	<div class="article-row-two margin-top5 clear-float">
-		<div class="left float-left margin-right11">
+	<div class="article-row-three margin-top5 clear-float">
+		<div class="column-item float-left margin-right11">
 			<div class="panel panel-default margin-bottom0">
-				<div class="bs-callout bs-callout-info"><h5>${label.projectTitle!""}</h5></div>
+				<div class="bs-callout bs-callout-info"><h5>${label.safeTitle!""}</h5></div>
 				<div class="panel-body article-list-text">
 					<ul>
-					[#list label.projectList![] as item]
+					[#list label.safeList![] as item]
 						<li class="width-percent100 text-ellipsis"><a target="_blank" href="${item.url!""}" title="${item.title!""}">${item.short_title!""}</a></li>
 					[/#list]
 					</ul>
 				</div>
 			</div>
 		</div>
-		<div class="right float-left">
+		<div class="column-item float-left">
 			<div class="panel panel-default margin-bottom0">
-				<div class="bs-callout bs-callout-info"><h5>${label.architectureTitle!""}</h5></div>
-				<div class="panel-body article-list-pic-text">
-				[#list label.architectureList![] as item]
-					<div class="media item">
-						<a target="_blank" class="media-left" href="${item.url!""}"><img class="media-object" src="[#if empty(item.log)]${defaultLogo!""}[#else]${item.logo!""}[/#if]" alt="${item.title!""}"></a>
-						<div class="media-body">
-							<h4 class="media-heading text-ellipsis">${item.short_title!""}</h4>
-							${item.description!""}
-						</div>
-					</div>
-				[/#list]
+				<div class="bs-callout bs-callout-info"><h5>${label.datebaseTitle!""}</h5></div>
+				<div class="panel-body article-list-text">
+					<ul>
+					[#list label.datebaseList![] as item]
+						<li class="width-percent100 text-ellipsis"><a target="_blank" href="${item.url!""}" title="${item.title!""}">${item.short_title!""}</a></li>
+					[/#list]
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="column-item float-right">
+			<div class="panel panel-default margin-bottom0">
+				<div class="bs-callout bs-callout-info"><h5>${label.algorithmTitle!""}</h5></div>
+				<div class="panel-body article-list-text">
+					<ul>
+					[#list label.algorithmList![] as item]
+						<li class="width-percent100 text-ellipsis"><a target="_blank" href="${item.url!""}" title="${item.title!""}">${item.short_title!""}</a></li>
+					[/#list]
+					</ul>
 				</div>
 			</div>
 		</div>
