@@ -74,17 +74,25 @@
 	<div class="article-row-two margin-top5 clear-float">
 		<div class="left float-left margin-right11">
 			<div class="panel panel-default margin-bottom0">
-				<div class="bs-callout bs-callout-info"><h5>${label.programTitle!""}</h5></div>
+				<div class="bs-callout bs-callout-info"><h5>${label.projectTitle!""}</h5></div>
 				<div class="panel-body article-list">
-					项目管理
+					<ul>
+					[#list label.projectList![] as item]
+						<li class="width-percent100 text-ellipsis"><a target="_blank" href="${item.url!""}" title="${item.title!""}">${item.short_title!""}</a></li>
+					[/#list]
+					</ul>
 				</div>
 			</div>
 		</div>
 		<div class="right float-left">
 			<div class="panel panel-default margin-bottom0">
-				<div class="bs-callout bs-callout-info"><h5>${label.operateTitle!""}</h5></div>
+				<div class="bs-callout bs-callout-info"><h5>${label.architectureTitle!""}</h5></div>
 				<div class="panel-body article-list">
-					架构设计图文
+					<ul>
+					[#list label.architectureList![] as item]
+						<li class="width-percent100 text-ellipsis"><a target="_blank" href="${item.url!""}" title="${item.title!""}">${item.short_title!""}</a></li>
+					[/#list]
+					</ul>
 				</div>
 			</div>
 		</div>
