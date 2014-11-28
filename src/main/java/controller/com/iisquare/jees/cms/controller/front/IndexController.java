@@ -36,7 +36,7 @@ public class IndexController extends PermitController {
 		assign("title", settingService.get("web", "title")); // 网站标题
 		assign("keywords", settingService.get("web", "keywords")); // 网站关键词
 		assign("description", settingService.get("web", "description")); // 网站描述
-		assign("navigateList", navigateService.getWebList(_WEB_URL_,
-				DPUtil.subString(ServletUtil.getFullUrl(request), _WEB_URL_.length()))); // 导航菜单
+		assign("navigateList", navigateService.getWebList(_WEB_URL_, DPUtil.subString(
+				ServletUtil.getFullUrl(request, isWebUrlWithDomain), _WEB_URL_.length()))); // 导航菜单
 	}
 }
