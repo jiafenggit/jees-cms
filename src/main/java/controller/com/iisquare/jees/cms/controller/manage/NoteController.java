@@ -34,10 +34,10 @@ public class NoteController extends PermitController {
 	public String listAction () throws Exception {
 		int page = ValidateUtil.filterInteger(get("page"), true, 0, null, null);
 		int pageSize = ValidateUtil.filterInteger(get("rows"), true, 0, 500, null);
-		Map<Object, Object> map = noteService.search(parameterMap, "sort desc", page, pageSize);
+		Map<Object, Object> map = noteService.search(parameter, "sort desc", page, pageSize);
 		List<Map<String, Object>> rows = (List<Map<String, Object>>) map.get("rows");
 		for (Map<String, Object> row : rows) {
-			row.put("fullUrl", UrlUtil.concat(_WEB_URL_, DPUtil.parseString(row.get("url"))));
+			row.put("fullUrl", UrlUtil.concat(webUrl, DPUtil.parseString(row.get("url"))));
 		}
 		assign("total", map.get("total"));
 		assign("rows", DPUtil.collectionToArray(rows));

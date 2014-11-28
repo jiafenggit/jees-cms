@@ -26,7 +26,7 @@
 $(function () {
 	$('#buttonOk').bind('click', function () {
 		var content = $('.js-input-content').textbox('getValue');
-		$.post('${_BASE_.url("saveEffect")}', {
+		$.post('${_base_.url("saveEffect")}', {
 			id : '${info.id}',
 			content : content
 		}, function (data) {
@@ -35,7 +35,7 @@ $(function () {
 				Web_alertInfo(data.message);
 			} else {
 				Web_confirm('操作成功，是否继续编辑', function (result) {
-					if(!result) Web_redirectPage('${_BASE_.url("layout")}');
+					if(!result) Web_redirectPage('${_base_.url("layout")}');
 				});
 			}
 		});

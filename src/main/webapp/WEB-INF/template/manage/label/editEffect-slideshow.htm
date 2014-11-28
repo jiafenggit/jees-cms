@@ -26,7 +26,7 @@
 					<table class="td-break-word full-w-h">
 						<tr>
 							<td rowspan="3" align="center" class="width213">
-								<a href="javascript:void(0);" target="_blank" title="点击查看大图"><img src="${_WEB_URL_}/skin/images/nopic_article.jpg" class="img js-image-show" width="213px" height="160px" /></a>
+								<a href="javascript:void(0);" target="_blank" title="点击查看大图"><img src="${_webUrl_}/skin/images/nopic_article.jpg" class="img js-image-show" width="213px" height="160px" /></a>
 							</td>
 							<th>标题名称</th>
 							<td><input class="easyui-textbox width300 js-input-title" type="text" value="" /></td>
@@ -181,7 +181,7 @@ $(function () {
 			suffix : $.trim($('.js-input-suffix').textbox('getValue')),
 			rows : $slideshowList.datagrid('getRows')
 		};
-		$.post('${_BASE_.url("saveEffect")}', {
+		$.post('${_base_.url("saveEffect")}', {
 			id : '${info.id}',
 			content : content
 		}, function (data) {
@@ -190,7 +190,7 @@ $(function () {
 				Web_alertInfo(data.message);
 			} else {
 				Web_confirm('操作成功，是否继续编辑', function (result) {
-					if(!result) Web_redirectPage('${_BASE_.url("layout")}');
+					if(!result) Web_redirectPage('${_base_.url("layout")}');
 				});
 			}
 		});

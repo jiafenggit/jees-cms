@@ -68,21 +68,21 @@ public abstract class PermitController extends CoreController {
 	 * 判断是否拥有当前Action的权限
 	 */
 	public boolean hasPermit () {
-		return hasPermit(_MODULE_, _CONTROLLER_, _ACTION_);
+		return hasPermit(moduleName, controllerName, actionName);
 	}
 	
 	/**
 	 * 判断是否拥有对应Action的权限
 	 */
 	public boolean hasPermit (String action) {
-		return hasPermit(_MODULE_, _CONTROLLER_, action);
+		return hasPermit(moduleName, controllerName, action);
 	}
 	
 	/**
 	 * 判断是否拥有对应Controller中Action的权限
 	 */
 	public boolean hasPermit (String controller, String action) {
-		return hasPermit(_MODULE_, controller, action);
+		return hasPermit(moduleName, controller, action);
 	}
 	
 	/**
@@ -108,12 +108,12 @@ public abstract class PermitController extends CoreController {
 			ModelAndView modelAndView) {
 		String viewName = modelAndView.getViewName();
 		if(!DPUtil.empty(viewName) && !viewName.startsWith("redirect:")) {
-			modelAndView.addObject("_WEB_NAME_", settingService.get("system", "webName"));
-			modelAndView.addObject("_PAGE_SIZE_", settingService.get("system", "pageSize"));
+			modelAndView.addObject("_webName_", settingService.get("system", "webName"));
+			modelAndView.addObject("_pageSize_", settingService.get("system", "pageSize"));
 		}
 		super.destroy(request, response, handler, modelAndView);
 		/* 日志处理 */
-		Resource resource = resourceService.getByRouter(0, _MODULE_, _CONTROLLER_, _ACTION_);
+		Resource resource = resourceService.getByRouter(0, moduleName, controllerName, actionName);
 		if(null == resource) return ;
 		LogSetting logSetting = logService.getSettingById(resource.getId());
 		if(null == logSetting || 1 != logSetting.getEnable()) return ;
@@ -126,7 +126,7 @@ public abstract class PermitController extends CoreController {
 		if(1 == logSetting.getReferer()) log.setReferer(request.getHeader("referer"));
 		if(1 == logSetting.getRequestUrl()) log.setRequestUrl(request.getRequestURL().toString());
 		if(1 == logSetting.getRequestParam()) {
-			if("base".equals(_MODULE_) && "member".equals(_CONTROLLER_) && "logon".equals(_ACTION_)) {
+			if("base".equals(moduleName) && "member".equals(controllerName) && "logon".equals(actionName)) {
 				log.setRequestParam("******");
 			} else {
 				log.setRequestParam(JSONObject.fromObject(request.getParameterMap()).toString());
@@ -136,7 +136,7 @@ public abstract class PermitController extends CoreController {
 		if(1 == logSetting.getSessionValue()) log.setSessionValue(
 				JSONObject.fromObject(ServletUtil.getSessionMap(request)).toString());
 		if(1 == logSetting.getResponseView()) log.setResponseView(viewName);
-		if(1 == logSetting.getResponseData()) log.setResponseData(JSONObject.fromObject(_ASSIGN_).toString());
+		if(1 == logSetting.getResponseData()) log.setResponseData(JSONObject.fromObject(assign).toString());
 		log.setOperateId(null == currentMember ? 0 : currentMember.getId());
 		log.setOperateIp(ServletUtil.getRemoteAddr(request));
 		log.setOperateTime(System.currentTimeMillis());

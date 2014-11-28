@@ -53,7 +53,7 @@ $(function () {
 	if(contentObj && contentObj.sortOrder) $('.js-select-sort-order').combobox('setValue', contentObj.sortOrder);
 	console.log(contentObj);
 	$('.js-list-table-column').treegrid({
-		url : '${_BASE_.url("column", "list")}',
+		url : '${_base_.url("column", "list")}',
 		idField : 'id',
 		treeField : 'name',
 		toolbar : '#toolbar-column',
@@ -89,7 +89,7 @@ $(function () {
 			sortOrder : $('.js-select-sort-order').combobox('getValue'),
 			columnIdArray : Web_getDatagridIdArray($('.js-list-table-column'), 'checked')
 		};
-		$.post('${_BASE_.url("saveEffect")}', {
+		$.post('${_base_.url("saveEffect")}', {
 			id : '${info.id}',
 			content : content
 		}, function (data) {
@@ -98,7 +98,7 @@ $(function () {
 				Web_alertInfo(data.message);
 			} else {
 				Web_confirm('操作成功，是否继续编辑', function (result) {
-					if(!result) Web_redirectPage('${_BASE_.url("layout")}');
+					if(!result) Web_redirectPage('${_base_.url("layout")}');
 				});
 			}
 		});

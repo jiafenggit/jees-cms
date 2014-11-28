@@ -42,7 +42,7 @@ public class LabelController extends PermitController {
 			assign("sortNameMap", labelService.getCommentSortNameMap());
 			assign("sortOrderMap", labelService.getSortOrderMap());
 		}
-		return displayTemplate(DPUtil.stringConcat(_ACTION_, "-", effect));
+		return displayTemplate(DPUtil.stringConcat(actionName, "-", effect));
 	}
 	
 	public String saveEffectAction() throws Exception {
@@ -78,10 +78,10 @@ public class LabelController extends PermitController {
 	public String listAction () throws Exception {
 		int page = ValidateUtil.filterInteger(get("page"), true, 0, null, null);
 		int pageSize = ValidateUtil.filterInteger(get("rows"), true, 0, 500, null);
-		Map<Object, Object> map = labelService.search(parameterMap, "sort desc", page, pageSize);
+		Map<Object, Object> map = labelService.search(parameter, "sort desc", page, pageSize);
 		List<Map<String, Object>> rows = (List<Map<String, Object>>) map.get("rows");
 		for (Map<String, Object> row : rows) {
-			row.put("fullUrl", UrlUtil.concat(_WEB_URL_, DPUtil.parseString(row.get("url"))));
+			row.put("fullUrl", UrlUtil.concat(webUrl, DPUtil.parseString(row.get("url"))));
 		}
 		assign("total", map.get("total"));
 		assign("rows", DPUtil.collectionToArray(rows));
@@ -140,7 +140,7 @@ public class LabelController extends PermitController {
 		String keyName = ValidateUtil.filterSimpleString(get("keyName"), true, 1, 64, null);
 		if(DPUtil.empty(keyName)) return displayMessage(3002, "标签名称参数错误", null);
 		persist.setKeyName(keyName);
-		if(!DPUtil.empty(labelService.getContentMap(_MODULE_, _CONTROLLER_, _ACTION_, null, keyName, false, false))) {
+		if(!DPUtil.empty(labelService.getContentMap(moduleName, controllerName, actionName, null, keyName, false, false))) {
 			return displayMessage(3006, "对应标签已存在", null);
 		}
 		String effect = ValidateUtil.filterItem(get("effect"), false,

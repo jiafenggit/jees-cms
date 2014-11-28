@@ -136,7 +136,7 @@ public class LabelService extends ServiceBase {
 	
 	public Map<String, Object> getContentMap(ControllerBase base,
 			String keyGroup, String keyName, boolean bStatusNormal, boolean bConvert) {
-		return getContentMap(base._MODULE_, base._CONTROLLER_, base._ACTION_, keyGroup, keyName, bStatusNormal, bConvert);
+		return getContentMap(base.moduleName, base.controllerName, base.actionName, keyGroup, keyName, bStatusNormal, bConvert);
 	}
 	
 	/**

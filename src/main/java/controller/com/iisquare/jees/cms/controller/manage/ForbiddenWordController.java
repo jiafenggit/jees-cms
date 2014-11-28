@@ -31,7 +31,7 @@ public class ForbiddenWordController extends PermitController {
 	public String listAction () throws Exception {
 		int page = ValidateUtil.filterInteger(get("page"), true, 0, null, null);
 		int pageSize = ValidateUtil.filterInteger(get("rows"), true, 0, 500, null);
-		Map<Object, Object> map = forbiddenWordService.search(parameterMap, "sort desc", page, pageSize);
+		Map<Object, Object> map = forbiddenWordService.search(parameter, "sort desc", page, pageSize);
 		assign("total", map.get("total"));
 		assign("rows", map.get("rows"));
 		return displayJSON();

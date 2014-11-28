@@ -10,7 +10,7 @@
 $(function () {
 	var isLoading = false;
 	$('.js-list-table').treegrid({
-		url : '${_BASE_.url("list")}',
+		url : '${_base_.url("list")}',
 		idField : 'id',
 		treeField : 'fileName',
 		toolbar : '#toolbar',
@@ -32,7 +32,7 @@ $(function () {
 				return false;
 			}
 			isLoading = true;
-			$.post('${_BASE_.url("list")}', {
+			$.post('${_base_.url("list")}', {
 				path : row.filePath
 			}, function (data) {
 				isLoading = false;
@@ -59,7 +59,7 @@ $(function () {
 			Web_alertInfo('请选择模板文件');
 			return false;
 		}
-		var url = '${_BASE_.url("edit")}?path=' + encodeURIComponent(row.filePath);
+		var url = '${_base_.url("edit")}?path=' + encodeURIComponent(row.filePath);
 		Web_redirectPage(url);
 	});
 });

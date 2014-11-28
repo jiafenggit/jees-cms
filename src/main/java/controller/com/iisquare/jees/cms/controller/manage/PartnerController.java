@@ -35,10 +35,10 @@ public class PartnerController extends PermitController {
 	public String listAction () throws Exception {
 		int page = ValidateUtil.filterInteger(get("page"), true, 0, null, null);
 		int pageSize = ValidateUtil.filterInteger(get("rows"), true, 0, 500, null);
-		Map<Object, Object> map = partnerService.search(parameterMap, "sort desc", page, pageSize);
+		Map<Object, Object> map = partnerService.search(parameter, "sort desc", page, pageSize);
 		List<Map<String, Object>> rows = (List<Map<String, Object>>) map.get("rows");
 		for (Map<String, Object> row : rows) {
-			row.put("fullUrl", UrlUtil.concat(_WEB_URL_, DPUtil.parseString(row.get("url"))));
+			row.put("fullUrl", UrlUtil.concat(webUrl, DPUtil.parseString(row.get("url"))));
 		}
 		assign("total", map.get("total"));
 		assign("rows", DPUtil.collectionToArray(rows));
@@ -51,8 +51,8 @@ public class PartnerController extends PermitController {
 		if(null == info) {
 			return displayInfo("信息不存在，请刷新后再试", null);
 		}
-		String fullUrl = UrlUtil.concat(_WEB_URL_, DPUtil.parseString(info.get("logo")));
-		if(DPUtil.empty(fullUrl)) fullUrl = UrlUtil.concat(_WEB_URL_, partnerService.defaultLogo);
+		String fullUrl = UrlUtil.concat(webUrl, DPUtil.parseString(info.get("logo")));
+		if(DPUtil.empty(fullUrl)) fullUrl = UrlUtil.concat(webUrl, partnerService.defaultLogo);
 		assign("info", info);
 		assign("fullUrl", fullUrl);
 		return displayTemplate();
@@ -67,8 +67,8 @@ public class PartnerController extends PermitController {
 			info = partnerService.getById(id);
 			if(DPUtil.empty(info)) return displayInfo("信息不存在，请刷新后再试", null);
 		}
-		String fullUrl = UrlUtil.concat(_WEB_URL_, DPUtil.parseString(info.getLogo()));
-		if(DPUtil.empty(fullUrl)) fullUrl = UrlUtil.concat(_WEB_URL_, partnerService.defaultLogo);
+		String fullUrl = UrlUtil.concat(webUrl, DPUtil.parseString(info.getLogo()));
+		if(DPUtil.empty(fullUrl)) fullUrl = UrlUtil.concat(webUrl, partnerService.defaultLogo);
 		assign("info", info);
 		assign("statusMap", partnerService.getStatusMap(false));
 		assign("goalMap", partnerService.getGoalMap());

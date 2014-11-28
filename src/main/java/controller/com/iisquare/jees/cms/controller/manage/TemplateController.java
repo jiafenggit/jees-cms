@@ -24,7 +24,7 @@ public class TemplateController extends PermitController {
 	public TemplateService templateService;
 	
 	private String getTemplateLoaderPath() {
-		return DPUtil.stringConcat(_WEB_ROOT_, "/", DPUtil.trim(configuration.getTemplateLoaderPath(), "/"));
+		return DPUtil.stringConcat(webRoot, "/", DPUtil.trim(configuration.getTemplateLoaderPath(), "/"));
 	}
 	
 	public String layoutAction() throws Exception {
