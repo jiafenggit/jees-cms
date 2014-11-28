@@ -62,7 +62,7 @@ public class LabelController extends PermitController {
 		}
 		int result = labelService.updateContent(persist.getId(), content);
 		if(result > 0) {
-			return displayMessage(0, "操作成功", url("layout"));
+			return displayMessage(0, "操作成功", null);
 		} else {
 			return displayMessage(500, "操作失败", null);
 		}
@@ -164,7 +164,7 @@ public class LabelController extends PermitController {
 			result = labelService.update(persist);
 		}
 		if(result > 0) {
-			return displayMessage(0, "操作成功", url("layout"));
+			return displayMessage(0, "操作成功", null);
 		} else {
 			return displayMessage(500, "操作失败", null);
 		}

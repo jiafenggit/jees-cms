@@ -51,7 +51,7 @@ public class TemplateController extends PermitController {
 		String path = get("path");
 		String content = get("content");
 		if(templateService.updateTempalteContent(getTemplateLoaderPath(), path, configuration.getTemplateSuffix(), content)) {
-			return displayMessage(0, "操作成功", url("layout"));
+			return displayMessage(0, "操作成功", null);
 		} else {
 			return displayMessage(500, "修改失败", null);
 		}
