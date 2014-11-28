@@ -21,7 +21,7 @@
 		</div>
 		<div class="article-panel-news panel panel-default margin-bottom0">
 			<div class="panel-heading">${label.newsTitle!""}</div>
-			<div class="panel-body article-list">
+			<div class="panel-body article-list-text">
 			[#list label.newsList![] as item]
 			<ul>
 				<li class="width-percent100">
@@ -37,7 +37,7 @@
 		<div class="column-item float-left margin-right11">
 			<div class="panel panel-default margin-bottom0">
 				<div class="bs-callout bs-callout-info"><h5>${label.programTitle!""}</h5></div>
-				<div class="panel-body article-list">
+				<div class="panel-body article-list-text">
 					<ul>
 					[#list label.programList![] as item]
 						<li class="width-percent100 text-ellipsis"><a target="_blank" href="${item.url!""}" title="${item.title!""}">${item.short_title!""}</a></li>
@@ -49,7 +49,7 @@
 		<div class="column-item float-left">
 			<div class="panel panel-default margin-bottom0">
 				<div class="bs-callout bs-callout-info"><h5>${label.operateTitle!""}</h5></div>
-				<div class="panel-body article-list">
+				<div class="panel-body article-list-text">
 					<ul>
 					[#list label.operateList![] as item]
 						<li class="width-percent100 text-ellipsis"><a target="_blank" href="${item.url!""}" title="${item.title!""}">${item.short_title!""}</a></li>
@@ -61,7 +61,7 @@
 		<div class="column-item float-right">
 			<div class="panel panel-default margin-bottom0">
 				<div class="bs-callout bs-callout-info"><h5>${label.testTitle!""}</h5></div>
-				<div class="panel-body article-list">
+				<div class="panel-body article-list-text">
 					<ul>
 					[#list label.testList![] as item]
 						<li class="width-percent100 text-ellipsis"><a target="_blank" href="${item.url!""}" title="${item.title!""}">${item.short_title!""}</a></li>
@@ -75,7 +75,7 @@
 		<div class="left float-left margin-right11">
 			<div class="panel panel-default margin-bottom0">
 				<div class="bs-callout bs-callout-info"><h5>${label.projectTitle!""}</h5></div>
-				<div class="panel-body article-list">
+				<div class="panel-body article-list-text">
 					<ul>
 					[#list label.projectList![] as item]
 						<li class="width-percent100 text-ellipsis"><a target="_blank" href="${item.url!""}" title="${item.title!""}">${item.short_title!""}</a></li>
@@ -87,12 +87,16 @@
 		<div class="right float-left">
 			<div class="panel panel-default margin-bottom0">
 				<div class="bs-callout bs-callout-info"><h5>${label.architectureTitle!""}</h5></div>
-				<div class="panel-body article-list">
-					<ul>
-					[#list label.architectureList![] as item]
-						<li class="width-percent100 text-ellipsis"><a target="_blank" href="${item.url!""}" title="${item.title!""}">${item.short_title!""}</a></li>
-					[/#list]
-					</ul>
+				<div class="panel-body article-list-pic-text">
+				[#list label.architectureList![] as item]
+					<div class="media item">
+						<a target="_blank" class="media-left" href="${item.url!""}"><img class="media-object" src="[#if empty(item.log)]${defaultLogo!""}[#else]${item.logo!""}[/#if]" alt="${item.title!""}"></a>
+						<div class="media-body">
+							<h4 class="media-heading text-ellipsis">${item.short_title!""}</h4>
+							${item.description!""}
+						</div>
+					</div>
+				[/#list]
 				</div>
 			</div>
 		</div>
