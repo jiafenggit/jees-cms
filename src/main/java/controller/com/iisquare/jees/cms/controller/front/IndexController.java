@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.iisquare.jees.cms.service.ArticleService;
 import com.iisquare.jees.cms.service.LabelService;
 import com.iisquare.jees.cms.service.NavigateService;
+import com.iisquare.jees.cms.service.PartnerService;
 import com.iisquare.jees.core.component.PermitController;
 import com.iisquare.jees.framework.util.DPUtil;
 import com.iisquare.jees.framework.util.ServletUtil;
@@ -27,12 +28,15 @@ public class IndexController extends PermitController {
 	public LabelService labelService;
 	@Autowired
 	public ArticleService articleService;
+	@Autowired
+	public PartnerService partnerService;
 	
 	@RequestMapping(value="/")
 	public String indexAction() throws Exception {
 		assignWeb();
 		assign("defaultLogo", articleService.defaultLogo);
 		assign("label", labelService.getContentMap(this, null, null, true, true));
+		assign("partner", partnerService.getWebList());
 		return displayTemplate();
 	}
 	

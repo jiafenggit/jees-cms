@@ -1,5 +1,6 @@
 package com.iisquare.jees.cms.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -51,6 +52,39 @@ public class PartnerService extends ServiceBase {
 	}
 	
 	public PartnerService() {}
+	
+	public List<Map<String, Object>> getWebList() {
+		List<Map<String, Object>> typeList = partnerTypeDao.getList("*", new String[]{"status"}, new Object[]{1}, null, "order by sort desc", 0, 0);
+		List<Map<String, Object>> partnerList = partnerDao.getList("*", "status = 1 and (logo_enable = 1 or title_enable = 1)", new Object[]{}, "order by sort desc", 0, 0);
+		Map<Object, List<Map<String, Object>>> indexMap = ServiceUtil.indexesMapList(partnerList, "type_id");
+		String typePrimaryKey = partnerTypeDao.getPrimaryKey();
+		for (Map<String, Object> map : typeList) {
+			List<Map<String, Object>> childrenLogoTitle = new ArrayList<Map<String, Object>>();
+			List<Map<String, Object>> childrenLogoOnly = new ArrayList<Map<String, Object>>();
+			List<Map<String, Object>> childrenTitleOnly = new ArrayList<Map<String, Object>>();
+			List<Map<String, Object>> childrenList = indexMap.get(map.get(typePrimaryKey));
+			if(null != childrenList) {
+				for (Map<String, Object> childrenMap : childrenList) {
+					if(!DPUtil.empty(childrenMap.get("logo_enable")) && !DPUtil.empty(childrenMap.get("title_enable"))) {
+						childrenLogoTitle.add(childrenMap); // 图文模式
+						continue ;
+					}
+					if(!DPUtil.empty(childrenMap.get("logo_enable"))) {
+						childrenLogoOnly.add(childrenMap); // 图片模式
+						continue ;
+					}
+					if(!DPUtil.empty(childrenMap.get("title_enable"))) {
+						childrenTitleOnly.add(childrenMap); // 文本模式
+						continue ;
+					}
+				}
+			}
+			map.put("children_logo_title", childrenLogoTitle);
+			map.put("children_logo_only", childrenLogoOnly);
+			map.put("children_title_only", childrenTitleOnly);
+		}
+		return typeList;
+	}
 	
 	public Map<Object, Object> search(Map<String, Object> map, String orderBy, int page, int pageSize) {
 		StringBuilder sb = new StringBuilder("select * from ")

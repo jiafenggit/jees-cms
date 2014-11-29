@@ -196,9 +196,9 @@ public class LabelService extends ServiceBase {
 	 */
 	public Object parseLabel(String effect, String content) {
 		if("html".equals(effect)) return parseLabelHtml(content);
-		if("article".equals(effect)) return parseLabelArticle(content);
-		if("comment".equals(effect)) return parseLabelComment(content);
-		if("slideshow".equals(effect)) return parseLabelSlideshow(content);
+		if("article".equals(effect)) return parseLabelArticle(DPUtil.parseJSON(content));
+		if("comment".equals(effect)) return parseLabelComment(DPUtil.parseJSON(content));
+		if("slideshow".equals(effect)) return parseLabelSlideshow(DPUtil.parseJSON(content));
 		return "";
 	}
 	
@@ -207,8 +207,7 @@ public class LabelService extends ServiceBase {
 		return content;
 	}
 	
-	public List<Map<String, Object>> parseLabelArticle(String content) {
-		Map<?, ?> map = DPUtil.parseJSON(content);
+	public List<Map<String, Object>> parseLabelArticle(Map<?, ?> map) {
 		if(null == map) return null;
 		int total = ValidateUtil.filterInteger(DPUtil.parseString(map.get("total")), true, 1, 100, 10);
 		int space = ValidateUtil.filterInteger(DPUtil.parseString(map.get("space")), true, 0, 100, 0);
@@ -240,9 +239,8 @@ public class LabelService extends ServiceBase {
 		return rows;
 	}
 	
-	public String parseLabelComment(String content) { // 待处理
-		if(null == content) return "";
-		return content;
+	public String parseLabelComment(Map<?, ?> map) { // 待处理
+		return null;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -258,8 +256,7 @@ public class LabelService extends ServiceBase {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> parseLabelSlideshow(String content) {
-		Map<?, ?> map = DPUtil.parseJSON(content);
+	public List<Map<String, Object>> parseLabelSlideshow(Map<?, ?> map) {
 		if(null == map) return null;
 		Map<String, Map<String, Object>> rowsMap = (Map<String, Map<String, Object>>) map.get("rows");
 		int size = rowsMap.size();
