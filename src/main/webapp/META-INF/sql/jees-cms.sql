@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50525
 File Encoding         : 65001
 
-Date: 2014-11-29 22:38:35
+Date: 2014-11-29 23:27:40
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -373,7 +373,7 @@ CREATE TABLE `cms_member` (
 -- ----------------------------
 -- Records of cms_member
 -- ----------------------------
-INSERT INTO `cms_member` VALUES ('1', 'admin', '管理员', '0f4e8ac95b5c1fc48dc98004c7525bc7', '888888', '0', '1', '1417271904339', '127.0.0.1', '1', '127.0.0.1', '1411090286300', '1', '1417159438312');
+INSERT INTO `cms_member` VALUES ('1', 'admin', '管理员', '0f4e8ac95b5c1fc48dc98004c7525bc7', '888888', '0', '1', '1417274847210', '127.0.0.1', '1', '127.0.0.1', '1411090286300', '1', '1417159438312');
 INSERT INTO `cms_member` VALUES ('2', 'guest', '访客', '793a507822c9ec991c3418dfb7950f07', '338043', '0', '1', '1414550595011', '127.0.0.1', '1', '127.0.0.1', '1414546536140', '1', '1414546536140');
 
 -- ----------------------------
@@ -1119,15 +1119,15 @@ CREATE TABLE `cms_setting` (
 INSERT INTO `cms_setting` VALUES ('1', 'webName', 'system', '内容管理系统', '系统名称', '1', '127.0.0.1', '1414641138607');
 INSERT INTO `cms_setting` VALUES ('2', 'pageSize', 'system', '15', '分页大小', '1', '127.0.0.1', '1413018859640');
 INSERT INTO `cms_setting` VALUES ('3', 'guestSerial', 'system', 'guest', '访客模式账号', '1', '127.0.0.1', '1414549233193');
-INSERT INTO `cms_setting` VALUES ('4', 'title', 'web', 'Jees-CMS演示站', '网站标题', '1', '127.0.0.1', '1416212352748');
-INSERT INTO `cms_setting` VALUES ('5', 'keywords', 'web', 'java,j2ee,cms,开源,免费,jees', '网站关键词', '1', '127.0.0.1', '1416212342872');
-INSERT INTO `cms_setting` VALUES ('6', 'description', 'web', 'Jees-CMS演示站', '网站描述', '1', '127.0.0.1', '1416212334431');
-INSERT INTO `cms_setting` VALUES ('7', 'loginEnable', 'web', '1', '是否开启登陆', '1', '127.0.0.1', '1416212324752');
-INSERT INTO `cms_setting` VALUES ('8', 'registerEnable', 'web', '1', '是否开启注册', '1', '127.0.0.1', '1416212315472');
-INSERT INTO `cms_setting` VALUES ('9', 'noteEnable', 'web', '1', '是否开启在线留言', '1', '127.0.0.1', '1416212307380');
-INSERT INTO `cms_setting` VALUES ('10', 'commentEnable', 'web', '1', '是否开启文章评论（全局）', '1', '127.0.0.1', '1416212298435');
-INSERT INTO `cms_setting` VALUES ('11', 'feedbackEnable', 'web', '1', '是否开启文章投诉举报', '1', '127.0.0.1', '1416212280762');
-INSERT INTO `cms_setting` VALUES ('12', 'partnerEnable', 'web', '1', '是否开启友情链接申请', '1', '127.0.0.1', '1416212271324');
+INSERT INTO `cms_setting` VALUES ('4', 'title', 'web', 'Jees-CMS演示站 - 灰鸦社区', '网站标题', '1', '127.0.0.1', '1417274843418');
+INSERT INTO `cms_setting` VALUES ('5', 'keywords', 'web', 'java,j2ee,cms,开源,免费,jees', '网站关键词', '1', '127.0.0.1', '1417274843460');
+INSERT INTO `cms_setting` VALUES ('6', 'description', 'web', 'IT科技前沿，综合主流元素的高级应用软件开发。云计算、物联网、移动互联、计算机视觉，分享无处不在。Join us and learning together,if you like PC as well!', '网站描述', '1', '127.0.0.1', '1417274843502');
+INSERT INTO `cms_setting` VALUES ('7', 'loginEnable', 'web', '1', '是否开启登陆', '1', '127.0.0.1', '1417274843543');
+INSERT INTO `cms_setting` VALUES ('8', 'registerEnable', 'web', '1', '是否开启注册', '1', '127.0.0.1', '1417274843586');
+INSERT INTO `cms_setting` VALUES ('9', 'noteEnable', 'web', '1', '是否开启在线留言', '1', '127.0.0.1', '1417274843626');
+INSERT INTO `cms_setting` VALUES ('10', 'commentEnable', 'web', '1', '是否开启文章评论（全局）', '1', '127.0.0.1', '1417274843669');
+INSERT INTO `cms_setting` VALUES ('11', 'feedbackEnable', 'web', '1', '是否开启文章投诉举报', '1', '127.0.0.1', '1417274843710');
+INSERT INTO `cms_setting` VALUES ('12', 'partnerEnable', 'web', '1', '是否开启友情链接申请', '1', '127.0.0.1', '1417274843753');
 
 -- ----------------------------
 -- Table structure for `cms_upload`
