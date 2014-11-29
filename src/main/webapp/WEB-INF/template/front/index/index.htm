@@ -53,7 +53,7 @@
 				[#list label.architectureList![] as item]
 					<div class="col-sm-6 col-md-4 item">
 						<div class="thumbnail margin-bottom0">
-							<a target="_blank" href="${item.url!""}" title="${item.title!""}"><img src="[#if empty(item.log)]${defaultArticleLogo!""}[#else]${item.logo!""}[/#if]"></a>
+							<a target="_blank" href="${item.url!""}" title="${item.title!""}"><img src="[#if empty(item.logo)]${defaultArticleLogo!""}[#else]${item.logo!""}[/#if]"></a>
 							<div class="caption">
 								<div class="column-title">[${(item.column_id_rel.name)!""}]</div>
 								<a target="_blank" href="${item.url!""}" title="${item.title!""}">${item.short_title!""}</a>
@@ -144,12 +144,43 @@
 	<div class="panel panel-default partner-panel">
 		<ul class="nav nav-tabs" role="tablist">
 		[#list partnerList![] as partner]
-			<li role="presentation" class="js-panel-partner"><a href="javascript:void(0);">${partner.name!""}</a></li>
+			<li role="presentation" class="js-panel-partner">
+				<a href="javascript:void(0);">${partner.name!""}</a>
+				<div class="js-panel-partner-children hidden">
+				[#if !empty(partner.children_logo_title)]
+					<div class="panel-body item-logo-title">
+					[#list partner.children_logo_title![] as item]
+						<div class="media margin-top5">
+							<a class="media-left" target="${item.goal!""}" href="${item.url!""}" title="${item.title!""}"><img class="media-object" src="[#if empty(item.logo)]${defaultPartnerLogo!""}[#else]${item.logo!""}[/#if]"></a>
+							<div class="media-body">
+								<div class="text-ellipsis"><a target="${item.goal!""}" href="${item.url!""}" title="${item.description!""}">${item.title!""}</a></div>
+								<div class="text-ellipsis">${item.description!""}</div>
+							</div>
+						</div>
+					[/#list]
+					</div>
+				[/#if]
+				[#if !empty(partner.children_logo_only)]
+					<div class="item-logo-only">
+					[#list partner.children_logo_only![] as item]
+						<a class="item" target="${item.goal!""}" href="${item.url!""}" title="${item.description!""}"><img class="media-object" src="[#if empty(item.logo)]${defaultPartnerLogo!""}[#else]${item.logo!""}[/#if]"></a>
+					[/#list]
+					</div>
+				[/#if]
+				[#if !empty(partner.children_title_only)]
+					<div class="item-title-only">
+						<ul>
+						[#list partner.children_title_only![] as item]
+							<li><a target="${item.goal!""}" href="${item.url!""}" title="${item.description!""}">${item.title!""}</a></li>
+						[/#list]
+						</ul>
+					</div>
+				[/#if]
+				</div>
+			</li>
 		[/#list]
 		</ul>
-		<div class="panel-body">
-		Basic panel example
-		</div>
+		<div class="js-panel-partner-show">loading...</div>
 	</div>
 </div>
 <script src="${_webUrl_}/api/jQuery/jquery.SuperSlide.2.1.1.js"></script>
@@ -183,6 +214,7 @@ $(function(){
 	$('.js-panel-partner').bind('mouseover', function () {
 		$('.js-panel-partner').removeClass('active');
 		$(this).addClass('active');
+		$('.js-panel-partner-show').html($(this).children('.js-panel-partner-children').html());
 	});
 	$('.js-panel-partner:first').trigger('mouseover');
 });
