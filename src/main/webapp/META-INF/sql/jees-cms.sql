@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50525
 File Encoding         : 65001
 
-Date: 2014-11-28 22:54:42
+Date: 2014-11-29 15:25:29
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -628,6 +628,8 @@ CREATE TABLE `cms_partner` (
   `description` tinytext,
   `logo` tinytext,
   `remark` text,
+  `logo_enable` tinyint(4) NOT NULL DEFAULT '0',
+  `title_enable` tinyint(4) NOT NULL DEFAULT '0',
   `sort` int(11) NOT NULL DEFAULT '0',
   `status` tinyint(4) NOT NULL DEFAULT '0',
   `create_id` int(11) NOT NULL DEFAULT '0',
@@ -640,7 +642,7 @@ CREATE TABLE `cms_partner` (
 -- ----------------------------
 -- Records of cms_partner
 -- ----------------------------
-INSERT INTO `cms_partner` VALUES ('1', '灰鸦社区', '3', '_blank', 'http://www.iisquare.com/', '', '', '', '1', '1', '1', '1414487118605', '1', '1415330517692');
+INSERT INTO `cms_partner` VALUES ('1', '灰鸦社区', '3', '_blank', 'http://www.iisquare.com/', '', '', '', '0', '0', '1', '1', '1', '1414487118605', '1', '1415330517692');
 
 -- ----------------------------
 -- Table structure for `cms_partner_type`

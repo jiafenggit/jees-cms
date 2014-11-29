@@ -14,6 +14,15 @@ public class Partner {
 	private String description; // 介绍
 	private String logo; // 网站图标
 	private String remark; // 备注
+	/**首页展示效果推荐
+	 * LogoEnable,TitleEnable,展示效果
+	 * true      ,true       ,图文模式
+	 * true      ,false      ,图片模式
+	 * false     ,true       ,文字模式
+	 * false     ,false      ,不显示 
+	 *  */
+	private Integer LogoEnable; // 是否显示Logo
+	private Integer TitleEnable; // 是否显示标题
 	private Integer sort; // 排序（从高到低）
 	private Integer status; // 状态
 	private Integer createId; // 添加者
@@ -83,6 +92,22 @@ public class Partner {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public Integer getLogoEnable() {
+		return LogoEnable;
+	}
+
+	public void setLogoEnable(Integer logoEnable) {
+		LogoEnable = logoEnable;
+	}
+
+	public Integer getTitleEnable() {
+		return TitleEnable;
+	}
+
+	public void setTitleEnable(Integer titleEnable) {
+		TitleEnable = titleEnable;
 	}
 
 	public Integer getSort() {

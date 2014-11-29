@@ -70,10 +70,10 @@ _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingM
 filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=image, src="../images/focus/play-btn.png")}
 #focus .focus-title a{display: none;color: #fff}
 
+.article-list-text a, .article-list-text a:visited, .article-list-pic-text a, .article-list-pic-text a:visited{color:#172c45;}
 .article-panel-news{width: 410px; height:100%; float:right; text-align:left;}
 .article-list-text{padding:10px 15px; text-align:left;}
 .article-list-text li{height:22px; line-height:22px;}
-.article-list-text a, .article-list-text a:visited{color:#172c45;}
 .article-list-pic-text {text-align: left; padding:3px 2px;}
 .article-list-pic-text .item{ width:160px; margin:0 2px; padding:0; overflow: hidden;}
 .article-list-pic-text .column-title{text-align: center;}
@@ -83,3 +83,6 @@ filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMe
 .article-row-three .column-item{width: 326px;}
 .article-row-two .left{width: 326px;}
 .article-row-two .right{width: 663px;}
+
+.partner-panel{margin: 5px 0 0 0;}
+.partner-panel .nav-tabs{margin: 3px;}
