@@ -34,9 +34,10 @@ public class IndexController extends PermitController {
 	@RequestMapping(value="/")
 	public String indexAction() throws Exception {
 		assignWeb();
-		assign("defaultLogo", articleService.defaultLogo);
+		assign("defaultArticleLogo", articleService.defaultLogo);
+		assign("defaultPartnerLogo", partnerService.defaultLogo);
 		assign("label", labelService.getContentMap(this, null, null, true, true));
-		assign("partner", partnerService.getWebList());
+		assign("partnerList", partnerService.getWebList());
 		return displayTemplate();
 	}
 	

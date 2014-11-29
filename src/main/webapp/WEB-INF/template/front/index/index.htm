@@ -53,7 +53,7 @@
 				[#list label.architectureList![] as item]
 					<div class="col-sm-6 col-md-4 item">
 						<div class="thumbnail margin-bottom0">
-							<a target="_blank" href="${item.url!""}" title="${item.title!""}"><img src="[#if empty(item.log)]${defaultLogo!""}[#else]${item.logo!""}[/#if]"></a>
+							<a target="_blank" href="${item.url!""}" title="${item.title!""}"><img src="[#if empty(item.log)]${defaultArticleLogo!""}[#else]${item.logo!""}[/#if]"></a>
 							<div class="caption">
 								<div class="column-title">[${(item.column_id_rel.name)!""}]</div>
 								<a target="_blank" href="${item.url!""}" title="${item.title!""}">${item.short_title!""}</a>
@@ -143,9 +143,9 @@
 	</div>
 	<div class="panel panel-default partner-panel">
 		<ul class="nav nav-tabs" role="tablist">
-			<li role="presentation" class="active"><a href="#">Home</a></li>
-			<li role="presentation"><a href="#">Profile</a></li>
-			<li role="presentation"><a href="#">Messages</a></li>
+		[#list partnerList![] as partner]
+			<li role="presentation" class="js-panel-partner"><a href="javascript:void(0);">${partner.name!""}</a></li>
+		[/#list]
 		</ul>
 		<div class="panel-body">
 		Basic panel example
@@ -179,6 +179,12 @@ $(function(){
 		autoPlay : true,
 		delayTime : 200
 	});
+	/* 首页友情链接 */
+	$('.js-panel-partner').bind('mouseover', function () {
+		$('.js-panel-partner').removeClass('active');
+		$(this).addClass('active');
+	});
+	$('.js-panel-partner:first').trigger('mouseover');
 });
 </script>
 [#include "../public/footer.inc.htm"]
