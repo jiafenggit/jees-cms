@@ -32,6 +32,12 @@ $(function () {
 			{field:'type_id',title:'所属类型',formatter:function (value, row, index) {
 				return row.type_id_rel ? row.type_id_rel.name : row.type_id;
 			}},
+			{field:'logo_enable',title:'展示图片',formatter:function (value, row, index) {
+				return value ? '是' : '否';
+			}},
+			{field:'title_enable',title:'展示标题',formatter:function (value, row, index) {
+				return value ? '是' : '否';
+			}},
 			{field:'goal_text',title:'打开方式'},
 			{field:'status_text',title:'状态'},
 			{field:'create_id',title:'创建者',formatter:function (value, row, index) {

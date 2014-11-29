@@ -30,6 +30,14 @@
 		<td><textarea name="description" class="easyui-textbox width300" data-options="multiline:true,height:80">${info.description!""}</textarea></td>
 	</tr>
 	<tr>
+		<th>展示图片</th>
+		<td><input class="input-checkbox" type="checkbox" name="logoEnable" value="1"[#if !empty(info.logoEnable)] checked="checked"[/#if] />在首页显示Logo图片</td>
+	</tr>
+	<tr>
+		<th>展示标题</th>
+		<td><input class="input-checkbox" type="checkbox" name="titleEnable" value="1"[#if !empty(info.titleEnable)] checked="checked"[/#if] />在首页显示标题</td>
+	</tr>
+	<tr>
 		<th>排序</th>
 		<td><input class="easyui-numberspinner width150" type="text" name="sort" data-options="required:true,min:0" value="${(info.sort)!0}" /></td>
 	</tr>

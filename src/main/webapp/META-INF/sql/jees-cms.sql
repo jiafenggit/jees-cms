@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50525
 File Encoding         : 65001
 
-Date: 2014-11-29 15:25:29
+Date: 2014-11-29 15:35:30
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -254,7 +254,7 @@ CREATE TABLE `cms_log` (
   `operate_ip` varchar(64) NOT NULL DEFAULT '',
   `operate_time` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of cms_log
@@ -321,6 +321,7 @@ INSERT INTO `cms_log` VALUES ('62', '用户登陆', 'service', 'base', 'member',
 INSERT INTO `cms_log` VALUES ('63', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1417168992507');
 INSERT INTO `cms_log` VALUES ('64', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1417179749779');
 INSERT INTO `cms_log` VALUES ('65', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1417185782761');
+INSERT INTO `cms_log` VALUES ('66', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1417246458083');
 
 -- ----------------------------
 -- Table structure for `cms_log_setting`
@@ -370,7 +371,7 @@ CREATE TABLE `cms_member` (
 -- ----------------------------
 -- Records of cms_member
 -- ----------------------------
-INSERT INTO `cms_member` VALUES ('1', 'admin', '管理员', '0f4e8ac95b5c1fc48dc98004c7525bc7', '888888', '0', '1', '1417186458854', '127.0.0.1', '1', '127.0.0.1', '1411090286300', '1', '1417159438312');
+INSERT INTO `cms_member` VALUES ('1', 'admin', '管理员', '0f4e8ac95b5c1fc48dc98004c7525bc7', '888888', '0', '1', '1417246494586', '127.0.0.1', '1', '127.0.0.1', '1411090286300', '1', '1417159438312');
 INSERT INTO `cms_member` VALUES ('2', 'guest', '访客', '793a507822c9ec991c3418dfb7950f07', '338043', '0', '1', '1414550595011', '127.0.0.1', '1', '127.0.0.1', '1414546536140', '1', '1414546536140');
 
 -- ----------------------------
@@ -642,7 +643,7 @@ CREATE TABLE `cms_partner` (
 -- ----------------------------
 -- Records of cms_partner
 -- ----------------------------
-INSERT INTO `cms_partner` VALUES ('1', '灰鸦社区', '3', '_blank', 'http://www.iisquare.com/', '', '', '', '0', '0', '1', '1', '1', '1414487118605', '1', '1415330517692');
+INSERT INTO `cms_partner` VALUES ('1', '灰鸦社区', '3', '_blank', 'http://www.iisquare.com/', '', '', '', '0', '0', '1', '1', '1', '1414487118605', '1', '1417246488064');
 
 -- ----------------------------
 -- Table structure for `cms_partner_type`

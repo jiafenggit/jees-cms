@@ -14,13 +14,14 @@ public class Partner {
 	private String description; // 介绍
 	private String logo; // 网站图标
 	private String remark; // 备注
-	/**首页展示效果推荐
+	/**
+	 * 首页展示效果推荐
 	 * LogoEnable,TitleEnable,展示效果
 	 * true      ,true       ,图文模式
 	 * true      ,false      ,图片模式
 	 * false     ,true       ,文字模式
 	 * false     ,false      ,不显示 
-	 *  */
+	 */
 	private Integer LogoEnable; // 是否显示Logo
 	private Integer TitleEnable; // 是否显示标题
 	private Integer sort; // 排序（从高到低）
