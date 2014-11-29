@@ -144,7 +144,7 @@
 	<div class="panel panel-default partner-panel">
 		<ul class="nav nav-tabs" role="tablist">
 		[#list partnerList![] as partner]
-			<li role="presentation" class="js-panel-partner">
+			<li role="presentation" class="js-panel-partner partner-panel-tab-item">
 				<a href="javascript:void(0);">${partner.name!""}</a>
 				<div class="js-panel-partner-children hidden">
 				[#if partner.children_logo_title?size > 0]
@@ -179,6 +179,8 @@
 				</div>
 			</li>
 		[/#list]
+			<li role="presentation" class="partner-panel-tab-item"><a target="_blank" href="javascript:void(0);">查看更多</a></li>
+			<li role="presentation" class="partner-panel-tab-item"><a target="_blank" href="javascript:void(0);">申请友链</a></li>
 		</ul>
 		<div class="js-panel-partner-show">loading...</div>
 	</div>

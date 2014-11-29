@@ -86,6 +86,7 @@ filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMe
 .article-row-two .right{width: 663px;}
 
 .partner-panel{text-align: left; margin: 5px 0 0 0;}
+.partner-panel-tab-item a, .partner-panel-tab-item a:visited{color:#333;}
 .partner-panel .nav-tabs{margin: 3px;}
 .partner-panel .item-logo-text, .partner-panel .item-logo-only, .partner-panel .item-text-only{padding: 5px; overflow: hidden;}
 .partner-panel .item-logo-text div{font-size: 12px; width: 875px;}
