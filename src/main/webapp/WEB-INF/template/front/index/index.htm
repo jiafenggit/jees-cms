@@ -147,31 +147,31 @@
 			<li role="presentation" class="js-panel-partner">
 				<a href="javascript:void(0);">${partner.name!""}</a>
 				<div class="js-panel-partner-children hidden">
-				[#if !empty(partner.children_logo_title)]
-					<div class="panel-body item-logo-title">
+				[#if partner.children_logo_title?size > 0]
+					<div class="panel-body item-logo-text">
 					[#list partner.children_logo_title![] as item]
 						<div class="media margin-top5">
-							<a class="media-left" target="${item.goal!""}" href="${item.url!""}" title="${item.title!""}"><img class="media-object" src="[#if empty(item.logo)]${defaultPartnerLogo!""}[#else]${item.logo!""}[/#if]"></a>
+							<a class="media-left" target="${item.goal!""}" href="${item.url!""}" title="${item.description!""}"><img class="media-object" src="[#if empty(item.logo)]${defaultPartnerLogo!""}[#else]${item.logo!""}[/#if]"></a>
 							<div class="media-body">
-								<div class="text-ellipsis"><a target="${item.goal!""}" href="${item.url!""}" title="${item.description!""}">${item.title!""}</a></div>
+								<div class="text-ellipsis"><a target="${item.goal!""}" href="${item.url!""}" title="${item.description!""}">${item.name!""}</a></div>
 								<div class="text-ellipsis">${item.description!""}</div>
 							</div>
 						</div>
 					[/#list]
 					</div>
 				[/#if]
-				[#if !empty(partner.children_logo_only)]
+				[#if partner.children_logo_only?size > 0]
 					<div class="item-logo-only">
 					[#list partner.children_logo_only![] as item]
 						<a class="item" target="${item.goal!""}" href="${item.url!""}" title="${item.description!""}"><img class="media-object" src="[#if empty(item.logo)]${defaultPartnerLogo!""}[#else]${item.logo!""}[/#if]"></a>
 					[/#list]
 					</div>
 				[/#if]
-				[#if !empty(partner.children_title_only)]
-					<div class="item-title-only">
+				[#if partner.children_text_only?size > 0]
+					<div class="item-text-only">
 						<ul>
-						[#list partner.children_title_only![] as item]
-							<li><a target="${item.goal!""}" href="${item.url!""}" title="${item.description!""}">${item.title!""}</a></li>
+						[#list partner.children_text_only![] as item]
+							<li><a target="${item.goal!""}" href="${item.url!""}" title="${item.description!""}">${item.name!""}</a></li>
 						[/#list]
 						</ul>
 					</div>

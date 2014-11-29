@@ -102,7 +102,7 @@ public class PartnerController extends PermitController {
 		String remark = get("remark");
 		persist.setRemark(remark);
 		persist.setLogoEnable(ValidateUtil.filterInteger(get("logoEnable"), true, 0, 1, 0));
-		persist.setTitleEnable(ValidateUtil.filterInteger(get("titleEnable"), true, 0, 1, 0));
+		persist.setTextEnable(ValidateUtil.filterInteger(get("textEnable"), true, 0, 1, 0));
 		persist.setSort(ValidateUtil.filterInteger(get("sort"), true, null, null, null));
 		String status = get("status");
 		if(ValidateUtil.isNull(status, true)) return displayMessage(3003, "请选择记录状态", null);

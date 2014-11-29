@@ -23,7 +23,7 @@ public class Partner {
 	 * false     ,false      ,不显示 
 	 */
 	private Integer LogoEnable; // 是否显示Logo
-	private Integer TitleEnable; // 是否显示标题
+	private Integer TextEnable; // 是否显示名称
 	private Integer sort; // 排序（从高到低）
 	private Integer status; // 状态
 	private Integer createId; // 添加者
@@ -103,12 +103,12 @@ public class Partner {
 		LogoEnable = logoEnable;
 	}
 
-	public Integer getTitleEnable() {
-		return TitleEnable;
+	public Integer getTextEnable() {
+		return TextEnable;
 	}
 
-	public void setTitleEnable(Integer titleEnable) {
-		TitleEnable = titleEnable;
+	public void setTextEnable(Integer textEnable) {
+		TextEnable = textEnable;
 	}
 
 	public Integer getSort() {
