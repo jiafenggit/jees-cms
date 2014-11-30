@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50525
 File Encoding         : 65001
 
-Date: 2014-11-29 23:27:40
+Date: 2014-11-30 11:57:33
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -211,7 +211,7 @@ CREATE TABLE `cms_label` (
 -- ----------------------------
 -- Records of cms_label
 -- ----------------------------
-INSERT INTO `cms_label` VALUES ('1', '首页焦点图', 'front', 'index', 'index', '', 'slideshow', 'slideshow', '{\"rows\":{\"3\":{\"url\":\"/\",\"short_title\":\"李晨张馨予谱写爱之终曲\",\"image\":\"http://127.0.0.1:8080/jees-cms/skin/images/focus/04.jpg\",\"title\":\"李晨张馨予谱写爱之终曲\"},\"0\":{\"short_title\":\"于正版霸王别姬 陈乔恩变腹黑大战情敌袁姗姗\",\"url\":\"/\",\"image\":\"http://127.0.0.1:8080/jees-cms/skin/images/focus/01.jpg\",\"title\":\"于正版霸王别姬 陈乔恩变腹黑大战情敌袁姗姗\"},\"1\":{\"title\":\"刘德华、郑秀文、杜琪峰香港电影铁三角十年归来\",\"short_title\":\"刘德华、郑秀文、杜琪峰香港电影铁三角十年归来\",\"image\":\"http://127.0.0.1:8080/jees-cms/skin/images/focus/02.jpg\",\"url\":\"/\"},\"2\":{\"short_title\":\"众星爸厨艺比拼犯难（2013-10-18期）\",\"title\":\"众星爸厨艺比拼犯难（2013-10-18期）\",\"url\":\"/\",\"image\":\"http://127.0.0.1:8080/jees-cms/skin/images/focus/03.jpg\"},\"4\":{\"image\":\"http://127.0.0.1:8080/jees-cms/skin/images/focus/05.jpg\",\"title\":\"周杰伦自导自演  传递超屌正能量\",\"short_title\":\"周杰伦自导自演  传递超屌正能量\",\"url\":\"/\"}},\"space\":\"0\",\"suffix\":\"...\"}', '', '0', '1', '1', '1415418678539', '1', '1416890662460');
+INSERT INTO `cms_label` VALUES ('1', '首页焦点图', 'front', 'index', 'index', '', 'slideshow', 'slideshow', '{\"rows\":{\"3\":{\"url\":\"/\",\"short_title\":\"李晨张馨予谱写爱之终曲\",\"image\":\"skin/images/focus/04.jpg\",\"title\":\"李晨张馨予谱写爱之终曲\"},\"0\":{\"short_title\":\"于正版霸王别姬 陈乔恩变腹黑大战情敌袁姗姗\",\"url\":\"/\",\"image\":\"skin/images/focus/01.jpg\",\"title\":\"于正版霸王别姬 陈乔恩变腹黑大战情敌袁姗姗\"},\"1\":{\"title\":\"刘德华、郑秀文、杜琪峰香港电影铁三角十年归来\",\"short_title\":\"刘德华、郑秀文、杜琪峰香港电影铁三角十年归来\",\"image\":\"skin/images/focus/02.jpg\",\"url\":\"/\"},\"2\":{\"short_title\":\"众星爸厨艺比拼犯难（2013-10-18期）\",\"title\":\"众星爸厨艺比拼犯难（2013-10-18期）\",\"url\":\"/\",\"image\":\"skin/images/focus/03.jpg\"},\"4\":{\"image\":\"skin/images/focus/05.jpg\",\"title\":\"周杰伦自导自演  传递超屌正能量\",\"short_title\":\"周杰伦自导自演  传递超屌正能量\",\"url\":\"/\"}},\"space\":\"0\",\"suffix\":\"...\"}', '', '0', '1', '1', '1415418678539', '1', '1416890662460');
 INSERT INTO `cms_label` VALUES ('2', '首页最新动态标题', 'front', 'index', 'index', '', 'newsTitle', 'html', '最新动态', '', '0', '1', '1', '1416910221488', '1', '1416910221488');
 INSERT INTO `cms_label` VALUES ('3', '首页最新动态列表', 'front', 'index', 'index', '', 'newsList', 'article', '{\"sortOrder\":\"desc\",\"total\":\"8\",\"space\":\"0\",\"sortName\":\"sort\",\"suffix\":\"...\"}', '', '0', '1', '1', '1416998098427', '1', '1416998098427');
 INSERT INTO `cms_label` VALUES ('4', '首页编程开发标题', 'front', 'index', 'index', '', 'programTitle', 'html', '编程开发', '', '0', '1', '1', '1417068299564', '1', '1417068299564');
@@ -254,7 +254,7 @@ CREATE TABLE `cms_log` (
   `operate_ip` varchar(64) NOT NULL DEFAULT '',
   `operate_time` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of cms_log
@@ -324,6 +324,7 @@ INSERT INTO `cms_log` VALUES ('65', '用户登陆', 'service', 'base', 'member',
 INSERT INTO `cms_log` VALUES ('66', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1417246458083');
 INSERT INTO `cms_log` VALUES ('67', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1417251262184');
 INSERT INTO `cms_log` VALUES ('68', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1417271782739');
+INSERT INTO `cms_log` VALUES ('69', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1417319721835');
 
 -- ----------------------------
 -- Table structure for `cms_log_setting`
@@ -373,7 +374,7 @@ CREATE TABLE `cms_member` (
 -- ----------------------------
 -- Records of cms_member
 -- ----------------------------
-INSERT INTO `cms_member` VALUES ('1', 'admin', '管理员', '0f4e8ac95b5c1fc48dc98004c7525bc7', '888888', '0', '1', '1417274847210', '127.0.0.1', '1', '127.0.0.1', '1411090286300', '1', '1417159438312');
+INSERT INTO `cms_member` VALUES ('1', 'admin', '管理员', '0f4e8ac95b5c1fc48dc98004c7525bc7', '888888', '0', '1', '1417319804494', '127.0.0.1', '1', '127.0.0.1', '1411090286300', '1', '1417159438312');
 INSERT INTO `cms_member` VALUES ('2', 'guest', '访客', '793a507822c9ec991c3418dfb7950f07', '338043', '0', '1', '1414550595011', '127.0.0.1', '1', '127.0.0.1', '1414546536140', '1', '1414546536140');
 
 -- ----------------------------
