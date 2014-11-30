@@ -29,7 +29,7 @@ a{text-decoration:none;}
 
 .main-container{width:1000px; margin:0 auto;}
 
-.top-menu{font-size:12px; width:100%; height:30px; line-height:30px; border-bottom:#d3d3d3 solid 1px; background:#f7f7f7;}
+.top-menu{font-size:12px; min-width:1000px; width:100%; height:30px; line-height:30px; border-bottom:#d3d3d3 solid 1px; background:#f7f7f7;}
 .top-menu a, .top-menu a:visited{color:#4C4C4C;}
 .top-menu ul{list-style:none;}
 .top-menu ul li{float:left; margin:0 5px 0 5px;}
