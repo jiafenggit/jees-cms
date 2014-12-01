@@ -101,4 +101,4 @@ filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMe
 .bottom-panel .copyright{color:#666666; line-height:20px; font-size:12px;}
 .bottom-panel .copyright a, .bottom-panel .copyright a:visited{color:#666666; padding: 0 2px;}
 
-.crumb-navigate{text-align: left;}
+.crumb-navigate{text-align: left; margin: 5px auto 0 auto;}

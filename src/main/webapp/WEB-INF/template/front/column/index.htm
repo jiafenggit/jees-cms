@@ -1,16 +1,12 @@
 [#include "../public/header.inc.htm"]
 <div class="main-container">
-	<ol class="breadcrumb crumb-navigate margin-top5">
+	<ol class="breadcrumb crumb-navigate">
 		<li class="glyphicon glyphicon-home"><a class="margin-left5" href="${_webUrl_}">主页</a></li>
 		[#list columnParentList![] as item]
 		<li><a href="${item.url!""}">${item.name!""}</a></li>
 		[/#list]
 		<li class="active">${info.name!""}</li>
 	</ol>
-	
-	<div class="bs-callout bs-callout-info">
-		<h4>${info.name!""}</h4>
-		<p>${info.description!""}</p>
-	</div>
+
 </div>
 [#include "../public/footer.inc.htm"]
