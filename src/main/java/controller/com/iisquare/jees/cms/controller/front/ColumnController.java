@@ -26,6 +26,7 @@ public class ColumnController extends FrontController {
 	@RequestMapping(value="/column-{id}.shtml")
 	public String indexAction(@PathVariable String id) throws Exception {
 		Map<String, Object> info = columnService.getById(id, true);
+		if(null == info) return redirect(webUrl);
 		assignWeb();
 		assign("info", info);
 		return displayTemplate();

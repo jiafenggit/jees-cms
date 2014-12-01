@@ -25,6 +25,7 @@ public class ArticleController extends FrontController {
 	@RequestMapping(value="/article-{id}.shtml")
 	public String indexAction(@PathVariable String id) throws Exception {
 		Map<String, Object> info = articleService.getById(id, true);
+		if(null == info) return redirect(webUrl);
 		assignWeb();
 		assign("info", info);
 		return displayTemplate();

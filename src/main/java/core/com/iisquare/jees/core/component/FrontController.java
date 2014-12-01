@@ -31,9 +31,10 @@ public abstract class FrontController extends CoreController {
 	/**
 	 * 输出提示信息页面
 	 */
-	protected String displayInfo(String message, String forward) throws Exception {
+	protected String displayInfo(String message, String forward, boolean bAssignWeb) throws Exception {
+		if(bAssignWeb) assignWeb();
 		assign("message", message);
-		assign("url", forward);
+		assign("forward", forward);
 		return displayTemplate("public", "info");
 	}
 }

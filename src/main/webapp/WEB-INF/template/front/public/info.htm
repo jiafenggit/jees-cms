@@ -1,0 +1,56 @@
+[#include "../public/header.inc.htm"]
+<style>
+html,body,form,div,ul,fieldset,li,table,tr,td,span,em,lable,span,input{ margin:0px; padding:0px;}
+body{ background:#FFFFFF; font-family:Arial, Helvetica, sans-serif; font-size:13px; text-align:center;}
+a{ text-decoration:none; color:#006699;}
+a:hover{ text-decoration:underline;}
+.copy{ color:#666666; line-height:20px; font-size:12px;}
+.error { width:500px; height:140px; margin:100px auto 100px auto;}
+.error .logo { float:left; width:125px; height:140px; text-align:left;}
+.error .tips { float:right; width:375px; text-align:left;}
+.error .tips .title { padding:30px 0px 0px 0px; font-size:16px; font-weight:600;}
+.error .tips .time { color:#666; margin:15px 0px 25px 0px;}
+.error .tips .content { color:#666;}
+.error .tips .content .back { color:#666; font-size:8px; margin:0px 0px 0px 15px;}
+</style>
+<script type="text/javascript">
+function lazyGo() {
+	var sec = $("#sec").text();
+	$("#sec").text(--sec);
+	if (sec > 0)
+		setTimeout(lazyGo, 1000);
+	else
+		$('.js-controll-forward').trigger('click');
+}
+$(function () {
+	lazyGo();
+	$('.js-controll-back').bind('click', function () {
+		window.history.back();
+	});
+	$('.js-controll-forward').bind('click', function () {
+		var url = '${forward!""}';
+		if(url.length > 0) {
+			window.location.href = url;
+		} else {
+			window.history.back();
+		}
+	});
+});
+</script>
+<div class="main-container">
+	<div class="error">
+		<div class="logo"><img src="${_themeUrl_}/images/search_boy.gif" width="120" height="136" alt="loading..." /></div>
+		<div class="tips">
+			<div class="title">
+			[#if empty(message)]对不起，您要访问页面不存在或出现了出错！[#else]${message}[/#if]
+			</div>
+			<div class="time">将在<strong id="sec">8</strong>秒后自动跳转。</div>
+			<div class="content">
+				您也可以：
+				<a href="javascript:void(0);" class="glyphicon glyphicon-hand-right js-controll-forward">立即跳转</a>
+				<a href="javascript:void(0);" class="glyphicon glyphicon-arrow-left js-controll-back">返回上一页</a>
+			</div>
+		</div>
+	</div>
+</div>
+[#include "../public/footer.inc.htm"]
