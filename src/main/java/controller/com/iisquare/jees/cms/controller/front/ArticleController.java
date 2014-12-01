@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.iisquare.jees.cms.service.ArticleService;
 import com.iisquare.jees.core.component.FrontController;
+import com.iisquare.jees.framework.util.DPUtil;
 
 /**
  * 文章管理
@@ -25,7 +26,9 @@ public class ArticleController extends FrontController {
 	@RequestMapping(value="/article-{id}.shtml")
 	public String indexAction(@PathVariable String id) throws Exception {
 		Map<String, Object> info = articleService.getById(id, true);
-		if(null == info) return redirect(webUrl);
+		if(null == info || 1 != DPUtil.parseInt(info.get("status"))) {
+			return displayInfo("您要访问的信息不存在或已被删除", webUrl, true);
+		}
 		assignWeb();
 		assign("info", info);
 		return displayTemplate();

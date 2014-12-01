@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.iisquare.jees.cms.service.ColumnService;
 import com.iisquare.jees.core.component.FrontController;
+import com.iisquare.jees.framework.util.DPUtil;
 
 /**
  * 栏目管理
@@ -26,9 +27,12 @@ public class ColumnController extends FrontController {
 	@RequestMapping(value="/column-{id}.shtml")
 	public String indexAction(@PathVariable String id) throws Exception {
 		Map<String, Object> info = columnService.getById(id, true);
-		if(null == info) return redirect(webUrl);
+		if(null == info || 1 != DPUtil.parseInt(info.get("status"))) {
+			return displayInfo("您要访问的信息不存在或已被删除", webUrl, true);
+		}
 		assignWeb();
 		assign("info", info);
+		assign("columnParentList", columnService.getParentList(webUrl, info.get("parent_id"), false, true));
 		return displayTemplate();
 	}
 }

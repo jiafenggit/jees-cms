@@ -21,6 +21,7 @@ a{text-decoration:none;}
 .float-left{float:left;}
 .float-right{float:right;}
 .margin-top5{margin-top:5px;}
+.margin-left5{margin-left:5px;}
 .margin-right11{margin-right:11px;}
 .margin-bottom0{margin-bottom: 0;}
 .width-percent100{width: 100%;}
@@ -99,3 +100,5 @@ filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMe
 .bottom-panel hr{margin: 5px 0; color: gray;}
 .bottom-panel .copyright{color:#666666; line-height:20px; font-size:12px;}
 .bottom-panel .copyright a, .bottom-panel .copyright a:visited{color:#666666; padding: 0 2px;}
+
+.crumb-navigate{text-align: left;}

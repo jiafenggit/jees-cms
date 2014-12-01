@@ -46,6 +46,46 @@ public class ColumnService extends ServiceBase {
 	public ColumnService() {}
 	
 	/**
+	 * 获取上级栏目列表
+	 * @param parentId 父级主键值
+	 * @param bShowWithStatus 根据状态判断是否展示对应项
+	 * @param bBreakWithStatus 根据状态判断是否结束处理
+	 * @return
+	 */
+	public List<Map<String, Object>> getParentList(String webUrl, Object parentId, boolean bShowWithStatus, boolean bBreakWithStatus) {
+		String primaryKey = columnDao.getPrimaryKey();
+		List<Map<String, Object>> list = columnDao.getList("*", null, null, null, null, 0, 0);
+		for (Map<String, Object> map : list) {
+			map.put("url", columnDao.makeWebUrl(map, webUrl));
+		}
+		Map<Object, Map<String, Object>> indexMap = ServiceUtil.indexMapList(list, primaryKey);
+		List<Map<String, Object>> parentList = new ArrayList<Map<String, Object>>();
+		processParentList(indexMap, parentList, parentId, bShowWithStatus, bBreakWithStatus);
+		return parentList;
+	}
+	
+	/**
+	 * 处理上级栏目列表
+	 * @param indexMap 以主键为下标的Map对象
+	 * @param parentList 上级栏目列表
+	 * @param parentId 上级栏目主键值
+	 * @param bShowWithStatus 根据状态判断是否展示对应项
+	 * @param bBreakWithStatus根据状态判断是否结束处理
+	 */
+	public void processParentList(Map<Object, Map<String, Object>> indexMap,
+			List<Map<String, Object>> parentList, Object parentId, boolean bShowWithStatus, boolean bBreakWithStatus) {
+		Map<String, Object> map = indexMap.get(parentId);
+		if(null == map) return ;
+		int status = DPUtil.parseInt(map.get("status"));
+		if(bBreakWithStatus && 1 != status) {
+			if(bShowWithStatus) parentList.add(0, map);
+			return ;
+		}
+		if(bShowWithStatus || 1 == status) parentList.add(0, map);
+		processParentList(indexMap, parentList, map.get("parent_id"), bShowWithStatus, bBreakWithStatus);
+	}
+	
+	/**
 	 * 填充栏目权限
 	 * @param roleId 栏目主键值
 	 * 		null - 全部角色权限取或运算结果
