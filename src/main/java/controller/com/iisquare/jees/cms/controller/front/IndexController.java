@@ -7,11 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.iisquare.jees.cms.service.ArticleService;
 import com.iisquare.jees.cms.service.LabelService;
-import com.iisquare.jees.cms.service.NavigateService;
 import com.iisquare.jees.cms.service.PartnerService;
-import com.iisquare.jees.core.component.PermitController;
-import com.iisquare.jees.framework.util.DPUtil;
-import com.iisquare.jees.framework.util.ServletUtil;
+import com.iisquare.jees.core.component.FrontController;
 
 /**
  * 前台首页控制器
@@ -20,10 +17,8 @@ import com.iisquare.jees.framework.util.ServletUtil;
  */
 @Controller
 @Scope("prototype")
-public class IndexController extends PermitController {
+public class IndexController extends FrontController {
 	
-	@Autowired
-	public NavigateService navigateService;
 	@Autowired
 	public LabelService labelService;
 	@Autowired
@@ -39,13 +34,5 @@ public class IndexController extends PermitController {
 		assign("label", labelService.getContentMap(this, null, null, true, true));
 		assign("partnerList", partnerService.getWebList());
 		return displayTemplate();
-	}
-	
-	private void assignWeb() {
-		assign("title", settingService.get("web", "title")); // 网站标题
-		assign("keywords", settingService.get("web", "keywords")); // 网站关键词
-		assign("description", settingService.get("web", "description")); // 网站描述
-		assign("navigateList", navigateService.getWebList(webUrl, DPUtil.subString(
-				ServletUtil.getFullUrl(request, isWebUrlWithDomain), webUrl.length()))); // 导航菜单
 	}
 }

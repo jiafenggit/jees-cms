@@ -136,7 +136,7 @@ public class LabelService extends ServiceBase {
 	
 	public Map<String, Object> getContentMap(ControllerBase base,
 			String keyGroup, String keyName, boolean bStatusNormal, boolean bConvert) {
-		return getContentMap(base.moduleName, base.controllerName, base.actionName, keyGroup, keyName, bStatusNormal, bConvert);
+		return getContentMap(base.moduleName, base.controllerName, base.actionName, keyGroup, keyName, base.webUrl, bStatusNormal, bConvert);
 	}
 	
 	/**
@@ -146,12 +146,13 @@ public class LabelService extends ServiceBase {
 	 * @param action 方法名称
 	 * @param keyGroup 标签组，仅用于筛选
 	 * @param keyName 标签名称，在同一页面中唯一
+	 * @param webUrl 网站访问地址
 	 * @param bStatusNormal 仅获取正常状态的记录
 	 * @param bConvert 转换标签内容，生成数据
 	 * @return
 	 */
-	public Map<String, Object> getContentMap(String module, String controller,
-			String action, String keyGroup, String keyName, boolean bStatusNormal, boolean bConvert) {
+	public Map<String, Object> getContentMap(String module, String controller, String action,
+			String keyGroup, String keyName, String webUrl, boolean bStatusNormal, boolean bConvert) {
 		StringBuilder sb = new StringBuilder("select * from ")
 			.append(labelDao.tableName()).append(" where 1 = 1");
 		Map<String, Object> paramMap = new HashMap<String, Object>();
@@ -182,7 +183,8 @@ public class LabelService extends ServiceBase {
 		Map<String, Object> contentMap = new HashMap<String, Object>(DPUtil.parseInt(rows.size() / 0.75f));
 		for (Map<String, Object> map : rows) {
 			String labelKey = DPUtil.parseString(map.get("key_name"));
-			Object labelContent = bConvert ? parseLabel(DPUtil.parseString(map.get("effect")), DPUtil.parseString(map.get("content"))) : map.get("content");
+			Object labelContent = bConvert ? parseLabel(DPUtil.parseString(
+					map.get("effect")), DPUtil.parseString(map.get("content")), webUrl) : map.get("content");
 			contentMap.put(labelKey, labelContent);
 		}
 		return contentMap;
@@ -194,9 +196,9 @@ public class LabelService extends ServiceBase {
 	 * @param content
 	 * @return
 	 */
-	public Object parseLabel(String effect, String content) {
+	public Object parseLabel(String effect, String content, String webUrl) {
 		if("html".equals(effect)) return parseLabelHtml(content);
-		if("article".equals(effect)) return parseLabelArticle(DPUtil.parseJSON(content));
+		if("article".equals(effect)) return parseLabelArticle(DPUtil.parseJSON(content), webUrl);
 		if("comment".equals(effect)) return parseLabelComment(DPUtil.parseJSON(content));
 		if("slideshow".equals(effect)) return parseLabelSlideshow(DPUtil.parseJSON(content));
 		return "";
@@ -207,7 +209,8 @@ public class LabelService extends ServiceBase {
 		return content;
 	}
 	
-	public List<Map<String, Object>> parseLabelArticle(Map<?, ?> map) {
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> parseLabelArticle(Map<?, ?> map, String webUrl) {
 		if(null == map) return null;
 		int total = ValidateUtil.filterInteger(DPUtil.parseString(map.get("total")), true, 1, 100, 10);
 		int space = ValidateUtil.filterInteger(DPUtil.parseString(map.get("space")), true, 0, 100, 0);
@@ -229,13 +232,25 @@ public class LabelService extends ServiceBase {
 		sb.append(" order by ").append(sortName).append(" ").append(sortOrder);
 		String sql = DPUtil.stringConcat(sb.toString(), SqlUtil.buildLimit(1, total));
 		List<Map<String, Object>> rows = articleDao.queryForList(sql);
+		rows = ServiceUtil.fillRelations(rows, columnDao, new String[]{"column_id"}, new String[]{"name"}, null);
+		rows = ServiceUtil.fillRelations(rows, memberDao, new String[]{"create_id", "update_id"}, new String[]{"serial", "name"}, null);
 		for (Map<String, Object> subMap : rows) {
+			/* 短标题 */
 			String title = DPUtil.parseString(subMap.get("title"));
 			String shortTitle = space > 0 ? DPUtil.subStringWithByte(title, space, suffix, null) : title;
 			subMap.put("short_title", shortTitle);
+			/* 页面地址 */
+			String url = DPUtil.parseString(subMap.get("url"));
+			if(DPUtil.empty(url)) {
+				url = articleDao.makeWebUrl(subMap, webUrl);
+				subMap.put("url", url);
+			}
+			/* 栏目地址 */
+			Map<String, Object> columnMap = (Map<String, Object>) map.get("column_id_rel");
+			if(!DPUtil.empty(columnMap)) {
+				columnMap.put("url", columnDao.makeWebUrl(columnMap, webUrl));
+			}
 		}
-		rows = ServiceUtil.fillRelations(rows, columnDao, new String[]{"column_id"}, new String[]{"name"}, null);
-		rows = ServiceUtil.fillRelations(rows, memberDao, new String[]{"create_id", "update_id"}, new String[]{"serial", "name"}, null);
 		return rows;
 	}
 	

@@ -140,7 +140,7 @@ public class LabelController extends PermitController {
 		String keyName = ValidateUtil.filterSimpleString(get("keyName"), true, 1, 64, null);
 		if(DPUtil.empty(keyName)) return displayMessage(3002, "标签名称参数错误", null);
 		persist.setKeyName(keyName);
-		if(!DPUtil.empty(labelService.getContentMap(moduleName, controllerName, actionName, null, keyName, false, false))) {
+		if(!DPUtil.empty(labelService.getContentMap(this, null, keyName, false, false))) {
 			return displayMessage(3006, "对应标签已存在", null);
 		}
 		String effect = ValidateUtil.filterItem(get("effect"), false,
