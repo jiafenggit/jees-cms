@@ -17,16 +17,12 @@
 			[/#list]
 		</div>
 		<div class="column-container-right">
-			<div class="panel panel-default margin-bottom0">
-				<div class="panel-heading">推荐栏目</div>
-				<div class="panel-body column-list-text">
-					<ul>
-					[#list columnSiblingList![] as item]
-						<li class="width-percent100 text-ellipsis"><a href="${item.url!""}">${item.name!""}</a></li>
-					[/#list]
-					</ul>
-				</div>
-			</div>
+			<ul class="list-group">
+				<li class="list-group-item disabled">推荐栏目</li>
+				[#list columnSiblingList![] as item]
+				<li class="list-group-item text-ellipsis"><a href="${item.url!""}" title="${item.description!""}">${item.name!""} - ${item.description!""}</a></li>
+				[/#list]
+			</ul>
 		</div>
 	</div>
 </div>
