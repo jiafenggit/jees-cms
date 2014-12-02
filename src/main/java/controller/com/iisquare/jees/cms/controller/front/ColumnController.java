@@ -25,21 +25,23 @@ public class ColumnController extends FrontController {
 	@Autowired
 	public ColumnService columnService;
 
-	@RequestMapping(value="/column-{id}.shtml")
-	public String indexAction(@PathVariable String id) throws Exception {
+	@RequestMapping(value="/column-{pathId}.shtml")
+	public String indexAction(@PathVariable String pathId) throws Exception {
+		Integer id = DPUtil.parseInt(pathId);
 		Map<String, Object> info = columnService.getById(id, true);
 		if(null == info || 1 != DPUtil.parseInt(info.get("status"))) {
 			return displayInfo("您要访问的信息不存在或已被删除", webUrl, true);
 		}
+		Integer parentId = DPUtil.parseInt(info.get("parent_id"));
 		List<Map<String, Object>> list = columnService.getList(null, "*", "sort desc", 0, 0);
 		assignWeb();
 		assign("info", info);
 		assign("columnParentList", // 父级栏目，路径导航
-				columnService.getParentList(list, webUrl, info.get("parent_id"), false, true));
+				columnService.getParentList(list, webUrl, parentId, false, true));
 		assign("columnChildrenList", // 子栏目列表
-				columnService.getChildrenList(list, info.get("id"), false));
+				columnService.getChildrenList(list, id, null, false));
 		assign("columnSiblingList", // 同级栏目列表
-				columnService.getChildrenList(list, info.get("parent_id"), false));
+				columnService.getChildrenList(list, parentId, new Object[]{id}, false));
 		return displayTemplate();
 	}
 }

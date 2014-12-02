@@ -49,14 +49,21 @@ public class ColumnService extends ServiceBase {
 	 * 获取子元素列表
 	 * @param list 源数据列表
 	 * @param id 对应父元素主键值
+	 * @param exceptIdArray 排除的主键值数组
 	 * @param bShowWithStatus 根据状态判断是否展示对应项
 	 * @return
 	 */
-	public List<Map<String, Object>> getChildrenList(List<Map<String, Object>> list, Object id, boolean bShowWithStatus) {
+	public List<Map<String, Object>> getChildrenList(
+			List<Map<String, Object>> list, Object id, Object[] exceptIdArray, boolean bShowWithStatus) {
 		if(null == list) list = columnDao.getList("*", null, null, null, null, 0, 0);
 		List<Map<String, Object>> subList = new ArrayList<Map<String, Object>>();
+		String primaryKey = columnDao.getPrimaryKey();
 		for (Map<String, Object> map : list) {
-			if(DPUtil.equals(id, map.get("parent_id"))) subList.add(map);
+			if(DPUtil.equals(id, map.get("parent_id"))) {
+				if(DPUtil.isItemExist(exceptIdArray, map.get(primaryKey))) continue ;
+				int status = DPUtil.parseInt(map.get("status"));
+				if(bShowWithStatus || 1 == status) subList.add(map);
+			}
 		}
 		return subList;
 	}

@@ -9,9 +9,25 @@
 	</ol>
 	<div class="column-container">
 		<div class="column-container-left">
-			
+			[#list columnChildrenList![] as item]
+			<div class="panel panel-default margin-bottom5">
+				<div class="panel-heading"><a href="${item.url!""}">${item.name!""}</a></div>
+				<div class="panel-body">${item.description!""}</div>
+			</div>
+			[/#list]
 		</div>
-		<div class="column-container-right"></div>
+		<div class="column-container-right">
+			<div class="panel panel-default margin-bottom0">
+				<div class="panel-heading">推荐栏目</div>
+				<div class="panel-body column-list-text">
+					<ul>
+					[#list columnSiblingList![] as item]
+						<li class="width-percent100 text-ellipsis"><a href="${item.url!""}">${item.name!""}</a></li>
+					[/#list]
+					</ul>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 [#include "../public/footer.inc.htm"]
