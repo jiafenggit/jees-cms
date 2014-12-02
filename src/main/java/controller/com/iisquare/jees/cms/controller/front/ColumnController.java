@@ -1,5 +1,6 @@
 package com.iisquare.jees.cms.controller.front;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +31,15 @@ public class ColumnController extends FrontController {
 		if(null == info || 1 != DPUtil.parseInt(info.get("status"))) {
 			return displayInfo("您要访问的信息不存在或已被删除", webUrl, true);
 		}
+		List<Map<String, Object>> list = columnService.getList(null, "*", "sort desc", 0, 0);
 		assignWeb();
 		assign("info", info);
-		assign("columnParentList", columnService.getParentList(webUrl, info.get("parent_id"), false, true));
+		assign("columnParentList", // 父级栏目，路径导航
+				columnService.getParentList(list, webUrl, info.get("parent_id"), false, true));
+		assign("columnChildrenList", // 子栏目列表
+				columnService.getChildrenList(list, info.get("id"), false));
+		assign("columnSiblingList", // 同级栏目列表
+				columnService.getChildrenList(list, info.get("parent_id"), false));
 		return displayTemplate();
 	}
 }

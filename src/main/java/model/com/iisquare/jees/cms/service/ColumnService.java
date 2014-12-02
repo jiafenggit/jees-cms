@@ -46,18 +46,47 @@ public class ColumnService extends ServiceBase {
 	public ColumnService() {}
 	
 	/**
+	 * 获取子元素列表
+	 * @param list 源数据列表
+	 * @param id 对应父元素主键值
+	 * @param bShowWithStatus 根据状态判断是否展示对应项
+	 * @return
+	 */
+	public List<Map<String, Object>> getChildrenList(List<Map<String, Object>> list, Object id, boolean bShowWithStatus) {
+		if(null == list) list = columnDao.getList("*", null, null, null, null, 0, 0);
+		List<Map<String, Object>> subList = new ArrayList<Map<String, Object>>();
+		for (Map<String, Object> map : list) {
+			if(DPUtil.equals(id, map.get("parent_id"))) subList.add(map);
+		}
+		return subList;
+	}
+	
+	/**
+	 * 填充URL地址
+	 * @param list
+	 * @param webUrl
+	 * @return
+	 */
+	public List<Map<String, Object>> fillWebUrl(List<Map<String, Object>> list, String webUrl) {
+		for (Map<String, Object> map : list) {
+			map.put("url", columnDao.makeWebUrl(map, webUrl));
+		}
+		return list;
+	}
+	
+	/**
 	 * 获取上级栏目列表
+	 * @param list 源数据列表
 	 * @param parentId 父级主键值
 	 * @param bShowWithStatus 根据状态判断是否展示对应项
 	 * @param bBreakWithStatus 根据状态判断是否结束处理
 	 * @return
 	 */
-	public List<Map<String, Object>> getParentList(String webUrl, Object parentId, boolean bShowWithStatus, boolean bBreakWithStatus) {
+	public List<Map<String, Object>> getParentList(List<Map<String, Object>> list,
+			String webUrl, Object parentId, boolean bShowWithStatus, boolean bBreakWithStatus) {
 		String primaryKey = columnDao.getPrimaryKey();
-		List<Map<String, Object>> list = columnDao.getList("*", null, null, null, null, 0, 0);
-		for (Map<String, Object> map : list) {
-			map.put("url", columnDao.makeWebUrl(map, webUrl));
-		}
+		if(null == list) list = columnDao.getList("*", null, null, null, null, 0, 0);
+		fillWebUrl(list, webUrl);
 		Map<Object, Map<String, Object>> indexMap = ServiceUtil.indexMapList(list, primaryKey);
 		List<Map<String, Object>> parentList = new ArrayList<Map<String, Object>>();
 		processParentList(indexMap, parentList, parentId, bShowWithStatus, bBreakWithStatus);

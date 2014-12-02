@@ -102,3 +102,7 @@ filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMe
 .bottom-panel .copyright a, .bottom-panel .copyright a:visited{color:#666666; padding: 0 2px;}
 
 .crumb-navigate{text-align: left; margin: 5px auto 0 auto;}
+
+.column-container{width: 100%; height: auto; overflow: hidden;}
+.column-container-left{width: 690px; float: left;}
+.column-container-rught{width: 300px; float: right;}
