@@ -133,7 +133,9 @@ public class ArticleService extends ServiceBase {
 	public List<Map<String, Object>> fillWebUrl(List<Map<String, Object>> list, String webUrl, String key) {
 		if(null == key) key = "url";
 		for (Map<String, Object> map : list) {
-			map.put(key, articleDao.makeWebUrl(map, webUrl, null));
+			String url = DPUtil.parseString(map.get("url"));
+			if(DPUtil.empty(url)) url = articleDao.makeWebUrl(map, webUrl, null);
+			map.put(key, url);
 		}
 		return list;
 	}

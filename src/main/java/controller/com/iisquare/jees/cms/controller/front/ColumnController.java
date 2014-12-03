@@ -54,6 +54,7 @@ public class ColumnController extends FrontController {
 		/* 模板参数赋值 */
 		assignWeb();
 		assign("info", info);
+		assign("defaultArticleLogo", articleService.defaultLogo);
 		assign("columnParentList", // 父级栏目，路径导航
 				columnService.getParentList(list, webUrl, parentId, false, true));
 		assign("columnChildrenList", // 子栏目列表
