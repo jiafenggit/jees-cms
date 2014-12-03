@@ -242,13 +242,13 @@ public class LabelService extends ServiceBase {
 			/* 页面地址 */
 			String url = DPUtil.parseString(subMap.get("url"));
 			if(DPUtil.empty(url)) {
-				url = articleDao.makeWebUrl(subMap, webUrl);
+				url = articleDao.makeWebUrl(subMap, webUrl, null);
 				subMap.put("url", url);
 			}
 			/* 栏目地址 */
 			Map<String, Object> columnMap = (Map<String, Object>) map.get("column_id_rel");
 			if(!DPUtil.empty(columnMap)) {
-				columnMap.put("url", columnDao.makeWebUrl(columnMap, webUrl));
+				columnMap.put("url", columnDao.makeWebUrl(columnMap, webUrl, null));
 			}
 		}
 		return rows;

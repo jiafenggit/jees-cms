@@ -20,25 +20,31 @@ public class ArticleDao extends DaoBase<Article> {
 	
 	/**
 	 * 组合Web访问地址
-	 * @param info
-	 * @return
 	 */
-	public String makeWebUrl(Column info, String webUrl) {
+	public String makeWebUrl(Column info, String webUrl, Integer page) {
 		if(null == info) return "";
 		Object id = info.getId();
 		if(DPUtil.empty(id)) return "";
-		return DPUtil.stringConcat(webUrl, "/article-", id, ".shtml");
+		return makeWebUrl(webUrl, id, page);
 	}
 	
 	/**
 	 * 组合Web访问地址
-	 * @param info
-	 * @return
 	 */
-	public String makeWebUrl(Map<String, Object> info, String webUrl) {
+	public String makeWebUrl(Map<String, Object> info, String webUrl, Integer page) {
 		if(null == info) return "";
 		Object id = info.get(getPrimaryKey());
 		if(DPUtil.empty(id)) return "";
-		return DPUtil.stringConcat(webUrl, "/article-", id, ".shtml");
+		return makeWebUrl(webUrl, id, page);
+	}
+	
+	/**
+	 * 组合Web访问地址
+	 */
+	private String makeWebUrl(String webUrl, Object id, Integer page) {
+		if(null == page || 1 > page) page = 1;
+		StringBuilder sb = new StringBuilder().append(webUrl)
+				.append("/article-").append(id).append("-").append(page).append(".shtml");
+		return sb.toString();
 	}
 }

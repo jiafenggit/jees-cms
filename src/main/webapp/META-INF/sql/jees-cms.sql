@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50525
 File Encoding         : 65001
 
-Date: 2014-12-02 16:19:46
+Date: 2014-12-03 09:43:51
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -94,7 +94,7 @@ CREATE TABLE `cms_column` (
 -- ----------------------------
 -- Records of cms_column
 -- ----------------------------
-INSERT INTO `cms_column` VALUES ('1', '新闻动态', '0', '新闻动态', 'IT科技前沿，综合主流元素的高级应用软件开发。云计算、物联网、移动互联、计算机视觉，分享无处不在。Join us and learning together,if you like PC as well!', '0', '1', '1', '1415000500739', '1', '1417508260221');
+INSERT INTO `cms_column` VALUES ('1', '新闻动态', '0', '新闻动态', 'IT科技前沿，综合主流元素的高级应用软件开发。云计算、物联网、移动互联、计算机视觉，分享无处不在。Join us and learning together,if you like PC as well!', '0', '1', '1', '1415000500739', '1', '1417513819048');
 INSERT INTO `cms_column` VALUES ('2', '编程开发', '0', '编程开发', '编程开发', '0', '1', '1', '1415008840590', '1', '1417051712376');
 INSERT INTO `cms_column` VALUES ('3', '架构设计', '0', '架构设计', '架构设计', '0', '1', '1', '1415008861059', '1', '1417051727022');
 INSERT INTO `cms_column` VALUES ('4', '项目管理', '0', '项目管理', '项目管理', '0', '1', '1', '1415008869462', '1', '1417051741104');
@@ -254,7 +254,7 @@ CREATE TABLE `cms_log` (
   `operate_ip` varchar(64) NOT NULL DEFAULT '',
   `operate_time` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of cms_log
@@ -326,6 +326,8 @@ INSERT INTO `cms_log` VALUES ('67', '用户登陆', 'service', 'base', 'member',
 INSERT INTO `cms_log` VALUES ('68', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1417271782739');
 INSERT INTO `cms_log` VALUES ('69', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1417319721835');
 INSERT INTO `cms_log` VALUES ('70', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1417508240289');
+INSERT INTO `cms_log` VALUES ('71', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1417513071841');
+INSERT INTO `cms_log` VALUES ('72', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1417570918751');
 
 -- ----------------------------
 -- Table structure for `cms_log_setting`
@@ -375,7 +377,7 @@ CREATE TABLE `cms_member` (
 -- ----------------------------
 -- Records of cms_member
 -- ----------------------------
-INSERT INTO `cms_member` VALUES ('1', 'admin', '管理员', '0f4e8ac95b5c1fc48dc98004c7525bc7', '888888', '0', '1', '1417508259976', '127.0.0.1', '1', '127.0.0.1', '1411090286300', '1', '1417159438312');
+INSERT INTO `cms_member` VALUES ('1', 'admin', '管理员', '0f4e8ac95b5c1fc48dc98004c7525bc7', '888888', '0', '1', '1417570978528', '127.0.0.1', '1', '127.0.0.1', '1411090286300', '1', '1417513806245');
 INSERT INTO `cms_member` VALUES ('2', 'guest', '访客', '793a507822c9ec991c3418dfb7950f07', '338043', '0', '1', '1414550595011', '127.0.0.1', '1', '127.0.0.1', '1414546536140', '1', '1414546536140');
 
 -- ----------------------------
@@ -1113,7 +1115,7 @@ CREATE TABLE `cms_setting` (
   `operate_ip` varchar(64) NOT NULL DEFAULT '',
   `operate_time` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of cms_setting
@@ -1130,6 +1132,7 @@ INSERT INTO `cms_setting` VALUES ('9', 'noteEnable', 'web', '1', '是否开启�
 INSERT INTO `cms_setting` VALUES ('10', 'commentEnable', 'web', '1', '是否开启文章评论（全局）', '1', '127.0.0.1', '1417274843669');
 INSERT INTO `cms_setting` VALUES ('11', 'feedbackEnable', 'web', '1', '是否开启文章投诉举报', '1', '127.0.0.1', '1417274843710');
 INSERT INTO `cms_setting` VALUES ('12', 'partnerEnable', 'web', '1', '是否开启友情链接申请', '1', '127.0.0.1', '1417274843753');
+INSERT INTO `cms_setting` VALUES ('13', 'columnListPageSize', 'web', '15', '文章列表页分页大小', '1', '127.0.0.1', '1417570978057');
 
 -- ----------------------------
 -- Table structure for `cms_upload`

@@ -46,7 +46,7 @@ public class ArticleService extends ServiceBase {
 	
 	public ArticleService() {}
 	
-	public Map<Object, Object> search(Map<String, Object> map, String orderBy, int page, int pageSize) {
+	public Map<Object, Object> search(Map<String, Object> map, String orderBy, String webUrl, int page, int pageSize) {
 		StringBuilder sb = new StringBuilder("select * from ")
 			.append(articleDao.tableName()).append(" where 1 = 1");
 		Map<String, Object> paramMap = new HashMap<String, Object>();
@@ -116,10 +116,26 @@ public class ArticleService extends ServiceBase {
 		int total = articleDao.getCount(sql, paramMap, true);
 		sql = DPUtil.stringConcat(sql, SqlUtil.buildLimit(page, pageSize));
 		List<Map<String, Object>> rows = articleDao.npJdbcTemplate().queryForList(sql, paramMap);
+		fillWebUrl(rows, webUrl, "web_url");
 		rows = ServiceUtil.fillFields(rows, new String[]{"status"}, new Map<?, ?>[]{getStatusMap(true)}, null);
 		rows = ServiceUtil.fillRelations(rows, columnDao, new String[]{"column_id"}, new String[]{"name"}, null);
 		rows = ServiceUtil.fillRelations(rows, memberDao, new String[]{"create_id", "update_id"}, new String[]{"serial", "name"}, null);
 		return DPUtil.buildMap(new String[]{"total", "rows"}, new Object[]{total, rows});
+	}
+	
+	/**
+	 * 填充URL地址
+	 * @param list 源数据列表
+	 * @param webUrl 网站访问地址
+	 * @param key 填充下标
+	 * @return
+	 */
+	public List<Map<String, Object>> fillWebUrl(List<Map<String, Object>> list, String webUrl, String key) {
+		if(null == key) key = "url";
+		for (Map<String, Object> map : list) {
+			map.put(key, articleDao.makeWebUrl(map, webUrl, null));
+		}
+		return list;
 	}
 	
 	public List<Map<String, Object>> getListByIds(Object... ids) {

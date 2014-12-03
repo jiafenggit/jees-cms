@@ -23,8 +23,9 @@ public class ArticleController extends FrontController {
 	@Autowired
 	public ArticleService articleService;
 	
-	@RequestMapping(value="/article-{id}.shtml")
-	public String indexAction(@PathVariable String id) throws Exception {
+	@RequestMapping(value="/article-{pathId}-{pathPage}.shtml")
+	public String indexAction(@PathVariable String pathId) throws Exception {
+		Integer id = DPUtil.parseInt(pathId);
 		Map<String, Object> info = articleService.getById(id, true);
 		if(null == info || 1 != DPUtil.parseInt(info.get("status"))) {
 			return displayInfo("您要访问的信息不存在或已被删除", webUrl, true);

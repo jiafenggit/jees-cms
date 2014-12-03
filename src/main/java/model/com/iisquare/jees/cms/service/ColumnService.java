@@ -70,13 +70,15 @@ public class ColumnService extends ServiceBase {
 	
 	/**
 	 * 填充URL地址
-	 * @param list
-	 * @param webUrl
+	 * @param list 源数据列表
+	 * @param webUrl 网站访问地址
+	 * @param key 填充下标
 	 * @return
 	 */
-	public List<Map<String, Object>> fillWebUrl(List<Map<String, Object>> list, String webUrl) {
+	public List<Map<String, Object>> fillWebUrl(List<Map<String, Object>> list, String webUrl, String key) {
+		if(null == key) key = "url";
 		for (Map<String, Object> map : list) {
-			map.put("url", columnDao.makeWebUrl(map, webUrl));
+			map.put(key, columnDao.makeWebUrl(map, webUrl, null));
 		}
 		return list;
 	}
@@ -93,7 +95,7 @@ public class ColumnService extends ServiceBase {
 			String webUrl, Object parentId, boolean bShowWithStatus, boolean bBreakWithStatus) {
 		String primaryKey = columnDao.getPrimaryKey();
 		if(null == list) list = columnDao.getList("*", null, null, null, null, 0, 0);
-		fillWebUrl(list, webUrl);
+		fillWebUrl(list, webUrl, null);
 		Map<Object, Map<String, Object>> indexMap = ServiceUtil.indexMapList(list, primaryKey);
 		List<Map<String, Object>> parentList = new ArrayList<Map<String, Object>>();
 		processParentList(indexMap, parentList, parentId, bShowWithStatus, bBreakWithStatus);
