@@ -117,3 +117,5 @@ filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMe
 .column-list-item .item-title .right{float: right; width: 85px; text-align: right; font-size: 14px;}
 .column-list-item .item-title a, .column-list-item .item-title a:visited{color: #172c45;}
 .column-list-item .item-title a:hover{color: #cd0001;}
+
+.pagination-panel-default{text-align: center;}
