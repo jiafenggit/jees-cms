@@ -20,7 +20,9 @@
 				<div class="panel-body">
 					[#list articleMap.rows![] as item]
 					<div class="media column-list-item">
+						[#if !empty(item.logo)]
 						<a class="media-left" target="_blank" href="${item.web_url!""}" title="${item.title!""}"><img class="media-object" src="[#if empty(item.logo)]${defaultArticleLogo!""}[#else]${item.logo!""}[/#if]"></a>
+						[/#if]
 						<div class="media-body">
 							<h4 class="media-heading item-title">
 								<span class="left"><a class="media-left" target="_blank" href="${item.web_url!""}" title="${item.title!""}">${item.title!""}</a></span>
