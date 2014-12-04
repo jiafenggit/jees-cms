@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import com.iisquare.jees.cms.service.NavigateService;
 import com.iisquare.jees.cms.service.SettingService;
-import com.iisquare.jees.framework.util.DPUtil;
 import com.iisquare.jees.framework.util.ServletUtil;
 
 @Controller
@@ -24,8 +23,8 @@ public abstract class FrontController extends CoreController {
 		assign("title", settingService.get("web", "title")); // 网站标题
 		assign("keywords", settingService.get("web", "keywords")); // 网站关键词
 		assign("description", settingService.get("web", "description")); // 网站描述
-		assign("navigateList", navigateService.getWebList(webUrl, DPUtil.subString(
-				ServletUtil.getFullUrl(request, isWebUrlWithDomain), webUrl.length()))); // 导航菜单
+		assign("navigateList", // 导航菜单
+				navigateService.getWebList(webUrl, ServletUtil.getFullUrl(request, false, true)));
 	}
 	
 	/**
