@@ -14,6 +14,7 @@ import com.iisquare.jees.cms.service.ArticleService;
 import com.iisquare.jees.cms.service.ColumnService;
 import com.iisquare.jees.core.component.FrontController;
 import com.iisquare.jees.framework.util.DPUtil;
+import com.iisquare.jees.framework.util.ServletUtil;
 
 /**
  * 栏目管理
@@ -54,6 +55,7 @@ public class ColumnController extends FrontController {
 		/* 模板参数赋值 */
 		assignWeb();
 		assign("info", info);
+		assign("webFullUrl", ServletUtil.getFullUrl(request, false));
 		assign("defaultArticleLogo", articleService.defaultLogo);
 		assign("columnParentList", // 父级栏目，路径导航
 				columnService.getParentList(list, webUrl, parentId, false, true));

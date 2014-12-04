@@ -1,0 +1,11 @@
+<nav class="pagination-panel-default">
+	<ul class="pagination margin-bottom0">
+		<li><a href="#">首页</a></li>
+		<li><a href="#">上一页</a></li>
+		[#list pageList(pagination.page, pagination.pageSize, pagination.total, 10) as number]
+		<li[#if pagination.page == number] class="active"[/#if]><a href="#">${number}</a></li>
+		[/#list]
+		<li><a href="#">下一页</a></li>
+		<li><a href="#">尾页</a></li>
+	</ul>
+</nav>
