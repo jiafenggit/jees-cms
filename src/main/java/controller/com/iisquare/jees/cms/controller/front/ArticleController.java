@@ -28,8 +28,8 @@ public class ArticleController extends FrontController {
 	public ColumnService columnService;
 	
 	@RequestMapping(value="/article-{pathColumnId}-{pathId}-{pathPage}.shtml")
-	public String indexAction(@PathVariable String pathColumnId,
-			@PathVariable String pathId, @PathVariable String pathPage) throws Exception {
+	public String indexAction(@PathVariable("pathColumnId") String pathColumnId,
+			@PathVariable("pathId") String pathId, @PathVariable("pathPage") String pathPage) throws Exception {
 		/* 参数处理 */
 		Integer id = DPUtil.parseInt(pathId);
 		/* 基础信息处理 */

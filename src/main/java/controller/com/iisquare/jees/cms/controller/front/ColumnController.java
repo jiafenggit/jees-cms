@@ -31,7 +31,7 @@ public class ColumnController extends FrontController {
 	public ArticleService articleService;
 
 	@RequestMapping(value="/column-{pathId}-{pathPage}.shtml")
-	public String indexAction(@PathVariable String pathId, @PathVariable String pathPage) throws Exception {
+	public String indexAction(@PathVariable("pathId") String pathId, @PathVariable("pathPage") String pathPage) throws Exception {
 		/* 参数处理 */
 		Integer id = DPUtil.parseInt(pathId);
 		int page = DPUtil.parseInt(pathPage);
