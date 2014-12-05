@@ -73,7 +73,7 @@ _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingM
 filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=image, src="../images/focus/play-btn.png")}
 #focus .focus-title a{display: none;color: #fff}
 
-.article-list-text a, .article-list-text a:visited, .article-list-pic-text a, .article-list-pic-text a:visited{color:#172c45;}
+.article-list-text a, .article-list-text a:visited, .article-list-pic-text a, .article-list-pic-text a:visited{color:#2b2b2b;}
 .article-panel-news{width: 410px; height:100%; float:right; text-align:left;}
 .article-list-text{padding:10px 15px; text-align:left;}
 .article-list-text li{height:22px; line-height:22px;}
@@ -107,7 +107,7 @@ filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMe
 .column-container{width: 100%; height: auto; overflow: hidden; margin: 5px auto; text-align: left;}
 .column-container-left{width: 690px; float: left;}
 .column-container-right{width: 300px; float: right;}
-.column-container-right a, .column-container-right a:visited{color: #172c45;}
+.column-container-right a, .column-container-right a:visited{color: #2b2b2b;}
 
 .column-list-item{width:658px; color: #818181; border-bottom: 1px solid #f0f0f0; padding: 10px 0 10px 0; margin-top: 0;}
 .column-list-item:hover{background-color: #f7f7f7;}
@@ -115,7 +115,7 @@ filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMe
 .column-list-item .item-title{height:auto; overflow: hidden;}
 .column-list-item .item-title .left{float: left;}
 .column-list-item .item-title .right{float: right; text-align: right; font-size: 14px;}
-.column-list-item .item-title a, .column-list-item .item-title a:visited{color: #172c45;}
+.column-list-item .item-title a, .column-list-item .item-title a:visited{color: #2b2b2b;}
 .column-list-item .item-title a:hover{color: #cd0001;}
 
 .pagination-panel-default{text-align: center;}
@@ -123,4 +123,10 @@ filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMe
 .article-container{width: 100%; height: auto; overflow: hidden; margin: 5px auto; text-align: left;}
 .article-container-left{width: 690px; float: left;}
 .article-container-right{width: 300px; float: right;}
-.article-container-right a, .article-container-right a:visited{color: #172c45;}
+.article-container-right a, .article-container-right a:visited{color: #2b2b2b;}
+
+.article-panel{text-align: center;}
+.article-header{border-bottom:#d3d3d3 solid 1px; padding-bottom: 20px;}
+.article-header h1{font-size: 20px;}
+.article-header a, .article-header a:visited{color: #2b2b2b;}
+.article-content{height: auto; overflow: hidden; min-height: 500px; text-align: left;}

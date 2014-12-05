@@ -9,6 +9,20 @@
 	</ol>
 	<div class="article-container">
 		<div class="article-container-left">
+			<div class="panel panel-default margin-bottom0">
+				<div class="panel-body">
+					<article class="article-panel">
+						<header class="article-header">
+							<h1>${info.title!""}</h1>
+							<time pubdate datetime="${millisToDateTime(info.publish_time)}">${millisToDateTime(info.publish_time)}</time>
+							[#if !empty(info.from_name)]
+							<span class="margin-left5">来源：[#if empty(info.from_url)]${info.from_name!""}[#else]<a target="_blank" href="${info.from_url!""}">${info.from_name!""}</a>[/#if]</span>
+							[/#if]
+						</header>
+						<div class="article-content">${info.content!""}</div>
+					</article>
+				</div>
+			</div>
 		</div>
 		<div class="article-container-right">
 			<ul class="list-group">
