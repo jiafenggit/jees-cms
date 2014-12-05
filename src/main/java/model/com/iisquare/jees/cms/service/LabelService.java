@@ -246,7 +246,7 @@ public class LabelService extends ServiceBase {
 				subMap.put("url", url);
 			}
 			/* 栏目地址 */
-			Map<String, Object> columnMap = (Map<String, Object>) map.get("column_id_rel");
+			Map<String, Object> columnMap = (Map<String, Object>) subMap.get("column_id_rel");
 			if(!DPUtil.empty(columnMap)) {
 				columnMap.put("url", columnDao.makeWebUrl(columnMap, webUrl, null));
 			}
