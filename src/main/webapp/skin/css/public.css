@@ -129,4 +129,4 @@ filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMe
 .article-header{border-bottom:#d3d3d3 solid 1px; padding-bottom: 20px;}
 .article-header h1{font-size: 20px;}
 .article-header a, .article-header a:visited{color: #2b2b2b;}
-.article-content{height: auto; overflow: hidden; min-height: 500px; text-align: left;}
+.article-content{height: auto; overflow: hidden; min-height: 500px; text-align: left; margin-top: 15px;}
