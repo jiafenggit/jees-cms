@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50525
 File Encoding         : 65001
 
-Date: 2014-12-05 16:54:05
+Date: 2014-12-05 17:03:10
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -214,21 +214,21 @@ CREATE TABLE `cms_label` (
 INSERT INTO `cms_label` VALUES ('1', '首页焦点图', 'front', 'index', 'index', '', 'slideshow', 'slideshow', '{\"rows\":{\"3\":{\"url\":\"/\",\"short_title\":\"李晨张馨予谱写爱之终曲\",\"image\":\"skin/images/focus/04.jpg\",\"title\":\"李晨张馨予谱写爱之终曲\"},\"0\":{\"short_title\":\"于正版霸王别姬 陈乔恩变腹黑大战情敌袁姗姗\",\"url\":\"/\",\"image\":\"skin/images/focus/01.jpg\",\"title\":\"于正版霸王别姬 陈乔恩变腹黑大战情敌袁姗姗\"},\"1\":{\"title\":\"刘德华、郑秀文、杜琪峰香港电影铁三角十年归来\",\"short_title\":\"刘德华、郑秀文、杜琪峰香港电影铁三角十年归来\",\"image\":\"skin/images/focus/02.jpg\",\"url\":\"/\"},\"2\":{\"short_title\":\"众星爸厨艺比拼犯难（2013-10-18期）\",\"title\":\"众星爸厨艺比拼犯难（2013-10-18期）\",\"url\":\"/\",\"image\":\"skin/images/focus/03.jpg\"},\"4\":{\"image\":\"skin/images/focus/05.jpg\",\"title\":\"周杰伦自导自演  传递超屌正能量\",\"short_title\":\"周杰伦自导自演  传递超屌正能量\",\"url\":\"/\"}},\"space\":\"0\",\"suffix\":\"...\"}', '', '0', '1', '1', '1415418678539', '1', '1416890662460');
 INSERT INTO `cms_label` VALUES ('2', '首页最新动态标题', 'front', 'index', 'index', '', 'newsTitle', 'html', '最新动态', '', '0', '1', '1', '1416910221488', '1', '1416910221488');
 INSERT INTO `cms_label` VALUES ('3', '首页最新动态列表', 'front', 'index', 'index', '', 'newsList', 'article', '{\"sortOrder\":\"desc\",\"total\":\"8\",\"space\":\"0\",\"sortName\":\"sort\",\"suffix\":\"...\"}', '', '0', '1', '1', '1416998098427', '1', '1416998098427');
-INSERT INTO `cms_label` VALUES ('4', '首页编程开发标题', 'front', 'index', 'index', '', 'programTitle', 'html', '<a href=\"column-2-1.shtml\">编程开发</a>', '', '0', '1', '1', '1417068299564', '1', '1417068299564');
+INSERT INTO `cms_label` VALUES ('4', '首页编程开发标题', 'front', 'index', 'index', '', 'programTitle', 'html', '<a target=\"_blank\" href=\"column-2-1.shtml\">编程开发</a>', '', '0', '1', '1', '1417068299564', '1', '1417068299564');
 INSERT INTO `cms_label` VALUES ('5', '首页编程开发列表', 'front', 'index', 'index', '', 'programList', 'article', '{\"sortOrder\":\"desc\",\"total\":\"8\",\"space\":\"0\",\"suffix\":\"\",\"sortName\":\"sort\"}', '', '0', '1', '1', '1417068414337', '1', '1417068414337');
-INSERT INTO `cms_label` VALUES ('6', '首页运维监控标题', 'front', 'index', 'index', '', 'operateTitle', 'html', '<a href=\"column-5-1.shtml\">运维监控</a>', '', '0', '1', '1', '1417068462230', '1', '1417068610774');
-INSERT INTO `cms_label` VALUES ('7', '首页软件测试标题', 'front', 'index', 'index', '', 'testTitle', 'html', '<a href=\"column-7-1.shtml\">软件测试</a>', '', '0', '1', '1', '1417068480832', '1', '1417068578938');
+INSERT INTO `cms_label` VALUES ('6', '首页运维监控标题', 'front', 'index', 'index', '', 'operateTitle', 'html', '<a target=\"_blank\" href=\"column-5-1.shtml\">运维监控</a>', '', '0', '1', '1', '1417068462230', '1', '1417068610774');
+INSERT INTO `cms_label` VALUES ('7', '首页软件测试标题', 'front', 'index', 'index', '', 'testTitle', 'html', '<a target=\"_blank\" href=\"column-7-1.shtml\">软件测试</a>', '', '0', '1', '1', '1417068480832', '1', '1417068578938');
 INSERT INTO `cms_label` VALUES ('8', '首页运维监控列表', 'front', 'index', 'index', '', 'operateList', 'article', '{\"sortOrder\":\"desc\",\"total\":\"8\",\"space\":\"0\",\"suffix\":\"\",\"sortName\":\"sort\"}', '', '0', '1', '1', '1417068534594', '1', '1417068534594');
 INSERT INTO `cms_label` VALUES ('9', '首页软件测试列表', 'front', 'index', 'index', '', 'testList', 'article', '{\"sortOrder\":\"desc\",\"total\":\"8\",\"space\":\"0\",\"suffix\":\"\",\"sortName\":\"sort\"}', '', '0', '1', '1', '1417068546052', '1', '1417068546052');
-INSERT INTO `cms_label` VALUES ('10', '首页项目管理标题', 'front', 'index', 'index', '', 'projectTitle', 'html', '<a href=\"column-4-1.shtml\">项目管理</a>', '', '0', '1', '1', '1417162408298', '1', '1417162408298');
+INSERT INTO `cms_label` VALUES ('10', '首页项目管理标题', 'front', 'index', 'index', '', 'projectTitle', 'html', '<a target=\"_blank\" href=\"column-4-1.shtml\">项目管理</a>', '', '0', '1', '1', '1417162408298', '1', '1417162408298');
 INSERT INTO `cms_label` VALUES ('11', '首页项目管理列表', 'front', 'index', 'index', '', 'projectList', 'article', '{\"sortOrder\":\"desc\",\"total\":\"9\",\"space\":\"0\",\"suffix\":\"\",\"sortName\":\"sort\"}', '', '0', '1', '1', '1417162421249', '1', '1417162421249');
-INSERT INTO `cms_label` VALUES ('12', '首页架构设计标题', 'front', 'index', 'index', '', 'architectureTitle', 'html', '<a href=\"column-3-1.shtml\">架构设计</a>', '', '0', '1', '1', '1417164532006', '1', '1417164532006');
+INSERT INTO `cms_label` VALUES ('12', '首页架构设计标题', 'front', 'index', 'index', '', 'architectureTitle', 'html', '<a target=\"_blank\" href=\"column-3-1.shtml\">架构设计</a>', '', '0', '1', '1', '1417164532006', '1', '1417164532006');
 INSERT INTO `cms_label` VALUES ('13', '首页架构设计列表', 'front', 'index', 'index', '', 'architectureList', 'article', '{\"sortOrder\":\"desc\",\"total\":\"4\",\"space\":\"0\",\"suffix\":\"\",\"sortName\":\"sort\"}', '', '0', '1', '1', '1417164549666', '1', '1417164549666');
-INSERT INTO `cms_label` VALUES ('14', '首页信心安全标题', 'front', 'index', 'index', '', 'safeTitle', 'html', '<a href=\"column-6-1.shtml\">信息安全</a>', '', '0', '1', '1', '1417185785291', '1', '1417185785291');
+INSERT INTO `cms_label` VALUES ('14', '首页信心安全标题', 'front', 'index', 'index', '', 'safeTitle', 'html', '<a target=\"_blank\" href=\"column-6-1.shtml\">信息安全</a>', '', '0', '1', '1', '1417185785291', '1', '1417185785291');
 INSERT INTO `cms_label` VALUES ('15', '首页信心安全列表', 'front', 'index', 'index', '', 'safeList', 'article', '{\"sortOrder\":\"desc\",\"total\":\"8\",\"space\":\"0\",\"suffix\":\"\",\"sortName\":\"sort\"}', '', '0', '1', '1', '1417185802063', '1', '1417185802063');
-INSERT INTO `cms_label` VALUES ('16', '首页数据库标题', 'front', 'index', 'index', '', 'datebaseTitle', 'html', '<a href=\"column-8-1.shtml\">数据库</a>', '', '0', '1', '1', '1417185831120', '1', '1417185831120');
+INSERT INTO `cms_label` VALUES ('16', '首页数据库标题', 'front', 'index', 'index', '', 'datebaseTitle', 'html', '<a target=\"_blank\" href=\"column-8-1.shtml\">数据库</a>', '', '0', '1', '1', '1417185831120', '1', '1417185831120');
 INSERT INTO `cms_label` VALUES ('17', '首页数据库列表', 'front', 'index', 'index', '', 'datebaseList', 'article', '{\"sortOrder\":\"desc\",\"total\":\"8\",\"space\":\"0\",\"suffix\":\"\",\"sortName\":\"sort\"}', '', '0', '1', '1', '1417185843483', '1', '1417185843483');
-INSERT INTO `cms_label` VALUES ('18', '首页算法结构标题', 'front', 'index', 'index', '', 'algorithmTitle', 'html', '<a href=\"column-9-1.shtml\">算法结构</a>', '', '0', '1', '1', '1417186257027', '1', '1417186257027');
+INSERT INTO `cms_label` VALUES ('18', '首页算法结构标题', 'front', 'index', 'index', '', 'algorithmTitle', 'html', '<a target=\"_blank\" href=\"column-9-1.shtml\">算法结构</a>', '', '0', '1', '1', '1417186257027', '1', '1417186257027');
 INSERT INTO `cms_label` VALUES ('19', '首页算法结构列表', 'front', 'index', 'index', '', 'algorithmList', 'article', '{\"sortOrder\":\"desc\",\"total\":\"8\",\"space\":\"0\",\"suffix\":\"\",\"sortName\":\"sort\"}', '', '0', '1', '1', '1417186269317', '1', '1417186269317');
 
 -- ----------------------------
