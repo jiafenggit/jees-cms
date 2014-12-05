@@ -119,3 +119,8 @@ filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMe
 .column-list-item .item-title a:hover{color: #cd0001;}
 
 .pagination-panel-default{text-align: center;}
+
+.article-container{width: 100%; height: auto; overflow: hidden; margin: 5px auto; text-align: left;}
+.article-container-left{width: 690px; float: left;}
+.article-container-right{width: 300px; float: right;}
+.article-container-right a, .article-container-right a:visited{color: #172c45;}

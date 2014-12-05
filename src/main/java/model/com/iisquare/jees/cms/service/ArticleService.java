@@ -55,6 +55,10 @@ public class ArticleService extends ServiceBase {
 			sb.append(" and title like :title");
 			paramMap.put("title", DPUtil.stringConcat("%", title, "%"));
 		}
+		String exceptIds = SqlUtil.buildSafeWhere(",", (Object[]) map.get("exceptIds"));
+		if(!DPUtil.empty(exceptIds)) {
+			sb.append(" and ").append(articleDao.getPrimaryKey()).append(" not in (").append(exceptIds).append(")");
+		}
 		String columnIds = SqlUtil.buildSafeWhere(",", (Object[]) map.get("columnIds"));
 		if(!DPUtil.empty(columnIds)) {
 			sb.append(" and column_id in (").append(columnIds).append(")");
