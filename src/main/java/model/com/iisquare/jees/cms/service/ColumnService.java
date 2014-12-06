@@ -231,7 +231,7 @@ public class ColumnService extends ServiceBase {
 	}
 	
 	public int insert(Column persist) {
-		return columnDao.insert(persist);
+		return columnDao.insert(persist).intValue();
 	}
 	
 	public int update(Column persist) {
@@ -241,9 +241,9 @@ public class ColumnService extends ServiceBase {
 	public int delete(Object... ids) {
 		String idStr = SqlUtil.buildSafeWhere(",", ids);
 		if(DPUtil.empty(idStr)) return 0;
-		int count = columnDao.getCount(DPUtil.stringConcat("parent_id in (", idStr, " )"), new Object[]{}, null);
+		int count = columnDao.getCount(DPUtil.stringConcat("parent_id in (", idStr, " )"), new Object[]{}, null).intValue();
 		if(count > 0) return -1;
-		count = articleDao.getCount(DPUtil.stringConcat("column_id in (", idStr, " )"), new Object[]{}, null);
+		count = articleDao.getCount(DPUtil.stringConcat("column_id in (", idStr, " )"), new Object[]{}, null).intValue();
 		if(count > 0) return -2;
 		return columnDao.deleteByIds(ids);
 	}

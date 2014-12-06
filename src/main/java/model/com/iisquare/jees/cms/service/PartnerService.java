@@ -149,7 +149,7 @@ public class PartnerService extends ServiceBase {
 		}
 		if(!DPUtil.empty(orderBy)) sb.append(" order by ").append(orderBy);
 		String sql = sb.toString();
-		int total = partnerDao.getCount(sql, paramMap, true);
+		int total = partnerDao.getCount(sql, paramMap, true).intValue();
 		sql = DPUtil.stringConcat(sql, SqlUtil.buildLimit(page, pageSize));
 		List<Map<String, Object>> rows = partnerDao.npJdbcTemplate().queryForList(sql, paramMap);
 		rows = ServiceUtil.fillFields(rows, new String[]{"status", "goal"}, new Map<?, ?>[]{getStatusMap(true), getGoalMap()}, null);
@@ -180,7 +180,7 @@ public class PartnerService extends ServiceBase {
 	}
 	
 	public int insert(Partner persist) {
-		return partnerDao.insert(persist);
+		return partnerDao.insert(persist).intValue();
 	}
 	
 	public int update(Partner persist) {

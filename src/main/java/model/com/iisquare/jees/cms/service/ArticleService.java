@@ -117,7 +117,7 @@ public class ArticleService extends ServiceBase {
 		}
 		if(!DPUtil.empty(orderBy)) sb.append(" order by ").append(orderBy);
 		String sql = sb.toString();
-		int total = articleDao.getCount(sql, paramMap, true);
+		int total = articleDao.getCount(sql, paramMap, true).intValue();
 		sql = DPUtil.stringConcat(sql, SqlUtil.buildLimit(page, pageSize));
 		List<Map<String, Object>> rows = articleDao.npJdbcTemplate().queryForList(sql, paramMap);
 		fillWebUrl(rows, webUrl, "web_url");
@@ -163,7 +163,7 @@ public class ArticleService extends ServiceBase {
 	}
 	
 	public int insert(Article persist) {
-		return articleDao.insert(persist);
+		return articleDao.insert(persist).intValue();
 	}
 	
 	public int update(Article persist) {

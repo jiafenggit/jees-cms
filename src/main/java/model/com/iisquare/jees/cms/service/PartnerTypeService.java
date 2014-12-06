@@ -58,7 +58,7 @@ public class PartnerTypeService extends ServiceBase {
 	}
 	
 	public int insert(PartnerType persist) {
-		return partnerTypeDao.insert(persist);
+		return partnerTypeDao.insert(persist).intValue();
 	}
 	
 	public int update(PartnerType persist) {
@@ -68,9 +68,9 @@ public class PartnerTypeService extends ServiceBase {
 	public int delete(Object... ids) {
 		String idStr = SqlUtil.buildSafeWhere(",", ids);
 		if(DPUtil.empty(idStr)) return 0;
-		int count = partnerTypeDao.getCount(DPUtil.stringConcat("parent_id in (", idStr, " )"), new Object[]{}, null);
+		int count = partnerTypeDao.getCount(DPUtil.stringConcat("parent_id in (", idStr, " )"), new Object[]{}, null).intValue();
 		if(count > 0) return -1;
-		count = partnerDao.getCount(DPUtil.stringConcat("type_id in (", idStr, " )"), new Object[]{}, null);
+		count = partnerDao.getCount(DPUtil.stringConcat("type_id in (", idStr, " )"), new Object[]{}, null).intValue();
 		if(count > 0) return -2;
 		return partnerTypeDao.deleteByIds(ids);
 	}

@@ -88,7 +88,7 @@ public class RoleService extends ServiceBase {
 	}
 	
 	public int insert(Role persist) {
-		return roleDao.insert(persist);
+		return roleDao.insert(persist).intValue();
 	}
 	
 	public int update(Role persist) {
@@ -98,9 +98,9 @@ public class RoleService extends ServiceBase {
 	public int delete(Object... ids) {
 		String idStr = SqlUtil.buildSafeWhere(",", ids);
 		if(DPUtil.empty(idStr)) return 0;
-		int count = roleDao.getCount(DPUtil.stringConcat("parent_id in (", idStr, " )"), new Object[]{}, null);
+		int count = roleDao.getCount(DPUtil.stringConcat("parent_id in (", idStr, " )"), new Object[]{}, null).intValue();
 		if(count > 0) return -1;
-		count = memberDao.getCount(DPUtil.stringConcat("role_id in (", idStr, " )"), new Object[]{}, null);
+		count = memberDao.getCount(DPUtil.stringConcat("role_id in (", idStr, " )"), new Object[]{}, null).intValue();
 		if(count > 0) return -2;
 		return roleDao.deleteByIds(ids);
 	}
@@ -147,7 +147,7 @@ public class RoleService extends ServiceBase {
 		RoleColumnRel info = roleColumnRelDao.getByFields(new String[]{"role_id", "column_id"},
 				new Object[]{persist.getRoleId(), persist.getColumnId()}, null, null);
 		if(null == info) {
-			return roleColumnRelDao.insert(persist);
+			return roleColumnRelDao.insert(persist).intValue();
 		} else {
 			persist.setId(info.getId());
 			return roleColumnRelDao.update(persist);

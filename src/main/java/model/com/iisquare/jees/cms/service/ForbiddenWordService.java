@@ -90,7 +90,7 @@ public class ForbiddenWordService extends ServiceBase {
 		}
 		if(!DPUtil.empty(orderBy)) sb.append(" order by ").append(orderBy);
 		String sql = sb.toString();
-		int total = forbiddenWordDao.getCount(sql, paramMap, true);
+		int total = forbiddenWordDao.getCount(sql, paramMap, true).intValue();
 		sql = DPUtil.stringConcat(sql, SqlUtil.buildLimit(page, pageSize));
 		List<Map<String, Object>> rows = forbiddenWordDao.npJdbcTemplate().queryForList(sql, paramMap);
 		rows = ServiceUtil.fillFields(rows, new String[]{"status"}, new Map<?, ?>[]{getStatusMap()}, null);
@@ -112,7 +112,7 @@ public class ForbiddenWordService extends ServiceBase {
 	}
 	
 	public int insert(ForbiddenWord persist) {
-		return forbiddenWordDao.insert(persist);
+		return forbiddenWordDao.insert(persist).intValue();
 	}
 	
 	public int update(ForbiddenWord persist) {

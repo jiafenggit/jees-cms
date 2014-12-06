@@ -76,7 +76,7 @@ public class NavigateService extends ServiceBase {
 	}
 	
 	public int insert(Navigate persist) {
-		return navigateDao.insert(persist);
+		return navigateDao.insert(persist).intValue();
 	}
 	
 	public int update(Navigate persist) {
@@ -86,7 +86,7 @@ public class NavigateService extends ServiceBase {
 	public int delete(Object... ids) {
 		String idStr = SqlUtil.buildSafeWhere(",", ids);
 		if(DPUtil.empty(idStr)) return 0;
-		int count = navigateDao.getCount(DPUtil.stringConcat("parent_id in (", idStr, " )"), new Object[]{}, null);
+		int count = navigateDao.getCount(DPUtil.stringConcat("parent_id in (", idStr, " )"), new Object[]{}, null).intValue();
 		if(count > 0) return -1;
 		return navigateDao.deleteByIds(ids);
 	}

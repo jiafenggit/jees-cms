@@ -68,7 +68,7 @@ public class NoteService extends ServiceBase {
 		}
 		if(!DPUtil.empty(orderBy)) sb.append(" order by ").append(orderBy);
 		String sql = sb.toString();
-		int total = noteDao.getCount(sql, paramMap, true);
+		int total = noteDao.getCount(sql, paramMap, true).intValue();
 		sql = DPUtil.stringConcat(sql, SqlUtil.buildLimit(page, pageSize));
 		List<Map<String, Object>> rows = noteDao.npJdbcTemplate().queryForList(sql, paramMap);
 		rows = ServiceUtil.fillFields(rows, new String[]{"status"}, new Map<?, ?>[]{getStatusMap(true)}, null);
@@ -99,7 +99,7 @@ public class NoteService extends ServiceBase {
 	}
 	
 	public int insert(Note persist) {
-		return noteDao.insert(persist);
+		return noteDao.insert(persist).intValue();
 	}
 	
 	public int update(Note persist) {

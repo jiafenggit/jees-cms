@@ -119,7 +119,7 @@ public class LabelService extends ServiceBase {
 		}
 		if(!DPUtil.empty(orderBy)) sb.append(" order by ").append(orderBy);
 		String sql = sb.toString();
-		int total = labelDao.getCount(sql, paramMap, true);
+		int total = labelDao.getCount(sql, paramMap, true).intValue();
 		sql = DPUtil.stringConcat(sql, SqlUtil.buildLimit(page, pageSize));
 		List<Map<String, Object>> rows = labelDao.npJdbcTemplate().queryForList(sql, paramMap);
 		rows = ServiceUtil.fillFields(rows, new String[]{"status", "effect"}, new Map<?, ?>[]{getStatusMap(), getEffectMap()}, null);
@@ -296,7 +296,7 @@ public class LabelService extends ServiceBase {
 	}
 	
 	public int insert(Label persist) {
-		return labelDao.insert(persist);
+		return labelDao.insert(persist).intValue();
 	}
 	
 	public int update(Label persist) {
