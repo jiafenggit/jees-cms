@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50525
 File Encoding         : 65001
 
-Date: 2014-12-05 17:03:10
+Date: 2014-12-06 12:54:22
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -362,6 +362,7 @@ CREATE TABLE `cms_member` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `serial` varchar(64) NOT NULL DEFAULT '',
   `name` varchar(64) NOT NULL DEFAULT '',
+  `sex` tinyint(4) NOT NULL DEFAULT '0',
   `password` char(32) NOT NULL DEFAULT '',
   `salt` char(6) NOT NULL DEFAULT '',
   `sort` int(11) NOT NULL DEFAULT '0',
@@ -379,8 +380,27 @@ CREATE TABLE `cms_member` (
 -- ----------------------------
 -- Records of cms_member
 -- ----------------------------
-INSERT INTO `cms_member` VALUES ('1', 'admin', '管理员', '0f4e8ac95b5c1fc48dc98004c7525bc7', '888888', '0', '1', '1417769594117', '127.0.0.1', '1', '127.0.0.1', '1411090286300', '1', '1417513806245');
-INSERT INTO `cms_member` VALUES ('2', 'guest', '访客', '793a507822c9ec991c3418dfb7950f07', '338043', '0', '1', '1414550595011', '127.0.0.1', '1', '127.0.0.1', '1414546536140', '1', '1414546536140');
+INSERT INTO `cms_member` VALUES ('1', 'admin', '管理员', '0', '0f4e8ac95b5c1fc48dc98004c7525bc7', '888888', '0', '1', '1417769594117', '127.0.0.1', '1', '127.0.0.1', '1411090286300', '1', '1417513806245');
+INSERT INTO `cms_member` VALUES ('2', 'guest', '访客', '0', '793a507822c9ec991c3418dfb7950f07', '338043', '0', '1', '1414550595011', '127.0.0.1', '1', '127.0.0.1', '1414546536140', '1', '1414546536140');
+
+-- ----------------------------
+-- Table structure for `cms_member_code`
+-- ----------------------------
+DROP TABLE IF EXISTS `cms_member_code`;
+CREATE TABLE `cms_member_code` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `member_id` int(11) NOT NULL DEFAULT '0',
+  `type` varchar(32) NOT NULL DEFAULT '',
+  `username` varchar(128) NOT NULL DEFAULT '',
+  `service` varchar(32) NOT NULL DEFAULT '',
+  `code` varchar(64) NOT NULL DEFAULT '',
+  `expire` bigint(20) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of cms_member_code
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `cms_member_organize_rel`
@@ -415,6 +435,23 @@ CREATE TABLE `cms_member_role_rel` (
 -- ----------------------------
 INSERT INTO `cms_member_role_rel` VALUES ('1', '2');
 INSERT INTO `cms_member_role_rel` VALUES ('2', '5');
+
+-- ----------------------------
+-- Table structure for `cms_member_third`
+-- ----------------------------
+DROP TABLE IF EXISTS `cms_member_third`;
+CREATE TABLE `cms_member_third` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `member_id` int(11) NOT NULL DEFAULT '0',
+  `type` varchar(32) NOT NULL DEFAULT '',
+  `username` varchar(128) NOT NULL DEFAULT '',
+  `status` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of cms_member_third
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `cms_menu`
