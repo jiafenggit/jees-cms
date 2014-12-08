@@ -12,6 +12,8 @@ public class Member {
 	private Integer sex; // 性别
 	private String password; // 密码
 	private String salt; // 盐
+	private Integer frontEnable; // 允许登陆前台
+	private Integer manageEnable; // 允许登陆后台
 	private Integer sort; // 排序（从高到低）
 	private Integer status; // 状态
 	private Long activeTime; // 最后活动时间
@@ -68,6 +70,22 @@ public class Member {
 
 	public void setSalt(String salt) {
 		this.salt = salt;
+	}
+
+	public Integer getFrontEnable() {
+		return frontEnable;
+	}
+
+	public void setFrontEnable(Integer frontEnable) {
+		this.frontEnable = frontEnable;
+	}
+
+	public Integer getManageEnable() {
+		return manageEnable;
+	}
+
+	public void setManageEnable(Integer manageEnable) {
+		this.manageEnable = manageEnable;
 	}
 
 	public Integer getSort() {

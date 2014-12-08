@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50525
 File Encoding         : 65001
 
-Date: 2014-12-06 12:54:22
+Date: 2014-12-08 09:37:47
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -254,7 +254,7 @@ CREATE TABLE `cms_log` (
   `operate_ip` varchar(64) NOT NULL DEFAULT '',
   `operate_time` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of cms_log
@@ -330,6 +330,7 @@ INSERT INTO `cms_log` VALUES ('71', '用户登陆', 'service', 'base', 'member',
 INSERT INTO `cms_log` VALUES ('72', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1417570918751');
 INSERT INTO `cms_log` VALUES ('73', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1417767206399');
 INSERT INTO `cms_log` VALUES ('74', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1417768209950');
+INSERT INTO `cms_log` VALUES ('75', '用户登陆', 'service', 'base', 'member', 'logon', null, null, null, null, null, null, null, null, '1', '127.0.0.1', '1417845850922');
 
 -- ----------------------------
 -- Table structure for `cms_log_setting`
@@ -365,6 +366,8 @@ CREATE TABLE `cms_member` (
   `sex` tinyint(4) NOT NULL DEFAULT '0',
   `password` char(32) NOT NULL DEFAULT '',
   `salt` char(6) NOT NULL DEFAULT '',
+  `front_enable` tinyint(4) NOT NULL DEFAULT '0',
+  `manage_enable` tinyint(4) NOT NULL DEFAULT '0',
   `sort` int(11) NOT NULL DEFAULT '0',
   `status` tinyint(4) NOT NULL DEFAULT '0',
   `active_time` bigint(20) DEFAULT '0',
@@ -380,8 +383,8 @@ CREATE TABLE `cms_member` (
 -- ----------------------------
 -- Records of cms_member
 -- ----------------------------
-INSERT INTO `cms_member` VALUES ('1', 'admin', '管理员', '0', '0f4e8ac95b5c1fc48dc98004c7525bc7', '888888', '0', '1', '1417769594117', '127.0.0.1', '1', '127.0.0.1', '1411090286300', '1', '1417513806245');
-INSERT INTO `cms_member` VALUES ('2', 'guest', '访客', '0', '793a507822c9ec991c3418dfb7950f07', '338043', '0', '1', '1414550595011', '127.0.0.1', '1', '127.0.0.1', '1414546536140', '1', '1414546536140');
+INSERT INTO `cms_member` VALUES ('1', 'admin', '管理员', '0', '0f4e8ac95b5c1fc48dc98004c7525bc7', '888888', '0', '0', '0', '1', '1417845853168', '127.0.0.1', '1', '127.0.0.1', '1411090286300', '1', '1417513806245');
+INSERT INTO `cms_member` VALUES ('2', 'guest', '访客', '0', '793a507822c9ec991c3418dfb7950f07', '338043', '0', '0', '0', '1', '1414550595011', '127.0.0.1', '1', '127.0.0.1', '1414546536140', '1', '1414546536140');
 
 -- ----------------------------
 -- Table structure for `cms_member_code`
