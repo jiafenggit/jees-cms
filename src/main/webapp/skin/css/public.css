@@ -29,6 +29,7 @@ a{text-decoration:none;}
 .width290{width:290px;}
 .hidden{display: none;}
 
+body{min-width:1000px;}
 .main-container{width:1000px; margin:0 auto;}
 
 .top-menu{font-size:12px; min-width:1000px; width:100%; height:30px; line-height:30px; border-bottom:#d3d3d3 solid 1px; background:#f7f7f7;}
