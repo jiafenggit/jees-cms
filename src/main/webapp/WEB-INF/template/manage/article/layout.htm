@@ -33,15 +33,15 @@ $(function () {
 				return value ? '是' : '否';
 			}},
 			{field:'column_id',title:'所在栏目',formatter:function (value, row, index) {
-				return row.column_id_rel ? row.column_id_rel.name : row.column_id;
+				return row.column_id_info ? row.column_id_info.name : row.column_id;
 			}},
 			{field:'status_text',title:'状态'},
 			{field:'publish_time',title:'发布时间',formatter:function (value, row, index) {
 				return Web_formatDateTime(value);
 			}},
 			{field:'update_id',title:'操作者',formatter:function (value, row, index) {
-				if(!row.update_id_rel) return '';
-				return '[' + row.update_id_rel.serial + ']' + row.update_id_rel.name;
+				if(!row.update_id_info) return '';
+				return '[' + row.update_id_info.serial + ']' + row.update_id_info.name;
 			}},
 			{field:'from_name',title:'来源'},
 			{field:'comment_enable',title:'启用评论',formatter:function (value, row, index) {

@@ -55,7 +55,7 @@
 						<div class="thumbnail margin-bottom0">
 							<a target="_blank" href="${item.url!""}" title="${item.title!""}"><img src="[#if empty(item.logo)]${defaultArticleLogo!""}[#else]${item.logo!""}[/#if]"></a>
 							<div class="caption">
-								<div class="column-title">[<a target="_blank" href="${(item.column_id_rel.url)!""}">${(item.column_id_rel.name)!""}</a>]</div>
+								<div class="column-title">[<a target="_blank" href="${(item.column_id_info.url)!""}">${(item.column_id_info.name)!""}</a>]</div>
 								<a target="_blank" href="${item.url!""}" title="${item.title!""}">${item.short_title!""}</a>
 							</div>
 						</div>

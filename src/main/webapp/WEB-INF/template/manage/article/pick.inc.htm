@@ -79,7 +79,7 @@ $(function () {
 			}},
 			{field:'title',title:'标题'},
 			{field:'column_id',title:'所在栏目',formatter:function (value, row, index) {
-				return row.column_id_rel ? row.column_id_rel.name : row.column_id;
+				return row.column_id_info ? row.column_id_info.name : row.column_id;
 			}}
 		]]
 	});
@@ -102,7 +102,7 @@ $(function () {
 			}},
 			{field:'title',title:'标题'},
 			{field:'column_id',title:'所在栏目',formatter:function (value, row, index) {
-				return row.column_id_rel ? row.column_id_rel.name : row.column_id;
+				return row.column_id_info ? row.column_id_info.name : row.column_id;
 			}},
 			{field:'status_text',title:'状态'}
 		]]
