@@ -1,8 +1,7 @@
 package com.iisquare.jees.test;
 
-import java.lang.reflect.Modifier;
-
-import com.iisquare.jees.framework.util.DPUtil;
+import java.io.File;
+import java.io.FileInputStream;
 
 public class Test {
 
@@ -10,14 +9,29 @@ public class Test {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		short sh[] = new short[3];
-		Short sh2[] = new Short[3];
-		Class<?> shClass = sh.getClass();
-		Class<?> sh2Class = sh2.getClass();
-		//boolean b = Modifier.isAbstract(shClass.getModifiers());
-		System.out.println(Modifier.toString(shClass.getModifiers()));
-		System.out.println(Modifier.toString(sh2Class.getModifiers()));
-		System.out.println(Modifier.toString(DPUtil.class.getModifiers()));
+		Long timeStart = System.currentTimeMillis();
+		String filePath = "C:/Users/Ouyang/Desktop/380000.html";
+		File file = new File(filePath);
+		Long fileLength = file.length(); // 获取文件长度
+		byte[] fileContent = new byte[fileLength.intValue()];
+		FileInputStream inputStream = null;
+		try {
+			inputStream = new FileInputStream(file);
+			inputStream.read(fileContent);
+			inputStream.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		Long endStart = System.currentTimeMillis();
+		System.out.println(timeStart);
+		System.out.println(endStart);
+		System.out.println(endStart - timeStart);
+		timeStart = System.currentTimeMillis();
+		new String(fileContent);
+		endStart = System.currentTimeMillis();
+		System.out.println(timeStart);
+		System.out.println(endStart);
+		System.out.println(endStart - timeStart);
 	}
 
 }
